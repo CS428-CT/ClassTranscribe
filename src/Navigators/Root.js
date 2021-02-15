@@ -18,7 +18,7 @@ export function navigateAndReset(routes = [], index = 0) {
     CommonActions.reset({
       index,
       routes,
-    }),
+    })
   )
 }
 
@@ -27,6 +27,6 @@ export function navigateAndSimpleReset(name, index = 0) {
     CommonActions.reset({
       index,
       routes: [{ name }],
-    }),
+    })
   )
 }

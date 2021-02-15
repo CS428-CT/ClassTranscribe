@@ -13,9 +13,7 @@ const IndexExampleContainer = () => {
   const dispatch = useDispatch()
 
   const user = useSelector((state) => state.user.item)
-  const fetchOneUserLoading = useSelector(
-    (state) => state.user.fetchOne.loading,
-  )
+  const fetchOneUserLoading = useSelector((state) => state.user.fetchOne.loading)
   const fetchOneUserError = useSelector((state) => state.user.fetchOne.error)
 
   const [userId, setUserId] = useState('1')
@@ -37,9 +35,7 @@ const IndexExampleContainer = () => {
         {fetchOneUserError ? (
           <Text style={Fonts.textRegular}>{fetchOneUserError.message}</Text>
         ) : (
-          <Text style={Fonts.textRegular}>
-            {t('example.helloUser', { name: user.name })}
-          </Text>
+          <Text style={Fonts.textRegular}>{t('example.helloUser', { name: user.name })}</Text>
         )}
       </View>
       <View
@@ -51,13 +47,11 @@ const IndexExampleContainer = () => {
           Common.backgroundPrimary,
         ]}
       >
-        <Text style={[Layout.fill, Fonts.textCenter]}>
-          {t('example.labels.userId')}
-        </Text>
+        <Text style={[Layout.fill, Fonts.textCenter]}>{t('example.labels.userId')}</Text>
         <TextInput
           onChangeText={(text) => fetch(text)}
           editable={!fetchOneUserLoading}
-          keyboardType={'number-pad'}
+          keyboardType="number-pad"
           maxLength={1}
           value={userId}
           selectTextOnFocus

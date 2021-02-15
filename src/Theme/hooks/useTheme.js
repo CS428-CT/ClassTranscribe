@@ -17,19 +17,14 @@ export default function () {
   const currentTheme = useSelector((state) => state.theme.theme || 'default')
   const isDark = useSelector((state) => state.theme.darkMode)
   const darkMode = isDark === null ? colorScheme === 'dark' : isDark
-  //Select the right theme light theme ({} if not exist)
-  const { Variables: themeConfigVars = {}, ...themeConfig } =
-    themes[currentTheme] || {}
+  // Select the right theme light theme ({} if not exist)
+  const { Variables: themeConfigVars = {}, ...themeConfig } = themes[currentTheme] || {}
 
   const { Variables: darkThemeConfigVars = {}, ...darkThemeConfig } = darkMode
     ? themes[`${currentTheme}_dark`] || {}
     : {}
 
-  const themeVariables = mergeVariables(
-    DefaultVariables,
-    themeConfigVars,
-    darkThemeConfigVars,
-  )
+  const themeVariables = mergeVariables(DefaultVariables, themeConfigVars, darkThemeConfigVars)
 
   // Build the default theme
   const baseTheme = {
@@ -46,7 +41,7 @@ export default function () {
     darkMode,
     baseTheme,
     formatTheme(themeVariables, themeConfig || {}),
-    formatTheme(themeVariables, darkThemeConfig || {}),
+    formatTheme(themeVariables, darkThemeConfig || {})
   )
 }
 
@@ -102,7 +97,7 @@ const buildTheme = (darkMode, baseTheme, themeConfig, darkThemeConfig) => {
     darkMode,
     NavigationTheme: mergeNavigationTheme(
       darkMode ? DarkTheme : DefaultTheme,
-      baseTheme.NavigationColors,
+      baseTheme.NavigationColors
     ),
   }
 }
@@ -125,7 +120,7 @@ const mergeTheme = (baseTheme, theme, darkTheme) => ({
         ...(darkTheme[key] || {}),
       },
     }),
-    {},
+    {}
   ),
 })
 

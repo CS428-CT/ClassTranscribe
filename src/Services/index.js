@@ -18,7 +18,7 @@ instance.interceptors.response.use(
   (response) => response,
   ({ message, response: { data, status } }) => {
     return handleError({ message, data, status })
-  },
+  }
 )
 
 export default instance
