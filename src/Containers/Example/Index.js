@@ -37,7 +37,9 @@ const IndexExampleContainer = () => {
         {fetchOneUserError ? (
           <Text style={Fonts.textRegular}>{fetchOneUserError.message}</Text>
         ) : (
-          <Text style={Fonts.textRegular}>{t('example.helloUser', { name: user.name })}</Text>
+          <Text style={Fonts.textRegular}>
+            {t('example.helloUser', { name: user.name })}
+          </Text>
         )}
       </View>
       <View
