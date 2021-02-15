@@ -7,14 +7,17 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint .",
-    "precommit": "lint-staged"
+    "lint": "eslint ."
   },
   "lint-staged": {
     "*.{js, jsx}": [
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.13.2",
