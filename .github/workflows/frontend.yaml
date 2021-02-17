@@ -72,7 +72,7 @@ jobs:
 
       - name: Generate keystore
         working-directory: ./android/app
-        run: keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000
+        run: keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -dname "cn=Unknown, ou=Unknown, o=Unknown, c=Unknown" -keypass android -keyalg RSA -keysize 2048 -validity 10000
 
       - name: Build application
         working-directory: ./
