@@ -76,7 +76,7 @@ jobs:
 
       - name: Build application
         working-directory: ./android
-        run: ./gradlew assembleRelease
+        run: yarn build-android
 
   test:
     runs-on: ubuntu-latest
