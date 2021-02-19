@@ -1,12 +1,3 @@
 export default {
-  welcome: 'Welcome to React Native ClassTranscribe by TheCodingMachine',
-  actions: {
-    continue: 'Continue',
-  },
-  example: {
-    helloUser: 'I am a fake user, my name is {{name}}',
-    labels: {
-      userId: 'Enter a user id',
-    },
-  },
+  welcome: 'Welcome to ClassTranscribe',
 }
