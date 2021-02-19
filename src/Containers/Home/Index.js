@@ -11,9 +11,9 @@ const HomeContainer = () => {
       <View style={[[Layout.colCenter, Gutters.smallHPadding]]}>
         <Brand />
         <Text>Home screen</Text>
-        </View>
+      </View>
     </View>
   )
 }
 
-export default HomeContainer;
+export default HomeContainer

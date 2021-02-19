@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-undef */
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { combineReducers } from 'redux'
 import {
@@ -13,12 +15,10 @@ import {
 import { configureStore } from '@reduxjs/toolkit'
 
 import startup from './Startup'
-import user from './User'
 import theme from './Theme'
 
 const reducers = combineReducers({
   startup,
-  user,
   theme,
 })
 

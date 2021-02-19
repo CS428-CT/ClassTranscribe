@@ -9,6 +9,9 @@
     "parser": "babel-eslint",
     "rules": {
     "import/no-unresolved": "off",
+    "react/require-default-props": "off",
+    "prefer-promise-reject-errors": "off",
+    "global-require": "off",
     "import/prefer-default-export": "off",
     "no-use-before-define": "off",
     "react/jsx-filename-extension": [
