@@ -61,34 +61,34 @@ jobs:
         working-directory: ./
         run: yarn build-android
 
-  build-ios:
-    runs-on: macos-latest
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v2
+  # build-ios:
+  #   runs-on: macos-latest
+  #   steps:
+  #     - name: Check out repository
+  #       uses: actions/checkout@v2
 
-      - name: Set up Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12
+  #     - name: Set up Node
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: 12
 
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: client/node_modules
-          key: ${{ runner.os }}-cache
+  #     - name: Cache dependencies
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: client/node_modules
+  #         key: ${{ runner.os }}-cache
 
-      - name: Install dependencies
-        working-directory: ./
-        run: yarn
+  #     - name: Install dependencies
+  #       working-directory: ./
+  #       run: yarn
 
-      - name: Install POD dependencies
-        working-directory: ./ios
-        run: pod install
+  #     - name: Install POD dependencies
+  #       working-directory: ./ios
+  #       run: pod install
 
-      - name: Build application
-        working-directory: ./
-        run: yarn build-ios
+  #     - name: Build application
+  #       working-directory: ./
+  #       run: yarn build-ios
 
   test:
     runs-on: ubuntu-latest
