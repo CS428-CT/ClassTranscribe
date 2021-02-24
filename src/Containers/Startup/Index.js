@@ -8,7 +8,13 @@ import { Brand } from '@/Components'
 
 const IndexStartupContainer = () => {
   const { Layout, Gutters, Fonts } = useTheme()
+<<<<<<< HEAD
   const { t } = useTranslation()
+=======
+
+  const { t } = useTranslation()
+
+>>>>>>> 3358100dd1e25d1f91490fcb0d3ef6ad0f1b8088
   const dispatch = useDispatch()
 
   useEffect(() => {

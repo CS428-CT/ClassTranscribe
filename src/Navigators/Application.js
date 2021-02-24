@@ -18,7 +18,6 @@ const Stack = createStackNavigator()
 let MainNavigator
 
 // @refresh reset
-
 const ApplicationNavigator = () => {
   const { Layout, darkMode, NavigationTheme } = useTheme()
   const { colors } = NavigationTheme
