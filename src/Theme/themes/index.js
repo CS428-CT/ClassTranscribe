@@ -1,5 +1,5 @@
-import * as default_dark from './default_dark'
+import * as DefaultDark from './default_dark'
 
 export default {
-  default_dark,
+  DefaultDark,
 }

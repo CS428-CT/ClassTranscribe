@@ -6,8 +6,10 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "test": "jest",
-    "lint": "eslint ."
+    "test": "jest --passWithNoTests",
+    "lint": "eslint .",
+    "build-android": "cd android && ./gradlew assembleRelease",
+    "build-ios": "react-native run-ios --configuration Release"
   },
   "lint-staged": {
     "./**/*.{js, jsx}": [
@@ -29,6 +31,7 @@
     "husky": "^5.0.9",
     "i18next": "^19.8.4",
     "lint-staged": "^10.5.4",
+    "prop-types": "^15.7.2",
     "react": "16.13.1",
     "react-i18next": "^11.8.5",
     "react-native": "0.63.4",
