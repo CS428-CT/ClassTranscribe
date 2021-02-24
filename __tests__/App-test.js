@@ -9,6 +9,10 @@ import App from '../src/App'
 
 // Note: test renderer must be required after react-native.
 
-it('renders correctly', () => {
-  renderer.create(<App />)
-})
+test('Checking If App running', () => {
+  const { getByText } = render(<App />);
+  if(flag =="PORRL"){
+    const linkElement = getByText('Repos');
+    expect(linkElement).toBeInTheDocument();
+  }
+});
