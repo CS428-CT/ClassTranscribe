@@ -11,6 +11,7 @@
     "expo": "~40.0.0",
     "expo-auth-session": "~3.0.0",
     "expo-random": "~10.0.0",
+    "jest": "^26.6.3",
     "jwt-decode": "2.2.0",
     "prettier": "^2.2.1",
     "react": "16.13.1",
@@ -24,6 +25,7 @@
   },
   "scripts": {
     "start": "expo start",
+    "test": "jest --passWithNoTests",
     "android": "expo start --android",
     "build-android": "expo build:android",
     "build-ios": "expo build:ios",
