@@ -2,8 +2,7 @@
 
 - Gitignore .expo, ios, android
 - If changing package.json/locl/babel please communicate
-- Tagging
-- 
+- Do Tagging
 
 ## Notes
 
