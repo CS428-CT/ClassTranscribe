@@ -2,6 +2,7 @@
 
 - Gitignore .expo, ios, android
 - If changing package.json/locl/babel please communicate
+- Start working on src/Components, we will use react navigation for later (https://wix.github.io/react-native-navigation/docs/before-you-start)
 - Do Tagging
 
 ## Notes
