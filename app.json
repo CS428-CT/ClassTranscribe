@@ -1,6 +1,4 @@
 {
-  "expo": {
-    "name": "ClassTranscribe",
-    "slug": "ClassTranscribe"
-  }
+  "name": "ClassTranscribe",
+  "displayName": "ClassTranscribe"
 }
