@@ -1,6 +1,14 @@
 {
   "expo": {
     "name": "ClassTranscribe",
-    "slug": "ClassTranscribe"
+    "slug": "class-transcribe",
+    "ios": {
+        "bundleIdentifier": "com.classtranscribe.mobile",
+        "buildNumber": "1.0.0"
+      },
+      "android": {
+        "package": "com.classtranscribe.mobile",
+        "versionCode": 1
+      }
   }
 }
