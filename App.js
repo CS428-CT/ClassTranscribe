@@ -1,18 +1,5 @@
-import * as AuthSession from 'expo-auth-session';
-import jwtDecode from 'jwt-decode';
-import * as React from 'react';
-import { Alert, Button, Platform, StyleSheet, Text, View } from 'react-native';
-
-
-export default function App() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>
-        Something
-      </Text>
-    </View>
-  );
-}
+import * as React from 'react'
+import { StyleSheet, Text, View } from 'react-native'
 
 const styles = StyleSheet.create({
   container: {
@@ -26,4 +13,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 40,
   },
-});
+})
+
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <Text>Something</Text>
+    </View>
+  )
+}
