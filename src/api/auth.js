@@ -1,4 +1,5 @@
-import { api, HTTP_STATUS_CODES } from ".";
+import { HTTP_STATUS_CODES, BASE_URL } from ".";
+import axios from 'axios'
 
 /**
  * Object contains the following attributes:
@@ -10,8 +11,8 @@ import { api, HTTP_STATUS_CODES } from ".";
  */
 let currentAuthenticatedUser = null;
 
-const ENDPOINTS = {
-    SIGN_IN: "Account/TestSignIn"
+export const ENDPOINTS = {
+    SIGN_IN: `${BASE_URL}Account/TestSignIn`
 }
 
 /**
@@ -30,8 +31,7 @@ export const isUserAuthenticated = () => {
 }
 
 export const authenticateUser = async () => {
-    let resp = await api.get(ENDPOINTS.SIGN_IN);
-    console.log(resp);
+    let resp = await axios.get(ENDPOINTS.SIGN_IN);
     if (resp?.status != HTTP_STATUS_CODES.OK)
         return;
 
