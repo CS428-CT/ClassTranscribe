@@ -1,6 +1,5 @@
 import { api, HTTP_STATUS_CODES } from ".";
 
-// TODO: Add documentation
 /**
  * Object contains the following attributes:
  *     - authToken: The user's authentication token
