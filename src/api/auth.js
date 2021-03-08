@@ -31,9 +31,17 @@ export const isUserAuthenticated = () => {
 }
 
 export const authenticateUser = async () => {
-    let resp = await axios.get(ENDPOINTS.SIGN_IN);
-    if (resp?.status != HTTP_STATUS_CODES.OK)
-        return;
+    try {
+        let resp = await axios.get(ENDPOINTS.SIGN_IN);
+        if (resp?.status != HTTP_STATUS_CODES.OK)
+            return;
 
-    currentAuthenticatedUser = resp.data;
+        currentAuthenticatedUser = resp.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const signOutUser = async () => {
+    currentAuthenticatedUser = null;
 }
