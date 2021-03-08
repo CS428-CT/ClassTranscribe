@@ -4,7 +4,7 @@ import { getCurrentAuthenticatedUser, authenticateUser, ENDPOINTS, isUserAuthent
 import { HTTP_STATUS_CODES } from "../../src/api";
 import { SIGN_IN_RESPONSE } from './mock-response';
 
-describe("Is User Authenticated", () => {
+describe("Check authentication", () => {
     let mock = new MockAdapter(axios);
 
     afterEach(async () => {
@@ -37,6 +37,16 @@ describe("Is User Authenticated", () => {
         mock.onGet(`${ENDPOINTS.SIGN_IN}`).networkError();
         await authenticateUser();
 
+        expect(isUserAuthenticated()).toBe(false);
+        expect(getCurrentAuthenticatedUser()).toBe(null);
+    });
+
+    test("after logging out", async () => {
+        mock.onGet(`${ENDPOINTS.SIGN_IN}`).reply(HTTP_STATUS_CODES.OK, SIGN_IN_RESPONSE);
+        await authenticateUser();
+        expect(isUserAuthenticated()).toBe(true);
+
+        await signOutUser();
         expect(isUserAuthenticated()).toBe(false);
         expect(getCurrentAuthenticatedUser()).toBe(null);
     });
