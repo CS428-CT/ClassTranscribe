@@ -12,15 +12,15 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     textAlign: 'center',
-    marginTop: "30%",
+    marginTop: '30%',
   },
 })
 
 export default function App() {
-  const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
+  const [isUserAuthenticated, setIsUserAuthenticated] = useState(false)
 
   const onAuthLevelChange = (isAuthenticated) => {
-    setIsUserAuthenticated(isAuthenticated);
+    setIsUserAuthenticated(isAuthenticated)
   }
 
   const renderApplication = () => {
@@ -29,13 +29,9 @@ export default function App() {
         <View style={styles.container}>
           <Text style={styles.title}>PUT REST OF APPLICATION HERE!!!</Text>
         </View>
-      );
+      )
 
-    return <LoginContainer onAuthLevelChange={onAuthLevelChange}/>
-}
-  return (
-    <SafeAreaView>
-      {renderApplication()}
-    </SafeAreaView>
-  );
+    return <LoginContainer onAuthLevelChange={onAuthLevelChange} />
+  }
+  return <SafeAreaView>{renderApplication()}</SafeAreaView>
 }

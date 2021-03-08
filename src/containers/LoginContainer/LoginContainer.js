@@ -1,24 +1,28 @@
 import React from 'react'
 import { View, Button } from 'react-native'
+import PropTypes from 'prop-types'
 import { authenticateUser, isUserAuthenticated } from '../../api/auth'
 import styles from './LoginContainer.style'
 
-
-
-const LoginContainer = ({onAuthLevelChange}) => {
+const LoginContainer = ({ onAuthLevelChange }) => {
   const onAuthenticate = () => {
-    authenticateUser();
-    onAuthLevelChange(isUserAuthenticated());
+    authenticateUser()
+    onAuthLevelChange(isUserAuthenticated())
   }
 
   return (
     <View style={styles.container}>
-      <Button 
+      <Button
         onPress={onAuthenticate}
         title="Log in with CI Logon"
-        accessibilityLabel="Press this button to log into the app with CI Logon"/>
+        accessibilityLabel="Press this button to log into the app with CI Logon"
+      />
     </View>
   )
 }
 
-export default LoginContainer;
+LoginContainer.propTypes = {
+  onAuthLevelChange: PropTypes.func.isRequired,
+}
+
+export default LoginContainer

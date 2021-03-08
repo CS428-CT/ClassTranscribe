@@ -1,4 +1,7 @@
 {
+    "env": {
+        "jest/globals": true
+    },
     "extends": [
         "airbnb",
         "prettier",
@@ -28,5 +31,5 @@
             }
         ]
     },
-    "plugins": ["prettier"]
+    "plugins": ["prettier", "jest"]
 }
