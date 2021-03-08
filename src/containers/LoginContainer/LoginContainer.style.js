@@ -5,9 +5,9 @@ const styles = StyleSheet.create({
     display: 'flex',
     backgroundColor: '#fff',
     alignItems: 'center',
-    height: "100%",
+    height: '100%',
     justifyContent: 'center',
   },
 })
 
-export default styles;
+export default styles

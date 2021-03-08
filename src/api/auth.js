@@ -1,5 +1,5 @@
-import { HTTP_STATUS_CODES, BASE_URL } from ".";
 import axios from 'axios'
+import { HTTP_STATUS_CODES, BASE_URL } from '.'
 
 /**
  * Object contains the following attributes:
@@ -9,10 +9,10 @@ import axios from 'axios'
  *     - universityId: ID of the user's university
  *     - userId: ID of user
  */
-let currentAuthenticatedUser = null;
+let currentAuthenticatedUser = null
 
 export const ENDPOINTS = {
-    SIGN_IN: `${BASE_URL}Account/TestSignIn`
+  SIGN_IN: `${BASE_URL}Account/TestSignIn`,
 }
 
 /**
@@ -20,28 +20,27 @@ export const ENDPOINTS = {
  * See @currentAuthenticatedUser for the attributes returned in the object
  */
 export const getCurrentAuthenticatedUser = () => {
-    return currentAuthenticatedUser;
+  return currentAuthenticatedUser
 }
 
 /**
  * @returns True if the user is authenticated, false otherwise
  */
 export const isUserAuthenticated = () => {
-    return currentAuthenticatedUser != null;
+  return currentAuthenticatedUser !== null
 }
 
 export const authenticateUser = async () => {
-    try {
-        let resp = await axios.get(ENDPOINTS.SIGN_IN);
-        if (resp?.status != HTTP_STATUS_CODES.OK)
-            return;
+  try {
+    const resp = await axios.get(ENDPOINTS.SIGN_IN)
+    if (resp?.status !== HTTP_STATUS_CODES.OK) return
 
-        currentAuthenticatedUser = resp.data;
-    } catch (error) {
-        console.log(error);
-    }
+    currentAuthenticatedUser = resp.data
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export const signOutUser = async () => {
-    currentAuthenticatedUser = null;
+  currentAuthenticatedUser = null
 }
