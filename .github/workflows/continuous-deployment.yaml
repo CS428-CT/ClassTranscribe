@@ -36,13 +36,13 @@ jobs:
         working-directory: ./android/app
         run: keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -dname "cn=Unknown, ou=Unknown, o=Unknown, c=Unknown" -keypass android -keyalg RSA -keysize 2048 -validity 10000
 
-      - name: Remove build.gradle
-        working-directory: ./android
-        run: rm -rf build.gradle
+#       - name: Remove build.gradle
+#         working-directory: ./android
+#         run: rm -rf build.gradle
 
-      - name: Create build.gradle
-        working-directory: ./android
-        run: TODO
+#       - name: Create build.gradle
+#         working-directory: ./android
+#         run: TODO
 
       - name: Elevate Permission
         working-directory: ./android
