@@ -28,6 +28,10 @@ jobs:
         working-directory: ./
         run: yarn add global expo-cli@3.13.1
         
+      - name: Install unimodules
+        working-directory: ./
+        run: yarn add react-native-unimodules
+        
       - name: Eject Expo
         working-directory: ./
         run: yarn eject
