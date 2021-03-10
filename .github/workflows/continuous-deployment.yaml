@@ -12,7 +12,7 @@ jobs:
       - name: Set up node
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 12.21.0
 
       - name: Cache dependencies
         uses: actions/cache@v2
@@ -26,7 +26,7 @@ jobs:
         
       - name: Install Expo
         working-directory: ./
-        run: yarn add global expo-cli
+        run: yarn add global expo-cli@3.13.1
         
       - name: Eject Expo
         working-directory: ./
