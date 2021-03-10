@@ -4,7 +4,7 @@ on: push
 
 jobs:
   deploy-android:
-    runs-on: macos-latest
+    runs-on: windows-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
@@ -23,10 +23,6 @@ jobs:
       - name: Install dependencies
         working-directory: ./
         run: yarn
-    
-      - name: Install Unimodules
-        working-directory: ./
-        run: npm install react-native-unimodules
         
       - name: Install Expo
         working-directory: ./
