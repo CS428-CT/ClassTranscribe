@@ -23,6 +23,10 @@ jobs:
       - name: Install dependencies
         working-directory: ./
         run: yarn
+    
+      - name: Install Unimodules
+        working-directory: ./
+        run: npm install react-native-unimodules
         
       - name: Install Expo
         working-directory: ./
