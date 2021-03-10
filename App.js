@@ -1,5 +1,6 @@
-import * as React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React, { useState } from 'react'
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import LoginContainer from './src/containers/LoginContainer/LoginContainer'
 
 const styles = StyleSheet.create({
   container: {
@@ -11,14 +12,26 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     textAlign: 'center',
-    marginTop: 40,
+    marginTop: '30%',
   },
 })
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Something</Text>
-    </View>
-  )
+  const [isUserAuthenticated, setIsUserAuthenticated] = useState(false)
+
+  const onAuthLevelChange = (isAuthenticated) => {
+    setIsUserAuthenticated(isAuthenticated)
+  }
+
+  const renderApplication = () => {
+    if (isUserAuthenticated)
+      return (
+        <View style={styles.container}>
+          <Text style={styles.title}>PUT REST OF APPLICATION HERE!!!</Text>
+        </View>
+      )
+
+    return <LoginContainer onAuthLevelChange={onAuthLevelChange} />
+  }
+  return <SafeAreaView>{renderApplication()}</SafeAreaView>
 }
