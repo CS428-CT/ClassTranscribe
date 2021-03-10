@@ -24,6 +24,10 @@ jobs:
         working-directory: ./
         run: yarn
         
+      - name: Install Expo
+        working-directory: ./
+        run: yarn add global expo-cli
+        
       - name: Eject Expo
         working-directory: ./
         run: yarn eject
