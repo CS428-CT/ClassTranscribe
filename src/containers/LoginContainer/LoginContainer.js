@@ -5,8 +5,9 @@ import { authenticateUser, isUserAuthenticated } from '../../api/auth'
 import styles from './LoginContainer.style'
 
 const LoginContainer = ({ onAuthLevelChange }) => {
-  const onAuthenticate = () => {
-    authenticateUser()
+  const onAuthenticate = async () => {
+    await authenticateUser()
+    console.log(isUserAuthenticated());
     onAuthLevelChange(isUserAuthenticated())
   }
 
