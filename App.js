@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import LoginContainer from './src/containers/LoginContainer/LoginContainer'
 
@@ -28,7 +28,6 @@ export default function App() {
       return (
         <View style={styles.container}>
           <Text style={styles.title}>PUT REST OF APPLICATION HERE!!!</Text>
-          {render()}
         </View>
       )
 

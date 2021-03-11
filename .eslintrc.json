@@ -16,6 +16,8 @@
     "global-require": "off",
     "import/prefer-default-export": "off",
     "no-use-before-define": "off",
+    "no-restricted-syntax": "off",
+    "no-await-in-loop": "off",
     "react/jsx-filename-extension": [
         1,
         {
