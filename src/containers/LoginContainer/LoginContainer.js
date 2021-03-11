@@ -7,7 +7,6 @@ import styles from './LoginContainer.style'
 const LoginContainer = ({ onAuthLevelChange }) => {
   const onAuthenticate = async () => {
     await authenticateUser()
-    console.log(isUserAuthenticated());
     onAuthLevelChange(isUserAuthenticated())
   }
 
