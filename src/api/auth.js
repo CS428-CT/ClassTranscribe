@@ -2,6 +2,21 @@ import axios from 'axios'
 import { HTTP_STATUS_CODES, BASE_URL } from '.'
 
 /**
+ * Interceptor signs every request with the token of the user.
+ * If user is not authenticated, then nothing happens
+ */
+axios.interceptors.request.use(
+  (request) => {
+    const userData = getCurrentAuthenticatedUser()
+    if (userData?.authToken != null) request.headers.Authorization = `Bearer ${userData.authToken}`
+    return request
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)
+
+/**
  * Object contains the following attributes:
  *     - authToken: The user's authentication token
  *     - emailId: The user's email
