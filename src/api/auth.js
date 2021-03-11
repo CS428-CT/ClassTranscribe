@@ -34,7 +34,6 @@ export const authenticateUser = async () => {
   try {
     const resp = await axios.get(ENDPOINTS.SIGN_IN)
     if (resp?.status !== HTTP_STATUS_CODES.OK) return
-
     currentAuthenticatedUser = resp.data
   } catch (error) {
     console.log(error)
