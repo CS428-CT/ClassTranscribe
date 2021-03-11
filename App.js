@@ -19,15 +19,6 @@ const styles = StyleSheet.create({
 export default function App() {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false)
 
-  // TODO: Remove this
-  useEffect(() => {
-    const getOfferings = async () => {
-      console.log(await getOfferings("ac5b1727-629c-443b-8c1a-cc1bd541af6a"))
-    }
-
-    getOfferings()
-  }, isUserAuthenticated)
-
   const onAuthLevelChange = (isAuthenticated) => {
     setIsUserAuthenticated(isAuthenticated)
   }
@@ -37,6 +28,7 @@ export default function App() {
       return (
         <View style={styles.container}>
           <Text style={styles.title}>PUT REST OF APPLICATION HERE!!!</Text>
+          {render()}
         </View>
       )
 

@@ -35,7 +35,7 @@
   },
   "scripts": {
     "start": "expo start",
-    "test": "jest --passWithNoTests",
+    "test": "jest --passWithNoTests --runInBand --detectOpenHandles --forceExit",
     "android": "expo start --android",
     "build-android": "expo build:android",
     "build-ios": "expo build:ios",
