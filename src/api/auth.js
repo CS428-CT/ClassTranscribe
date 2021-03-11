@@ -8,7 +8,7 @@ import { HTTP_STATUS_CODES, BASE_URL } from '.'
 axios.interceptors.request.use(
   (request) => {
     const userData = getCurrentAuthenticatedUser()
-    //if (userData?.authToken != null) request.headers.Authorization = `Bearer ${userData.authToken}`
+    if (userData?.authToken != null) request.headers.Authorization = `Bearer ${userData.authToken}`
     return request
   },
   (error) => {
