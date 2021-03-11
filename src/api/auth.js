@@ -37,7 +37,7 @@ export const authenticateUser = async () => {
 
     currentAuthenticatedUser = resp.data
   } catch (error) {
-    console.log(error)
+    //console.log(error)
   }
 }
 
