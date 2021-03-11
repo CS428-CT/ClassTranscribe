@@ -7,6 +7,11 @@ export const ENDPOINTS = {
     OFFERING: `${BASE_URL}Offerings/{0}`
 }
 
+/**
+ * Gets the data for an offering from the CT API 
+ * @param {string} offeringId
+ * @returns The offering data
+ */
 export const getOfferingData = async (offeringId) => {
     const url = format(ENDPOINTS.OFFERING, offeringId);
 
@@ -21,6 +26,11 @@ export const getOfferingData = async (offeringId) => {
     return null;
 }
 
+/**
+ * Returns an array of all the starred offering data for the current user.
+ * If no user is signed in, null is returned. 
+ * @returns Array of offerings data
+ */
 export const getStarredOfferingsData = async () => {
     let offerings = [];
 
@@ -37,6 +47,11 @@ export const getStarredOfferingsData = async () => {
     return offerings;
 }
 
+/**
+ * Gets the starred offering course IDs for the current user.
+ * If no user is signed in, null is returned 
+ * @returns An object, where each key is the starred course ID and each value is 'starred'.
+ */
 export const getStarredOfferings = () => {
     if (!isUserAuthenticated())
         return null;
