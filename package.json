@@ -13,6 +13,7 @@
     "eslint-plugin-react": "^7.22.0",
     "expo": "~40.0.0",
     "expo-auth-session": "~3.0.0",
+    "expo-av": "~8.7.0",
     "expo-random": "~10.0.0",
     "jest": "^26.6.3",
     "jwt-decode": "2.2.0",

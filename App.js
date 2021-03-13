@@ -1,20 +1,8 @@
 import React, { useState } from 'react'
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import { View } from 'react-native'
 import LoginContainer from './src/containers/LoginContainer/LoginContainer'
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    textAlign: 'center',
-    marginTop: '30%',
-  },
-})
+import VideoContainer from './src/containers/VideoContainer/VideoContainer'
+import VideoStyle from './src/containers/VideoContainer/VideoContainer.style'
 
 export default function App() {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false)
@@ -24,14 +12,12 @@ export default function App() {
   }
 
   const renderApplication = () => {
-    if (isUserAuthenticated)
-      return (
-        <View style={styles.container}>
-          <Text style={styles.title}>PUT REST OF APPLICATION HERE!!!</Text>
-        </View>
-      )
+    if (isUserAuthenticated) {
+      return <VideoContainer />
+    }
 
     return <LoginContainer onAuthLevelChange={onAuthLevelChange} />
   }
-  return <SafeAreaView>{renderApplication()}</SafeAreaView>
+
+  return <View style={VideoStyle.container}>{renderApplication()}</View>
 }
