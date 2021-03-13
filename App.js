@@ -5,8 +5,8 @@ import VideoContainer from './src/containers/VideoContainer/VideoContainer'
 import VideoStyle from './src/containers/VideoContainer/VideoContainer.style'
 
 export default function App() {
-  const video = React.useRef(null)
-  const [status, setStatus] = React.useState({})
+  // const video = React.useRef(null)
+  // const [status, setStatus] = React.useState({})
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false)
 
   const onAuthLevelChange = (isAuthenticated) => {
