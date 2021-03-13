@@ -14,7 +14,6 @@ export default function App() {
   }
 
   const renderApplication = () => {
-
     if (isUserAuthenticated) {
       return (
           <VideoContainer />
@@ -23,7 +22,6 @@ export default function App() {
 
     return <LoginContainer onAuthLevelChange={onAuthLevelChange}/>
   }
-
     return (
       <View style={VideoStyle.container}>
         {renderApplication()}
