@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import LoginContainer from './src/containers/LoginContainer/LoginContainer'
-
+import CTNavigationContainer from './src/containers/CTNavigationContainer/CTNavigationContainer'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -26,12 +26,10 @@ export default function App() {
   const renderApplication = () => {
     if (isUserAuthenticated)
       return (
-        <View style={styles.container}>
-          <Text style={styles.title}>PUT REST OF APPLICATION HERE!!!</Text>
-        </View>
+        <CTNavigationContainer/>
       )
 
     return <LoginContainer onAuthLevelChange={onAuthLevelChange} />
   }
-  return <SafeAreaView>{renderApplication()}</SafeAreaView>
+  return renderApplication()
 }
