@@ -2,29 +2,29 @@
 /* eslint-env es6 */
 import React from 'react'
 import { View } from 'react-native'
-import { Button, Text } from 'react-native-paper'
+import { Button, Text, TextInput } from 'react-native-paper'
 import { Video } from 'expo-av'
 import PropTypes from 'prop-types'
 import styles from './VideoContainer.style'
 
 const VideoContainer = ({ url }) => {
   const video = React.useRef(null)
+  const [videoURI, setVideoURI] = React.useState()
   const [status, setStatus] = React.useState({
     isMuted: false,
     isPlaying: false,
     rate: 1.0,
   })
-
   return (
     <View style={styles.container}>
       <View style={styles.input}>
-        <Text label="Video URI" value={url} />
+        <TextInput label="Video URI" value={videoURI} onChangeText={(text) => setVideoURI(text)} />
       </View>
       <Video
         ref={video}
         style={styles.video}
         source={{
-          uri: url,
+          uri: videoURI,
         }}
         useNativeControls
         resizeMode="contain"
@@ -45,7 +45,6 @@ const VideoContainer = ({ url }) => {
           {status.isMuted ? 'Unmute' : 'Mute'}
         </Button>
       </View>
-
       <View style={styles.input}>
         <Button
           mode="contained"
@@ -61,7 +60,6 @@ const VideoContainer = ({ url }) => {
           Increase Rate
         </Button>
       </View>
-
       <View style={styles.buttons}>
         <Button
           mode="contained"
@@ -77,13 +75,6 @@ const VideoContainer = ({ url }) => {
         </Button>
         <Button mode="contained" onPress={() => video.current.playFromPositionAsync(0)}>
           Replay
-        </Button>
-
-        <Button
-          mode="contained"
-          onPress={() => video.current.loadAsync('/storage/emulated/0/Download')}
-        >
-          Download
         </Button>
       </View>
     </View>
