@@ -1,20 +1,21 @@
 import React, { useState } from 'react'
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
+// import { StyleSheet } from 'react-native'
 import LoginContainer from './src/containers/LoginContainer/LoginContainer'
 import CTNavigationContainer from './src/containers/CTNavigationContainer/CTNavigationContainer'
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    textAlign: 'center',
-    marginTop: '30%',
-  },
-})
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: '#fff',
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+//   title: {
+//     fontSize: 20,
+//     textAlign: 'center',
+//     marginTop: '30%',
+//   },
+// })
 
 export default function App() {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false)
@@ -24,10 +25,7 @@ export default function App() {
   }
 
   const renderApplication = () => {
-    if (isUserAuthenticated)
-      return (
-        <CTNavigationContainer/>
-      )
+    if (isUserAuthenticated) return <CTNavigationContainer />
 
     return <LoginContainer onAuthLevelChange={onAuthLevelChange} />
   }
