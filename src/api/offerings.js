@@ -14,10 +14,10 @@ export const ENDPOINTS = {
  */
 export const getOfferingData = async (offeringId) => {
   const url = format(ENDPOINTS.OFFERING, offeringId)
-
+  
   try {
     const resp = await axios.get(url)
-    if (resp?.status !== HTTP_STATUS_CODES.OK) return null
+    if (resp?.status !== HTTP_STATUS_CODES.OK) {return null}
     return resp.data
   } catch (error) {
     console.log(error)

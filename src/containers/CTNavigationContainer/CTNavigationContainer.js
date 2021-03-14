@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Button, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Home from '../HomeContainers/Home'
+import Home from '../HomeContainers/Home.js'
 const Tab = createBottomTabNavigator();
 
 const CTNavigationContainer = () => {
