@@ -8,9 +8,13 @@ import VideoStyle from '../VideoContainer/VideoContainer.style'
 
 const Tab = createBottomTabNavigator()
 
-function VideoView(){
-    return <View style={VideoStyle.container}><VideoContainer /></View> 
-} 
+function VideoView() {
+  return (
+    <View style={VideoStyle.container}>
+      <VideoContainer />
+    </View>
+  )
+}
 const CTNavigationContainer = () => {
   return (
     <NavigationContainer>

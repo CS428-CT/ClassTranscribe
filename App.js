@@ -10,10 +10,7 @@ export default function App() {
   }
 
   const renderApplication = () => {
-    if (isUserAuthenticated)
-      return (
-        <CTNavigationContainer/>
-      )
+    if (isUserAuthenticated) return <CTNavigationContainer />
 
     return <LoginContainer onAuthLevelChange={onAuthLevelChange} />
   }
