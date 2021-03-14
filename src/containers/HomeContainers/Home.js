@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, FlatList, View } from 'react-native';
+import { Text, FlatList, View, StyleSheet } from 'react-native';
 import { getStarredOfferings, getOfferingData, getStarredOfferingsData } from '../../api/offerings';
 import CourseCard from '../../components/Cards/CourseCard';
 class Home extends Component {
@@ -10,6 +10,7 @@ class Home extends Component {
            courses: null
         };
     }
+    
     fetchCourseInfo(){
         console.log("Updateing: ", this.state)
         getStarredOfferingsData()
@@ -23,11 +24,12 @@ class Home extends Component {
 
     renderCourseItem = ({item}) => {
         return (
-            <View>
+            <View style={this.styles.container}>
                 {/* <Text>{item.courses[0].courseId}</Text>
                 <Text>{item.courses[0].courseName}</Text>
                 <Text>{item.courses[0].departmentAcronym} {item.courses[0].courseNumber}</Text> */}
                 <CourseCard course_info={item.courses[0]}/>
+                <Text style={this.styles.placeholder}>Video Placeholder</Text>
             </View>);
     }
 
@@ -57,6 +59,18 @@ class Home extends Component {
             </View>
         );
     }
+
+    styles = StyleSheet.create({
+        container: {
+            display: "flex",
+            flexDirection: "row"
+        },
+        placeholder: {
+            height: 40,
+            margin: 12,
+            borderWidth: 1,
+        },
+    });
 }
 
 export default Home;

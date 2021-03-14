@@ -17,14 +17,14 @@ class CourseCard extends Component {
           fontWeight: "bold"
         },
 
-        w3_card_4: {
+        card: {
             backgroundColor: 'rgba(0,0,0,0.2)',
             width: "50%"
         },
-        w3_container: {
+        container: {
             padding: "0.01em 16px"
         },
-        w3_blue: {
+        blue: {
             color: "white",
             backgroundColor: "#2196F3",
         }
@@ -36,16 +36,16 @@ class CourseCard extends Component {
     }
     render(){
         return(
-            <View style={this.styles.w3_card_4}>
-                <Text style={this.styles.w3_container, this.styles.w3_blue}>
+            <View style={this.styles.card}>
+                <Text style={this.styles.container, this.styles.blue}>
                 {this.state.course_info.departmentAcronym}  {this.state.course_info.courseNumber}: {this.empHandle(this.state.course_info.courseName)}
                 </Text>
 
-                <Text style={this.styles.w3_container}>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                <Text style={this.styles.container}>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit
                 </Text>
 
-                <Text style={this.styles.w3_container, this.styles.w3_blue}>
+                <Text style={this.styles.container, this.styles.blue}>
                     Footer
                 </Text>
             </View>
