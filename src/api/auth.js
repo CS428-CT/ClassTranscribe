@@ -45,6 +45,9 @@ export const isUserAuthenticated = () => {
   return currentAuthenticatedUser !== null
 }
 
+/**
+ * Authenticates the user. The result is stored in currentAuthenticatedUser
+ */
 export const authenticateUser = async () => {
   try {
     const resp = await axios.get(ENDPOINTS.SIGN_IN)
@@ -55,6 +58,9 @@ export const authenticateUser = async () => {
   }
 }
 
+/**
+ * Terminates the current users session
+ */
 export const signOutUser = async () => {
   currentAuthenticatedUser = null
 }
