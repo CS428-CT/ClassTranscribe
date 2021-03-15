@@ -1,0 +1,22 @@
+import { StyleSheet } from 'react-native'
+
+const CourseCardStyle = StyleSheet.create({
+  titleText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+
+  card: {
+    backgroundColor: 'rgba(0,0,0,0.2)',
+    width: '50%',
+  },
+  container: {
+    padding: '0.01em 16px',
+  },
+  blue: {
+    color: 'white',
+    backgroundColor: '#2196F3',
+  },
+})
+
+export default CourseCardStyle
