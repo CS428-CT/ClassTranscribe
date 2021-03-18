@@ -10,27 +10,29 @@ const Home = () => {
   useEffect(() => {
     const fetchCourseInfo = async () => {
       const offerings = await getStarredOfferingsData()
-      setCourses(offerings);
+      setCourses(offerings)
     }
 
     fetchCourseInfo()
   }, [setCourses])
 
   const renderCourseItem = ({ item }) => {
-    if (item.length == 0)
-      return null;
-    
-    const course = item.courses[0];
-    const courseName = item.offering.courseName;
-    const courseDescription = item.offering.description;
+    if (item.length == 0) return null
+
+    const course = item.courses[0]
+    const { courseName } = item.offering
+    const courseDescription = item.offering.description
 
     console.log(item)
     return (
       <View style={styles.container}>
-        <CourseCard key={course.courseId} departmentAcronym={course.departmentAcronym} 
-          courseNumber={course.courseNumber} 
+        <CourseCard
+          key={course.courseId}
+          departmentAcronym={course.departmentAcronym}
+          courseNumber={course.courseNumber}
           courseName={courseName}
-          courseDescription={courseDescription} />
+          courseDescription={courseDescription}
+        />
         <Text style={styles.placeholder}>Video Placeholder</Text>
       </View>
     )
@@ -41,14 +43,15 @@ const Home = () => {
   }
 
   const renderStarredCourses = () => {
-    if (courses == null)
-      return null;
+    if (courses == null) return null
 
-    return <FlatList
-      data={courses}
-      renderItem={renderCourseItem}
-      ItemSeparatorComponent={renderSeparator}
-    />
+    return (
+      <FlatList
+        data={courses}
+        renderItem={renderCourseItem}
+        ItemSeparatorComponent={renderSeparator}
+      />
+    )
   }
 
   return (

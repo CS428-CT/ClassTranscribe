@@ -12,7 +12,7 @@ const CourseCardStyle = StyleSheet.create({
   },
   container: {
     paddingVertical: 2,
-    paddingHorizontal: 16
+    paddingHorizontal: 16,
   },
   blue: {
     color: 'white',

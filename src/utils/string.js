@@ -19,18 +19,16 @@ const replaceAll = (string, search, replace) => {
   return string.split(search).join(replace)
 }
 
-
 /**
  * Truncates a string to the provided length. If the string is shorter than maxLength, nothing is done. Else,
- * The string is cut to size maxLength and "..." is added to the end of it. 
+ * The string is cut to size maxLength and "..." is added to the end of it.
  * @param {String} str string to truncate
  * @param {Number} maxLength the maximum length for the string before truncation happens
- * @returns 
+ * @returns
  */
 export const truncateString = (str, maxLength) => {
-  if (str.length <= maxLength)
-    return str;
+  if (str.length <= maxLength) return str
 
-  let truncated = `${str.substring(0, maxLength)}...`;
-  return truncated;
+  const truncated = `${str.substring(0, maxLength)}...`
+  return truncated
 }
