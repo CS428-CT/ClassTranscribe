@@ -1,21 +1,24 @@
 import React from 'react'
 import { Text, View } from 'react-native'
+import { truncateString } from '../../utils/string'
 import PropTypes from 'prop-types'
 import styles from './CourseCard.style'
 
+const MAX_DESCRIPTION_LENGTH = 100;
+
 const CourseCard = ({ departmentAcronym, courseNumber, courseName, courseDescription = "" }) => {
 
-  const empHandle = (text) => {
-    return text == null ? 'Content missing' : text
+  const getCourseTitle = () => {
+    return `${departmentAcronym} ${courseNumber}: ${courseName}`;
   }
 
   return (
     <View style={styles.card}>
       <Text style={(styles.container, styles.blue)}>
-        {departmentAcronym} {courseNumber}: {empHandle(courseName)}
+        {getCourseTitle()}
       </Text>
 
-      <Text style={styles.container}>{courseDescription}</Text>
+      <Text style={styles.container}>{truncateString(courseDescription, MAX_DESCRIPTION_LENGTH)}</Text>
     </View>
   )
 }
