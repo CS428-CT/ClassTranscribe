@@ -20,4 +20,20 @@ describe('Get playlists by offering', () => {
     const playlists = await getPlaylistsByOffering(offeringId);
     expect(playlists).toStrictEqual(PLAYLISTS_BY_OFFERING_RESPONSE)
   })
+
+  test('when network error', async () => {
+    mock
+      .onGet(`${format(ENDPOINTS.PLAYLISTS_BY_OFFERING, offeringId)}`)
+      .networkError();
+    const playlists = await getPlaylistsByOffering(offeringId);
+    expect(playlists).toBe(null)
+  })
+
+  test('when bad status code', async () => {
+    mock
+      .onGet(`${format(ENDPOINTS.PLAYLISTS_BY_OFFERING, offeringId)}`)
+      .reply(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR, PLAYLISTS_BY_OFFERING_RESPONSE)
+    const playlists = await getPlaylistsByOffering(offeringId);
+    expect(playlists).toBe(null)
+  })
 })
