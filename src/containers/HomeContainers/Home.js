@@ -17,7 +17,7 @@ const Home = () => {
   }, [setCourses])
 
   const renderCourseItem = ({ item }) => {
-    if (item.length == 0) return null
+    if (item.length === 0) return null
 
     const course = item.courses[0]
     const { courseName } = item.offering
