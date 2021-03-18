@@ -3,11 +3,11 @@ import { HTTP_STATUS_CODES, BASE_URL } from '.'
 import { format } from '../utils/string'
 
 export const ENDPOINTS = {
-  PLAYLIST_BY_OFFERING: `${BASE_URL}Playlists/ByOffering/{0}`,
+  PLAYLISTS_BY_OFFERING: `${BASE_URL}Playlists/ByOffering/{0}`,
 }
 
-export const getPlaylistsByOffering = (offeringId) => {
-  const url = format(ENDPOINTS.OFFERING, offeringId)
+export const getPlaylistsByOffering = async (offeringId) => {
+  const url = format(ENDPOINTS.PLAYLISTS_BY_OFFERING, offeringId)
 
   try {
     const resp = await axios.get(url)
@@ -16,4 +16,6 @@ export const getPlaylistsByOffering = (offeringId) => {
   } catch (error) {
     console.log(error)
   }
+
+  return null;
 }
