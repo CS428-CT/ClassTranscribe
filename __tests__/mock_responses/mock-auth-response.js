@@ -1,0 +1,11 @@
+export const SIGN_IN_RESPONSE = {
+  userId: '99',
+  universityId: '1001',
+  authToken:
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0dXNlcjk5OUBjbGFzc3RyYW5zY3JpYmUuY29tIiwianRpIjoiNTc3ZGI5OTQtMmM3Yy00MWM2LWFmNzktZmM3NzkzM2NkMGY3IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZ2l2ZW5uYW1lIjoiVGVzdCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL3N1cm5hbWUiOiJVc2VyIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoidGVzdHVzZXI5OTlAY2xhc3N0cmFuc2NyaWJlLmNvbSIsImNsYXNzdHJhbnNjcmliZS9Vc2VySWQiOiI5OSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6WyJJbnN0cnVjdG9yIiwiQWRtaW4iXSwiZXhwIjoxNjE3ODIzMDQ2LCJpc3MiOiJodHRwczovL2NsYXNzdHJhbnNjcmliZS1kZXYubmNzYS5pbGxpbm9pcy5lZHUiLCJhdWQiOiJodHRwczovL2NsYXNzdHJhbnNjcmliZS1kZXYubmNzYS5pbGxpbm9pcy5lZHUifQ.ZJj3Ua5w5BSqz32krMWMlvLE8B87rgOjiBMcFdsfsMQ',
+  emailId: 'testuser999@classtranscribe.com',
+  metadata: {
+    starredOfferings:
+      '{"ac5b1727-629c-443b-8c1a-cc1bd541af6a":"starred","2c7a83cc-e2f3-493a-ae65-33f9c998e8ed":"starred"}',
+  },
+}

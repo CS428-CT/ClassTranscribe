@@ -31,7 +31,7 @@
   },
   "jest": {
     "testPathIgnorePatterns": [
-      "mock-response.js"
+      "mock_response/*"
     ]
   },
   "scripts": {
