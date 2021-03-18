@@ -4,6 +4,7 @@ import styles from './CoursePlaylistContainer.style'
 import { FlatList, View } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { getPlaylistsByOffering } from '../../api/playlists';
+import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 
 const CoursePlaylistContainer = ({ courseId }) => {
     const [playlists, setPlaylists] = useState([]);
@@ -22,13 +23,21 @@ const CoursePlaylistContainer = ({ courseId }) => {
 
     const keyExtractor = (item, index) => index.toString()
 
+    const onPlaylistSelected = (playlistId) => {
+        console.log("Selected");
+    }
+
     const renderItem = ({ item }) => {
         return (
-            <ListItem key={item.id} bottomDivider>
-                <ListItem.Content>
-                    <ListItem.Title>TEST{item.name}</ListItem.Title>
-                </ListItem.Content>
-            </ListItem>
+            <TouchableNativeFeedback 
+                onPress={() => onPlaylistSelected(item.id)}
+                background={Platform.OS === 'android' ? TouchableNativeFeedback.SelectableBackground() : ''}>
+                <ListItem key={item.id} bottomDivider>
+                    <ListItem.Content>
+                        <ListItem.Title>{item.name}</ListItem.Title>
+                    </ListItem.Content>
+                </ListItem>
+            </TouchableNativeFeedback>
         )
     }
 
