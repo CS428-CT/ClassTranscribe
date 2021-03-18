@@ -23,7 +23,6 @@ const Home = () => {
     const { courseName } = item.offering
     const courseDescription = item.offering.description
 
-    console.log(item)
     return (
       <View style={styles.container}>
         <CourseCard
