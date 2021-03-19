@@ -12,8 +12,8 @@ const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
 
 export const STACK_SCREENS = {
-  HOME: "HOME",
-  COURSE_PLAYLISTS: "COURSE_PLAYLISTS",
+  HOME: 'HOME',
+  COURSE_PLAYLISTS: 'COURSE_PLAYLISTS',
 }
 
 /**
@@ -28,20 +28,20 @@ function VideoView() {
 }
 
 /**
- * Wraps the CoursePlaylistsContainer so that it can 
+ * Wraps the CoursePlaylistsContainer so that it can
  * receive the proper props
  */
-const CoursePlaylistsView = ({navigator, route}) => {
+const CoursePlaylistsView = ({ navigator, route }) => {
   return <CoursePlaylistsContainer courseId={route.params.courseId} navigation={navigator} />
 }
 
 const HomeNaivgator = () => {
   return (
-    <Stack.Navigator initialRouteName={STACK_SCREENS.HOME}>        
-      <Stack.Screen name={STACK_SCREENS.HOME} component={Home}/>
-      <Stack.Screen name={STACK_SCREENS.COURSE_PLAYLISTS} component={CoursePlaylistsView}/>
+    <Stack.Navigator initialRouteName={STACK_SCREENS.HOME}>
+      <Stack.Screen name={STACK_SCREENS.HOME} component={Home} />
+      <Stack.Screen name={STACK_SCREENS.COURSE_PLAYLISTS} component={CoursePlaylistsView} />
     </Stack.Navigator>
-  )  
+  )
 }
 
 /**

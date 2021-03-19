@@ -7,7 +7,7 @@ import { PLAYLISTS_BY_OFFERING_RESPONSE } from '../mock_responses/mock-playlists
 
 const mock = new MockAdapter(axios)
 describe('Get playlists by offering', () => {
-  const offeringId = "ac5b1727-629c-443b-8c1a-cc1bd541af6a";
+  const offeringId = 'ac5b1727-629c-443b-8c1a-cc1bd541af6a'
 
   afterEach(async () => {
     mock.reset()
@@ -17,15 +17,13 @@ describe('Get playlists by offering', () => {
     mock
       .onGet(`${format(ENDPOINTS.PLAYLISTS_BY_OFFERING, offeringId)}`)
       .reply(HTTP_STATUS_CODES.OK, PLAYLISTS_BY_OFFERING_RESPONSE)
-    const playlists = await getPlaylistsByOffering(offeringId);
+    const playlists = await getPlaylistsByOffering(offeringId)
     expect(playlists).toStrictEqual(PLAYLISTS_BY_OFFERING_RESPONSE)
   })
 
   test('when network error', async () => {
-    mock
-      .onGet(`${format(ENDPOINTS.PLAYLISTS_BY_OFFERING, offeringId)}`)
-      .networkError();
-    const playlists = await getPlaylistsByOffering(offeringId);
+    mock.onGet(`${format(ENDPOINTS.PLAYLISTS_BY_OFFERING, offeringId)}`).networkError()
+    const playlists = await getPlaylistsByOffering(offeringId)
     expect(playlists).toBe(null)
   })
 
@@ -33,7 +31,7 @@ describe('Get playlists by offering', () => {
     mock
       .onGet(`${format(ENDPOINTS.PLAYLISTS_BY_OFFERING, offeringId)}`)
       .reply(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR, PLAYLISTS_BY_OFFERING_RESPONSE)
-    const playlists = await getPlaylistsByOffering(offeringId);
+    const playlists = await getPlaylistsByOffering(offeringId)
     expect(playlists).toBe(null)
   })
 })

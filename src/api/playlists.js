@@ -17,5 +17,5 @@ export const getPlaylistsByOffering = async (offeringId) => {
     console.log(error)
   }
 
-  return null;
+  return null
 }

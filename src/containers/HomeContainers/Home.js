@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { TouchableNativeFeedback } from 'react-native'
-import { Text, FlatList, View } from 'react-native'
+import { TouchableNativeFeedback, Text, FlatList, View } from 'react-native'
+
 import { getStarredOfferingsData } from '../../api/offerings'
 import CourseCard from '../../components/Cards/CourseCard'
 import { STACK_SCREENS } from '../CTNavigationContainer/CTNavigationContainer'
@@ -23,7 +23,7 @@ const Home = ({ navigation }) => {
   }, [setCourses])
 
   const onCourseSelected = (courseId) => {
-    navigation.push(STACK_SCREENS.COURSE_PLAYLISTS, {courseId: courseId})
+    navigation.push(STACK_SCREENS.COURSE_PLAYLISTS, { courseId })
   }
 
   /**
@@ -36,10 +36,10 @@ const Home = ({ navigation }) => {
     const course = item.courses[0]
     const { courseName } = item.offering
     const courseDescription = item.offering.description
-    const courseId = item.offering.id;
+    const courseId = item.offering.id
 
     return (
-      <TouchableNativeFeedback onPress={()=>onCourseSelected(courseId)}>
+      <TouchableNativeFeedback onPress={() => onCourseSelected(courseId)}>
         <View style={styles.container}>
           <CourseCard
             key={courseId}
