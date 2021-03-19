@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import styles from './CoursePlaylistContainer.style'
+import styles from './CoursePlaylistsContainer.style'
 import { FlatList, View } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { getPlaylistsByOffering } from '../../api/playlists';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 
-const CoursePlaylistContainer = ({ courseId }) => {
+const CoursePlaylistsContainer = ({ courseId }) => {
     const [playlists, setPlaylists] = useState([]);
 
     useEffect(() => {
@@ -52,8 +52,8 @@ const CoursePlaylistContainer = ({ courseId }) => {
     );
 }
 
-CoursePlaylistContainer.propTypes = {
+CoursePlaylistsContainer.propTypes = {
   courseId: PropTypes.string.isRequired,
 }
 
-export default CoursePlaylistContainer
+export default CoursePlaylistsContainer
