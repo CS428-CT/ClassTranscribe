@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
-import { View } from 'react-native'
 import LoginContainer from './src/containers/LoginContainer/LoginContainer'
-import VideoContainer from './src/containers/VideoContainer/VideoContainer'
-import VideoStyle from './src/containers/VideoContainer/VideoContainer.style'
+import CTNavigationContainer from './src/containers/CTNavigationContainer/CTNavigationContainer'
 
 export default function App() {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false)
@@ -12,12 +10,9 @@ export default function App() {
   }
 
   const renderApplication = () => {
-    if (isUserAuthenticated) {
-      return <VideoContainer />
-    }
+    if (isUserAuthenticated) return <CTNavigationContainer />
 
     return <LoginContainer onAuthLevelChange={onAuthLevelChange} />
   }
-
-  return <View style={VideoStyle.container}>{renderApplication()}</View>
+  return renderApplication()
 }
