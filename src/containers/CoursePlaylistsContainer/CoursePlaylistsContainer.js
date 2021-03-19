@@ -4,9 +4,10 @@ import { FlatList, View } from 'react-native'
 import { ListItem } from 'react-native-elements'
 import { TouchableNativeFeedback } from 'react-native-gesture-handler'
 import { getPlaylistsByOffering } from '../../api/playlists'
+import { STACK_SCREENS } from '../CTNavigationContainer/index'
 import styles from './CoursePlaylistsContainer.style'
 
-const CoursePlaylistsContainer = ({ courseId }) => {
+const CoursePlaylistsContainer = ({ courseId, navigation }) => {
   const [playlists, setPlaylists] = useState([])
 
   useEffect(() => {
@@ -18,12 +19,10 @@ const CoursePlaylistsContainer = ({ courseId }) => {
     }
 
     fetchPlaylists()
-  })
-
-  const keyExtractor = (item, index) => index.toString()
+  }, [courseId, setPlaylists])
 
   const onPlaylistSelected = (playlistId) => {
-    console.log('Selected')
+    navigation.push(STACK_SCREENS.PLAYLIST, {playlistId: playlistId})
   }
 
   const renderItem = ({ item }) => {
@@ -41,7 +40,7 @@ const CoursePlaylistsContainer = ({ courseId }) => {
 
   return (
     <View>
-      <FlatList keyExtractor={keyExtractor} data={playlists} renderItem={renderItem} />
+      <FlatList data={playlists} renderItem={renderItem} />
     </View>
   )
 }

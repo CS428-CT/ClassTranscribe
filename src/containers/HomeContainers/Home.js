@@ -3,7 +3,7 @@ import { TouchableNativeFeedback, Text, FlatList, View } from 'react-native'
 
 import { getStarredOfferingsData } from '../../api/offerings'
 import CourseCard from '../../components/Cards/CourseCard'
-import { STACK_SCREENS } from '../CTNavigationContainer/CTNavigationContainer'
+import { STACK_SCREENS } from '../CTNavigationContainer/index'
 import styles from './Home.style'
 
 /**

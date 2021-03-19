@@ -3,45 +3,47 @@ import PropTypes from 'prop-types'
 import { FlatList, View } from 'react-native'
 import { ListItem } from 'react-native-elements'
 import { TouchableNativeFeedback } from 'react-native-gesture-handler'
-import { getPlaylistsByOffering } from '../../api/playlists'
-import styles from './CoursePlaylistsContainer.style'
+import { getVideosByPlaylist } from '../../api/playlists'
+import { STACK_SCREENS } from '../CTNavigationContainer/index'
 
-const PlaylistContainer = ({ playlistId }) => {
+const PlaylistContainer = ({ navigation, playlistId }) => {
   const [videos, setVideos] = useState([])
 
   useEffect(() => {
     const fetchVideos = async () => {
-    //   let response = await getPlaylistsByOffering(courseId)
-    //   if (!response) return
-    //   response = response.sort((a, b) => a.index - b.index)
-    //   setPlaylists(response)
+       let response = await getVideosByPlaylist(playlistId)
+       if (!response) return
+       let videos = response.medias.sort((a, b) => a.index - b.index)
+       setVideos(videos)
     }
 
     fetchVideos()
-  })
+  }, [playlistId, setVideos])
 
-  const keyExtractor = (item, index) => index.toString()
+  const onVideoSelected = (videoData) => {
+      const urlExtension = videoData?.video?.video1Path
+      if (!urlExtension)
+        return
 
-  const onPlaylistSelected = (playlistId) => {
-    console.log('Selected')
+    //navigation.push(STACK_SCREENS.VIDEOS, {videoId: videoId})
   }
 
-//   const renderItem = ({ item }) => {
-//     return (
-//       <TouchableNativeFeedback
-//         onPress={() => onPlaylistSelected(item.id)}>
-//         <ListItem key={item.id} bottomDivider>
-//           <ListItem.Content>
-//             <ListItem.Title>{item.name}</ListItem.Title>
-//           </ListItem.Content>
-//         </ListItem>
-//       </TouchableNativeFeedback>
-//     )
-//   }
+  const renderItem = ({ item }) => {
+    return (
+      <TouchableNativeFeedback
+        onPress={() => onVideoSelected(item)}>
+        <ListItem key={item.id} bottomDivider>
+          <ListItem.Content>
+            <ListItem.Title>{item.name}</ListItem.Title>
+          </ListItem.Content>
+        </ListItem>
+      </TouchableNativeFeedback>
+    )
+  }
 
   return (
     <View>
-      {/* <FlatList keyExtractor={keyExtractor} data={playlists} renderItem={renderItem} /> */}
+      <FlatList data={videos} renderItem={renderItem} />
     </View>
   )
 }
