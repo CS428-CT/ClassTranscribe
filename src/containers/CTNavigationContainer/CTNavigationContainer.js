@@ -12,8 +12,8 @@ const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
 
 export const STACK_SCREENS = {
-  HOME: 'HOME',
-  COURSE_PLAYLISTS: 'COURSE_PLAYLISTS',
+  HOME: 'Home',
+  COURSE_PLAYLISTS: 'Course Playlists',
 }
 
 /**
@@ -35,6 +35,9 @@ const CoursePlaylistsView = ({ navigator, route }) => {
   return <CoursePlaylistsContainer courseId={route.params.courseId} navigation={navigator} />
 }
 
+/**
+ * The navigator of the home tab. Contains a stack navigator.
+ */
 const HomeNaivgator = () => {
   return (
     <Stack.Navigator initialRouteName={STACK_SCREENS.HOME}>

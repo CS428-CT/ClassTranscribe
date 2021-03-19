@@ -29,9 +29,7 @@ const CoursePlaylistsContainer = ({ courseId }) => {
   const renderItem = ({ item }) => {
     return (
       <TouchableNativeFeedback
-        onPress={() => onPlaylistSelected(item.id)}
-        background={Platform.OS === 'android' ? TouchableNativeFeedback.SelectableBackground() : ''}
-      >
+        onPress={() => onPlaylistSelected(item.id)}>
         <ListItem key={item.id} bottomDivider>
           <ListItem.Content>
             <ListItem.Title>{item.name}</ListItem.Title>
