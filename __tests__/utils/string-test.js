@@ -32,14 +32,14 @@ describe('Check formatting', () => {
 
 describe('Check truncation', () => {
   test('already short enough', () => {
-    expect(truncateString('hello', 10)).toBe('hello');
-  });
+    expect(truncateString('hello', 10)).toBe('hello')
+  })
 
   test('too long', () => {
-    expect(truncateString('hello world', 5)).toBe('hello...');
-  });
+    expect(truncateString('hello world', 5)).toBe('hello...')
+  })
 
   test('exact length', () => {
-    expect(truncateString('hello', 5)).toBe('hello');
-  });
+    expect(truncateString('hello', 5)).toBe('hello')
+  })
 })
