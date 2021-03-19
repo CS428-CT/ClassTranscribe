@@ -34,7 +34,7 @@ const PlaylistView = ({ navigation, route }) => {
  * receive the proper props
  */
 const VideoView = ({ navigation, route }) => {
-  return <VideoContainer videoUrl={route.params.videoUrl} />
+  return <VideoContainer url={route.params.url} />
 }
 
 /**
@@ -46,7 +46,7 @@ const HomeNaivgator = () => {
       <Stack.Screen name={STACK_SCREENS.HOME} component={Home} />
       <Stack.Screen name={STACK_SCREENS.COURSE_PLAYLISTS} component={CoursePlaylistsView} />
       <Stack.Screen name={STACK_SCREENS.PLAYLIST} component={PlaylistView} />
-      <Stack.Screen name={STACK_SCREENS.VIDEO} component={VideoContainer} />
+      <Stack.Screen name={STACK_SCREENS.VIDEO} component={VideoView} />
     </Stack.Navigator>
   )
 }
