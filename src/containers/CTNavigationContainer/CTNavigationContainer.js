@@ -14,17 +14,6 @@ const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
 
 /**
- * Wrapper for the VideoContainer
- */
-function VideoView() {
-  return (
-    <View style={VideoStyle.container}>
-      <VideoContainer />
-    </View>
-  )
-}
-
-/**
  * Wraps the CoursePlaylistsContainer so that it can
  * receive the proper props
  */
@@ -41,6 +30,14 @@ const PlaylistView = ({ navigation, route }) => {
 }
 
 /**
+ * Wraps the VideoContainer so that it can
+ * receive the proper props
+ */
+const VideoView = ({ navigation, route }) => {
+  return <VideoContainer videoUrl={route.params.videoUrl} />
+}
+
+/**
  * The navigator of the home tab. Contains a stack navigator.
  */
 const HomeNaivgator = () => {
@@ -49,6 +46,7 @@ const HomeNaivgator = () => {
       <Stack.Screen name={STACK_SCREENS.HOME} component={Home} />
       <Stack.Screen name={STACK_SCREENS.COURSE_PLAYLISTS} component={CoursePlaylistsView} />
       <Stack.Screen name={STACK_SCREENS.PLAYLIST} component={PlaylistView} />
+      <Stack.Screen name={STACK_SCREENS.VIDEO} component={VideoContainer} />
     </Stack.Navigator>
   )
 }
