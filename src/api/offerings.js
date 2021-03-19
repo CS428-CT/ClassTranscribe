@@ -17,7 +17,9 @@ export const getOfferingData = async (offeringId) => {
 
   try {
     const resp = await axios.get(url)
-    if (resp?.status !== HTTP_STATUS_CODES.OK) return null
+    if (resp?.status !== HTTP_STATUS_CODES.OK) {
+      return null
+    }
     return resp.data
   } catch (error) {
     console.log(error)
