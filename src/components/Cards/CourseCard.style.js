@@ -11,6 +11,11 @@ const CourseCardStyle = StyleSheet.create({
     alignContent: 'center',
     paddingVertical: 4,
     paddingHorizontal: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5,
   },
 
   courseTitle: {
