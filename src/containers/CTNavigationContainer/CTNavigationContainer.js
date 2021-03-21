@@ -7,11 +7,16 @@ import { STACK_SCREENS } from './index'
 import Home from '../HomeContainers/Home'
 import CoursePlaylistsContainer from '../CoursePlaylistsContainer/CoursePlaylistsContainer'
 import VideoContainer from '../VideoContainer/VideoContainer'
+import UniversityListContainer from '../UniversityListContainer/UniversityListContainer'
 import VideoStyle from '../VideoContainer/VideoContainer.style'
 import PlaylistContainer from '../PlaylistContainer/PlaylistContainer'
 
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
+
+const UniversityListView = ({ navigation, route }) => {
+  return <UniversityListContainer /*universityid= {route.params.universityId}/**/ navigation={navigation} />
+}
 
 /**
  * Wraps the CoursePlaylistsContainer so that it can
@@ -40,9 +45,10 @@ const VideoView = ({ navigation, route }) => {
 /**
  * The navigator of the home tab. Contains a stack navigator.
  */
-const HomeNaivgator = () => {
+const HomeNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName={STACK_SCREENS.HOME}>
+    <Stack.Navigator initialRouteName={STACK_SCREENS.UNIVERSITY_LIST}>
+      <Stack.Screen name={STACK_SCREENS.UNIVERSITY_LIST} component={UniversityListView} />
       <Stack.Screen name={STACK_SCREENS.HOME} component={Home} />
       <Stack.Screen name={STACK_SCREENS.COURSE_PLAYLISTS} component={CoursePlaylistsView} />
       <Stack.Screen name={STACK_SCREENS.PLAYLIST} component={PlaylistView} />
@@ -52,7 +58,7 @@ const HomeNaivgator = () => {
 }
 
 /**
- * This is the root naivagator for the entire application.
+ * This is the root navigator for the entire application.
  * Contains a home tab and a video tab. Within each tab, there may be additional navigators
  * such as a stack navigator.
  */
@@ -60,7 +66,7 @@ const CTNavigationContainer = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen name="HomeNavigator" component={HomeNaivgator} />
+        <Tab.Screen name="HomeNavigator" component={HomeNavigator} />
         <Tab.Screen name="Video" component={VideoView} />
       </Tab.Navigator>
     </NavigationContainer>
