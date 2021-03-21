@@ -48,18 +48,11 @@ const Home = ({ navigation }) => {
             courseName={courseName}
             courseDescription={courseDescription}
           />
-          <Text style={styles.placeholder}>Video Placeholder</Text>
         </View>
       </TouchableNativeFeedback>
     )
   }
 
-  /**
-   * Renders the separator for the course list
-   */
-  const renderSeparator = () => {
-    return <View style={styles.seperator} />
-  }
 
   /**
    * Renders all of the users' starred courses into a FlatList
@@ -71,13 +64,12 @@ const Home = ({ navigation }) => {
       <FlatList
         data={courses}
         renderItem={renderCourseItem}
-        ItemSeparatorComponent={renderSeparator}
       />
     )
   }
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       {renderStarredCourses()}
     </View>
   )

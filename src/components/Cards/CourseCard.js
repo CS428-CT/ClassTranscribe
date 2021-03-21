@@ -15,7 +15,7 @@ const MAX_DESCRIPTION_LENGTH = 100
  * @returns
  */
 
-const CourseCard = ({universityName, departmentAcronym, courseNumber, courseName, courseDescription = '' }) => {
+const CourseCard = ({departmentAcronym, courseNumber, courseName, courseDescription = '' }) => {
   const getCourseTitle = () => {
     return `${departmentAcronym} ${courseNumber}`
   }
@@ -24,15 +24,11 @@ const CourseCard = ({universityName, departmentAcronym, courseNumber, courseName
     return `${courseName}`
   }
 
-  const getUniversityName = () => {
-    return `${universityName}`
-  }
-
   return (
     <View style={styles.card}>
-      <Text style={(styles.container, styles.courseTitle)}>{getCourseTitle()}</Text>
-      <Text style={(styles.container, styles.courseName)}>{getCourseName()}</Text>
-      <Text style={styles.container}>
+      <Text style={styles.courseTitle}>{getCourseTitle()}</Text>
+      <Text style={styles.courseName}>{getCourseName()}</Text>
+      <Text style={styles.courseContent}>
         {truncateString(courseDescription, MAX_DESCRIPTION_LENGTH)}
       </Text>
     </View>

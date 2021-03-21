@@ -2,34 +2,34 @@ import { StyleSheet } from 'react-native'
 
 const CourseCardStyle = StyleSheet.create({
   card: {
-    marginVertical: 5,
+    marginTop: '5%',
     backgroundColor: 'white',
-    width: '50%',
-    height: '100%',
+    width: '95%',
     borderRadius: 5,
-  },
-  container: {
-    paddingVertical: 2,
+    justifyContent: 'space-between',
+    alignContent: 'center',
+    paddingVertical: 4,
     paddingHorizontal: 8,
-    borderRadius: 5,
   },
+
   courseTitle: {
-    paddingHorizontal: 8,
-    paddingVertical: 2,
     color: 'teal',
     fontWeight: 'bold',
     fontSize: 20,
     backgroundColor: 'white',
-    borderTopRightRadius: 5,
-    borderTopLeftRadius: 5,
   },
+  
   courseName: {
     color: '#333',
     fontWeight: 'bold',
-    paddingHorizontal: 8,
-    paddingVertical: 1,
+    fontSize: 16,
     backgroundColor: 'white',
-  }
+  },
+
+  courseContent: {
+    paddingTop: 6,
+    backgroundColor: 'white',
+  },
 })
 
 export default CourseCardStyle
