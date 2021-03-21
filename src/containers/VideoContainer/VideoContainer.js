@@ -5,14 +5,11 @@ import { View } from 'react-native'
 import { Button, Text, TextInput } from 'react-native-paper'
 import { Video } from 'expo-av'
 import PropTypes from 'prop-types'
-import { Asset } from 'expo-asset';
 import styles from './VideoContainer.style'
 
-const VideoContainer = ({url}) => {
+const VideoContainer = ({ url = 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }) => {
   const video = React.useRef(null)
-  const [videoURI, setVideoURI] = React.useState(
-    'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'
-  )
+  const [videoURI, setVideoURI] = React.useState(url)
   const [status, setStatus] = React.useState({
     isMuted: false,
     isPlaying: false,

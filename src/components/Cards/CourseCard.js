@@ -1,6 +1,5 @@
 import React from 'react'
-import { Text, View, StatusBar } from 'react-native'
-import { useSafeArea } from 'react-native-safe-area-context';
+import { Text, View } from 'react-native'
 import PropTypes from 'prop-types'
 import { truncateString } from '../../utils/string'
 import styles from './CourseCard.style'

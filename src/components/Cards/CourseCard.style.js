@@ -29,7 +29,7 @@ const CourseCardStyle = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 1,
     backgroundColor: 'white',
-  }
+  },
 })
 
 export default CourseCardStyle

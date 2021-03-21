@@ -22,13 +22,12 @@ const CoursePlaylistsContainer = ({ courseId, navigation }) => {
   }, [courseId, setPlaylists])
 
   const onPlaylistSelected = (playlistId) => {
-    navigation.push(STACK_SCREENS.PLAYLIST, {playlistId: playlistId})
+    navigation.push(STACK_SCREENS.PLAYLIST, { playlistId })
   }
 
   const renderItem = ({ item }) => {
     return (
-      <TouchableNativeFeedback
-        onPress={() => onPlaylistSelected(item.id)}>
+      <TouchableNativeFeedback onPress={() => onPlaylistSelected(item.id)}>
         <ListItem key={item.id} bottomDivider>
           <ListItem.Content>
             <ListItem.Title>{item.name}</ListItem.Title>
