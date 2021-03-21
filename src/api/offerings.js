@@ -60,3 +60,5 @@ export const getStarredOfferings = () => {
 
   return JSON.parse(user.metadata.starredOfferings)
 }
+
+
