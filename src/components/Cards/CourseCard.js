@@ -24,12 +24,10 @@ const CourseCard = ({ departmentAcronym, courseNumber, courseName, courseDescrip
     return `${courseName}`
   }
 
-
   return (
     <View style={styles.card}>
-      <StatusBar />
-      <Text style={(styles.container, styles.title)}>{getCourseTitle()}</Text>
-
+      <Text style={(styles.container, styles.courseTitle)}>{getCourseTitle()}</Text>
+      <Text style={(styles.container, styles.courseName)}>{getCourseName()}</Text>
       <Text style={styles.container}>
         {truncateString(courseDescription, MAX_DESCRIPTION_LENGTH)}
       </Text>

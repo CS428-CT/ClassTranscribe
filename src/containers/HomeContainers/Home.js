@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Text, FlatList, View } from 'react-native'
+import { Text, FlatList, View, StatusBar } from 'react-native'
 import { getStarredOfferingsData } from '../../api/offerings'
 import CourseCard from '../../components/Cards/CourseCard'
 import styles from './Home.style'
@@ -33,6 +33,7 @@ const Home = () => {
 
     return (
       <View style={styles.container}>
+        <StatusBar />
         <CourseCard
           key={course.courseId}
           departmentAcronym={course.departmentAcronym}
