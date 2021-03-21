@@ -2,7 +2,8 @@ import { StyleSheet } from 'react-native'
 
 const CourseCardStyle = StyleSheet.create({
   card: {
-    marginTop: '5%',
+    marginTop: '2%',
+    marginBottom: '2%',
     backgroundColor: 'white',
     width: '95%',
     borderRadius: 5,

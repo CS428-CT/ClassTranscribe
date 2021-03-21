@@ -7,6 +7,12 @@ const HomeStyle = StyleSheet.create({
     alignItems: 'center',
   },
 
+  viewStyle: {
+    flex: 1, 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    marginTop: '3%',
+  },
 })
 
 export default HomeStyle
