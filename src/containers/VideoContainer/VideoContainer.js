@@ -4,10 +4,11 @@ import React from 'react'
 import { View } from 'react-native'
 import { Button, Text, TextInput } from 'react-native-paper'
 import { Video } from 'expo-av'
+import PropTypes from 'prop-types'
 import { Asset } from 'expo-asset';
 import styles from './VideoContainer.style'
 
-export default function VideoContainer() {
+const VideoContainer = ({url}) => {
   const video = React.useRef(null)
   const [videoURI, setVideoURI] = React.useState(
     'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'
@@ -33,7 +34,6 @@ export default function VideoContainer() {
         isLooping
         onPlaybackStatusUpdate={(status) => setStatus(() => status)}
       />
-
       <View style={styles.buttons}>
         <Button
           mode="contained"
@@ -47,7 +47,6 @@ export default function VideoContainer() {
           {status.isMuted ? 'Unmute' : 'Mute'}
         </Button>
       </View>
-      
       <View style={styles.input}>
         <Button
           mode="contained"
@@ -63,7 +62,6 @@ export default function VideoContainer() {
           Increase Rate
         </Button>
       </View>
-
       <View style={styles.buttons}>
         <Button
           mode="contained"
@@ -80,13 +78,13 @@ export default function VideoContainer() {
         <Button mode="contained" onPress={() => video.current.playFromPositionAsync(0)}>
           Replay
         </Button>
-
-        <Button mode="contained" onPress={() => video.current.loadAsync('/storage/emulated/0/Download')}>
-          Download
-        </Button>
-
       </View>
-
     </View>
   )
 }
+
+VideoContainer.propTypes = {
+  url: PropTypes.string.isRequired,
+}
+
+export default VideoContainer
