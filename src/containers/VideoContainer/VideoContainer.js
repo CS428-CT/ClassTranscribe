@@ -4,6 +4,7 @@ import React from 'react'
 import { View } from 'react-native'
 import { Button, Text, TextInput } from 'react-native-paper'
 import { Video } from 'expo-av'
+import { Asset } from 'expo-asset';
 import styles from './VideoContainer.style'
 
 export default function VideoContainer() {
@@ -32,6 +33,7 @@ export default function VideoContainer() {
         isLooping
         onPlaybackStatusUpdate={(status) => setStatus(() => status)}
       />
+
       <View style={styles.buttons}>
         <Button
           mode="contained"
@@ -45,6 +47,7 @@ export default function VideoContainer() {
           {status.isMuted ? 'Unmute' : 'Mute'}
         </Button>
       </View>
+      
       <View style={styles.input}>
         <Button
           mode="contained"
@@ -60,6 +63,7 @@ export default function VideoContainer() {
           Increase Rate
         </Button>
       </View>
+
       <View style={styles.buttons}>
         <Button
           mode="contained"
@@ -76,7 +80,13 @@ export default function VideoContainer() {
         <Button mode="contained" onPress={() => video.current.playFromPositionAsync(0)}>
           Replay
         </Button>
+
+        <Button mode="contained" onPress={() => video.current.loadAsync('/storage/emulated/0/Download')}>
+          Download
+        </Button>
+
       </View>
+
     </View>
   )
 }
