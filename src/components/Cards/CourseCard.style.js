@@ -7,17 +7,30 @@ const CourseCardStyle = StyleSheet.create({
   },
 
   card: {
+    marginVertical: 5,
     backgroundColor: 'rgba(0,0,0,0.2)',
     width: '50%',
+    height: '100%',
+    borderRadius: 5,
   },
   container: {
     paddingVertical: 2,
     paddingHorizontal: 16,
+    borderRadius: 5,
   },
-  blue: {
-    color: 'white',
-    backgroundColor: '#2196F3',
+  title: {
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    color: 'teal',
+    fontWeight: 'bold',
+    fontSize: 20,
+    backgroundColor: 'white',
+    borderTopRightRadius: 5,
+    borderTopLeftRadius: 5,
   },
+  courseTitle: {
+
+  }
 })
 
 export default CourseCardStyle

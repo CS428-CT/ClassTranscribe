@@ -1,5 +1,6 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { Text, View, StatusBar } from 'react-native'
+import { useSafeArea } from 'react-native-safe-area-context';
 import PropTypes from 'prop-types'
 import { truncateString } from '../../utils/string'
 import styles from './CourseCard.style'
@@ -16,12 +17,18 @@ const MAX_DESCRIPTION_LENGTH = 100
  */
 const CourseCard = ({ departmentAcronym, courseNumber, courseName, courseDescription = '' }) => {
   const getCourseTitle = () => {
-    return `${departmentAcronym} ${courseNumber}: ${courseName}`
+    return `${departmentAcronym} ${courseNumber}`
   }
+
+  const getCourseName = () => {
+    return `${courseName}`
+  }
+
 
   return (
     <View style={styles.card}>
-      <Text style={(styles.container, styles.blue)}>{getCourseTitle()}</Text>
+      <StatusBar />
+      <Text style={(styles.container, styles.title)}>{getCourseTitle()}</Text>
 
       <Text style={styles.container}>
         {truncateString(courseDescription, MAX_DESCRIPTION_LENGTH)}
