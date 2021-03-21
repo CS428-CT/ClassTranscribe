@@ -4,9 +4,10 @@ import React from 'react'
 import { View } from 'react-native'
 import { Button, Text, TextInput } from 'react-native-paper'
 import { Video } from 'expo-av'
+import PropTypes from 'prop-types'
 import styles from './VideoContainer.style'
 
-export default function VideoContainer() {
+const VideoContainer = ({url}) => {
   const video = React.useRef(null)
   const [videoURI, setVideoURI] = React.useState(
     'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'
@@ -80,3 +81,9 @@ export default function VideoContainer() {
     </View>
   )
 }
+
+VideoContainer.propTypes = {
+  url: PropTypes.string.isRequired,
+}
+
+export default VideoContainer
