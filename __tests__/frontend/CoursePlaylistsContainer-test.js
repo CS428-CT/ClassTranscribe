@@ -50,24 +50,25 @@ describe('Check playlists rendering', () => {
     const playlists = await waitFor(() => queryAllByA11yRole('button'))
     expect(playlists.length).toBe(0)
   })
+})
 
-// describe('Check playlists navigation', () => {
-//   const offeringId = 'ac5b1727-629c-443b-8c1a-cc1bd541af6a'
-//   const mockNaivgator = {push: jest.fn()}
+describe('Check playlists navigation', () => {
+  const offeringId = 'ac5b1727-629c-443b-8c1a-cc1bd541af6a'
+  const mockNaivgator = {push: jest.fn()}
 
-//   test('when clicking on first item', async () => {
-//     mock
-//       .onGet(`${format(ENDPOINTS.PLAYLISTS_BY_OFFERING, offeringId)}`)
-//       .reply(HTTP_STATUS_CODES.OK, [PLAYLISTS_BY_OFFERING_RESPONSE[0]])
+  test('when clicking on first item', async () => {
+    mock
+      .onGet(`${format(ENDPOINTS.PLAYLISTS_BY_OFFERING, offeringId)}`)
+      .reply(HTTP_STATUS_CODES.OK, [PLAYLISTS_BY_OFFERING_RESPONSE[0]])
 
-//     const { queryAllByA11yRole } = render(<CoursePlaylistsContainer courseId={offeringId} navigation={mockNaivgator} />)
-//     const playlists = await waitFor(() => queryAllByA11yRole('button'))
-//     expect(playlists.length).not.toBe(0)
+    const { queryAllByA11yRole } = render(<CoursePlaylistsContainer courseId={offeringId} navigation={mockNaivgator} />)
+    const playlists = await waitFor(() => queryAllByA11yRole('button'))
+    expect(playlists.length).not.toBe(0)
 
-//     fireEvent.press(playlists[0])
-//     const expectedPlaylistId = PLAYLISTS_BY_OFFERING_RESPONSE[0].id;
+    fireEvent.press(playlists[0])
+    const expectedPlaylistId = PLAYLISTS_BY_OFFERING_RESPONSE[0].id;
 
-//     expect(mockNaivgator.push).toHaveBeenCalled();
-//     expect(mockNaivgator.push).toHaveBeenCalledWith(STACK_SCREENS.PLAYLIST, { playlistId: expectedPlaylistId } )
-//   })
+    expect(mockNaivgator.push).toHaveBeenCalled();
+    expect(mockNaivgator.push).toHaveBeenCalledWith(STACK_SCREENS.PLAYLIST, { playlistId: expectedPlaylistId } )
+  })
 })
