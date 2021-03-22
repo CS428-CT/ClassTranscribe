@@ -9,14 +9,14 @@ import { format } from '../../src/utils/string'
 import PlaylistContainer from '../../src/containers/PlaylistContainer/PlaylistContainer'
 
 const mock = new MockAdapter(axios)
-describe('Check playlists rendering', () => {
+describe('Check videos rendering', () => {
   const playlistId = '51519746-aa6c-485c-9894-549959c457b5'
 
   afterEach(() => {
     mock.reset()
   })
 
-  test('when given many playlists', async () => {
+  test('when given many videos', async () => {
     mock
       .onGet(`${format(ENDPOINTS.VIDEOS_BY_PLAYLIST, playlistId)}`)
       .reply(HTTP_STATUS_CODES.OK, VIDEOS_BY_PLAYLIST_RESPONSE)
@@ -29,7 +29,7 @@ describe('Check playlists rendering', () => {
     })
   })
 
-  test('when given no playlists', async () => {
+  test('when given no videos', async () => {
     mock
       .onGet(`${format(ENDPOINTS.PLAYLISTS_BY_OFFERING, playlistId)}`)
       .reply(HTTP_STATUS_CODES.OK, [])
