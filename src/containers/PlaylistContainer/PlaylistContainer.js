@@ -34,7 +34,7 @@ const PlaylistContainer = ({ navigation, playlistId }) => {
       <TouchableNativeFeedback onPress={() => onVideoSelected(item)}>
         <ListItem key={item.id} bottomDivider>
           <ListItem.Content>
-            <ListItem.Title accessibilityRole="button" >{item.name}</ListItem.Title>
+            <ListItem.Title accessibilityRole="button">{item.name}</ListItem.Title>
           </ListItem.Content>
         </ListItem>
       </TouchableNativeFeedback>
