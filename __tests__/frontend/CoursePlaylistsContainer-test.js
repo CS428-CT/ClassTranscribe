@@ -40,4 +40,14 @@ describe('Check playlists rendering', () => {
         const playlists = await waitFor(() => queryAllByA11yRole('button'))
         expect(playlists.length).toBe(0);
     })
+
+    test('on network error', async () => {
+        mock
+        .onGet(`${format(ENDPOINTS.PLAYLISTS_BY_OFFERING, offeringId)}`)
+        .networkError()
+
+        const { queryAllByA11yRole } = render(<CoursePlaylistsContainer courseId={offeringId} />)
+        const playlists = await waitFor(() => queryAllByA11yRole('button'))
+        expect(playlists.length).toBe(0);
+    })
 })
