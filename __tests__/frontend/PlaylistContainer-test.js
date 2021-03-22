@@ -23,12 +23,14 @@ describe('Check videos rendering', () => {
       .onGet(`${format(ENDPOINTS.VIDEOS_BY_PLAYLIST, playlistId)}`)
       .reply(HTTP_STATUS_CODES.OK, VIDEOS_BY_PLAYLIST_RESPONSE)
 
-   const { queryByText, queryAllByA11yRole } = render(<PlaylistContainer playlistId={playlistId} />)
-   const videos = await waitFor(() => queryAllByA11yRole('button'))
-   expect(videos.length).not.toBe(0);
+    const { queryByText, queryAllByA11yRole } = render(
+      <PlaylistContainer playlistId={playlistId} />
+    )
+    const videos = await waitFor(() => queryAllByA11yRole('button'))
+    expect(videos.length).not.toBe(0)
 
-   for(let i = 0; i < videos.length; i++){
-     const video = VIDEOS_BY_PLAYLIST_RESPONSE.medias[i];
+    for (let i = 0; i < videos.length; i += 1) {
+      const video = VIDEOS_BY_PLAYLIST_RESPONSE.medias[i]
       const videoItem = await waitFor(() => queryByText(video.name))
       expect(videoItem).not.toBe(null)
     }
@@ -55,22 +57,24 @@ describe('Check videos rendering', () => {
 
 describe('Check video navigation', () => {
   const playlistId = '51519746-aa6c-485c-9894-549959c457b5'
-  const mockNaivgator = {push: jest.fn()}
+  const mockNaivgator = { push: jest.fn() }
 
   test('when clicking on first item', async () => {
     mock
       .onGet(`${format(ENDPOINTS.VIDEOS_BY_PLAYLIST, playlistId)}`)
       .reply(HTTP_STATUS_CODES.OK, VIDEOS_BY_PLAYLIST_RESPONSE)
 
-    const { queryAllByA11yRole } = render(<PlaylistContainer playlistId={playlistId} navigation={mockNaivgator} />)
+    const { queryAllByA11yRole } = render(
+      <PlaylistContainer playlistId={playlistId} navigation={mockNaivgator} />
+    )
     const videos = await waitFor(() => queryAllByA11yRole('button'))
     expect(videos.length).not.toBe(0)
 
     fireEvent.press(videos[0])
-    const firstVideo = VIDEOS_BY_PLAYLIST_RESPONSE.medias.find((v) => v.index == 0)
-    const expectedVideoUrl = FILE_SERVER_BASE_URL + firstVideo.video.video1Path;
+    const firstVideo = VIDEOS_BY_PLAYLIST_RESPONSE.medias.find((v) => v.index === 0)
+    const expectedVideoUrl = FILE_SERVER_BASE_URL + firstVideo.video.video1Path
 
-    expect(mockNaivgator.push).toHaveBeenCalled();
-    expect(mockNaivgator.push).toHaveBeenCalledWith(STACK_SCREENS.VIDEO,  { url: expectedVideoUrl });
+    expect(mockNaivgator.push).toHaveBeenCalled()
+    expect(mockNaivgator.push).toHaveBeenCalledWith(STACK_SCREENS.VIDEO, { url: expectedVideoUrl })
   })
-});
+})

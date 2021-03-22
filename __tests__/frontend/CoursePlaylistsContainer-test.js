@@ -22,12 +22,14 @@ describe('Check playlists rendering', () => {
       .onGet(`${format(ENDPOINTS.PLAYLISTS_BY_OFFERING, offeringId)}`)
       .reply(HTTP_STATUS_CODES.OK, PLAYLISTS_BY_OFFERING_RESPONSE)
 
-   const { queryByText, queryAllByA11yRole } = render(<CoursePlaylistsContainer courseId={offeringId} />)
-   const playlists = await waitFor(() => queryAllByA11yRole('button'))
-   expect(playlists.length).not.toBe(0);
+    const { queryByText, queryAllByA11yRole } = render(
+      <CoursePlaylistsContainer courseId={offeringId} />
+    )
+    const playlists = await waitFor(() => queryAllByA11yRole('button'))
+    expect(playlists.length).not.toBe(0)
 
-   for(let i = 0; i < playlists.length; i++){
-      const playlist = PLAYLISTS_BY_OFFERING_RESPONSE[i];
+    for (let i = 0; i < playlists.length; i += 1) {
+      const playlist = PLAYLISTS_BY_OFFERING_RESPONSE[i]
       const playlistItem = await waitFor(() => queryByText(playlist.name))
       expect(playlistItem).not.toBe(null)
     }
@@ -54,21 +56,25 @@ describe('Check playlists rendering', () => {
 
 describe('Check playlists navigation', () => {
   const offeringId = 'ac5b1727-629c-443b-8c1a-cc1bd541af6a'
-  const mockNaivgator = {push: jest.fn()}
+  const mockNaivgator = { push: jest.fn() }
 
   test('when clicking on first item', async () => {
     mock
       .onGet(`${format(ENDPOINTS.PLAYLISTS_BY_OFFERING, offeringId)}`)
       .reply(HTTP_STATUS_CODES.OK, [PLAYLISTS_BY_OFFERING_RESPONSE[0]])
 
-    const { queryAllByA11yRole } = render(<CoursePlaylistsContainer courseId={offeringId} navigation={mockNaivgator} />)
+    const { queryAllByA11yRole } = render(
+      <CoursePlaylistsContainer courseId={offeringId} navigation={mockNaivgator} />
+    )
     const playlists = await waitFor(() => queryAllByA11yRole('button'))
     expect(playlists.length).not.toBe(0)
 
     fireEvent.press(playlists[0])
-    const expectedPlaylistId = PLAYLISTS_BY_OFFERING_RESPONSE[0].id;
+    const expectedPlaylistId = PLAYLISTS_BY_OFFERING_RESPONSE[0].id
 
-    expect(mockNaivgator.push).toHaveBeenCalled();
-    expect(mockNaivgator.push).toHaveBeenCalledWith(STACK_SCREENS.PLAYLIST, { playlistId: expectedPlaylistId } )
+    expect(mockNaivgator.push).toHaveBeenCalled()
+    expect(mockNaivgator.push).toHaveBeenCalledWith(STACK_SCREENS.PLAYLIST, {
+      playlistId: expectedPlaylistId,
+    })
   })
 })
