@@ -1,9 +1,11 @@
 import axios from 'axios'
+import React from 'react';
 import MockAdapter from 'axios-mock-adapter'
-import { ENDPOINTS } from '../../src/api/offerings'
+import { ENDPOINTS } from '../../src/api/playlists'
 import { HTTP_STATUS_CODES } from '../../src/api'
 import { PLAYLISTS_BY_OFFERING_RESPONSE } from '../mock_responses/mock-playlists-response'
 import { render } from '@testing-library/react-native'
+import { format } from '../../src/utils/string'
 import CoursePlaylistsContainer from '../../src/containers/CoursePlaylistsContainer/CoursePlaylistsContainer'
 
 const mock = new MockAdapter(axios)
