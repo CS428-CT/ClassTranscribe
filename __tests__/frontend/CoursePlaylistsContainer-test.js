@@ -21,12 +21,23 @@ describe('Check playlists rendering', () => {
         .onGet(`${format(ENDPOINTS.PLAYLISTS_BY_OFFERING, offeringId)}`)
         .reply(HTTP_STATUS_CODES.OK, PLAYLISTS_BY_OFFERING_RESPONSE)
 
-        const { queryByText } = render(<CoursePlaylistsContainer courseId={offeringId} />)
+        const { queryByText, queryAllByA11yRole } = render(<CoursePlaylistsContainer courseId={offeringId} />)
 
         PLAYLISTS_BY_OFFERING_RESPONSE.forEach(async (playlist) => {
             const playlistItem = await waitFor(() => queryByText(playlist.name));
             expect(playlistItem).not.toBe(null);
         });
 
+        const playlists = await waitFor(() => queryAllByA11yRole('button'))
+    })
+
+    test('when given no playlists', async () => {
+        mock
+        .onGet(`${format(ENDPOINTS.PLAYLISTS_BY_OFFERING, offeringId)}`)
+        .reply(HTTP_STATUS_CODES.OK, [])
+
+        const { queryAllByA11yRole } = render(<CoursePlaylistsContainer courseId={offeringId} />)
+        const playlists = await waitFor(() => queryAllByA11yRole('button'))
+        expect(playlists.length).toBe(0);
     })
 })

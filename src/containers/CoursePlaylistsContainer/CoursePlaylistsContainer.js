@@ -31,7 +31,7 @@ const CoursePlaylistsContainer = ({ courseId, navigation }) => {
         onPress={() => onPlaylistSelected(item.id)}>
         <ListItem key={item.id} bottomDivider>
           <ListItem.Content>
-            <ListItem.Title>{item.name}</ListItem.Title>
+            <ListItem.Title accessibilityRole="button">{item.name}</ListItem.Title>
           </ListItem.Content>
         </ListItem>
       </TouchableNativeFeedback>
