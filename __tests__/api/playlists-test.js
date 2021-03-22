@@ -3,7 +3,10 @@ import MockAdapter from 'axios-mock-adapter'
 import { format } from '../../src/utils/string'
 import { ENDPOINTS, getPlaylistsByOffering, getVideosByPlaylist } from '../../src/api/playlists'
 import { HTTP_STATUS_CODES } from '../../src/api'
-import { PLAYLISTS_BY_OFFERING_RESPONSE, VIDEOS_BY_PLAYLIST_RESPONSE } from '../mock_responses/mock-playlists-response'
+import {
+  PLAYLISTS_BY_OFFERING_RESPONSE,
+  VIDEOS_BY_PLAYLIST_RESPONSE,
+} from '../mock_responses/mock-playlists-response'
 
 const mock = new MockAdapter(axios)
 describe('Get playlists by offering', () => {

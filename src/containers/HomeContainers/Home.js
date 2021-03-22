@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { TouchableNativeFeedback, Text, FlatList, View } from 'react-native'
-
+import PropTypes from 'prop-types'
 import { getStarredOfferingsData } from '../../api/offerings'
 import CourseCard from '../../components/Cards/CourseCard'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
@@ -81,6 +81,12 @@ const Home = ({ navigation }) => {
       {renderStarredCourses()}
     </View>
   )
+}
+
+Home.propTypes = {
+  navigation: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 }
 
 export default Home

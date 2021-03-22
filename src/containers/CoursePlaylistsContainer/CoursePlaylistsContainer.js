@@ -5,7 +5,6 @@ import { ListItem } from 'react-native-elements'
 import { TouchableNativeFeedback } from 'react-native-gesture-handler'
 import { getPlaylistsByOffering } from '../../api/playlists'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
-import styles from './CoursePlaylistsContainer.style'
 
 const CoursePlaylistsContainer = ({ courseId, navigation }) => {
   const [playlists, setPlaylists] = useState([])
@@ -22,13 +21,12 @@ const CoursePlaylistsContainer = ({ courseId, navigation }) => {
   }, [courseId, setPlaylists])
 
   const onPlaylistSelected = (playlistId) => {
-    navigation.push(STACK_SCREENS.PLAYLIST, {playlistId: playlistId})
+    navigation.push(STACK_SCREENS.PLAYLIST, { playlistId })
   }
 
   const renderItem = ({ item }) => {
     return (
-      <TouchableNativeFeedback
-        onPress={() => onPlaylistSelected(item.id)}>
+      <TouchableNativeFeedback onPress={() => onPlaylistSelected(item.id)}>
         <ListItem key={item.id} bottomDivider>
           <ListItem.Content>
             <ListItem.Title accessibilityRole="button">{item.name}</ListItem.Title>
@@ -47,6 +45,9 @@ const CoursePlaylistsContainer = ({ courseId, navigation }) => {
 
 CoursePlaylistsContainer.propTypes = {
   courseId: PropTypes.string.isRequired,
+  navigation: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 }
 
 export default CoursePlaylistsContainer

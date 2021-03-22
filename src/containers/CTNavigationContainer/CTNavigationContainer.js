@@ -1,5 +1,5 @@
+/* eslint react/prop-types: "off" */
 import * as React from 'react'
-import { View } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -7,7 +7,6 @@ import { STACK_SCREENS } from './index'
 import Home from '../HomeContainers/Home'
 import CoursePlaylistsContainer from '../CoursePlaylistsContainer/CoursePlaylistsContainer'
 import VideoContainer from '../VideoContainer/VideoContainer'
-import VideoStyle from '../VideoContainer/VideoContainer.style'
 import PlaylistContainer from '../PlaylistContainer/PlaylistContainer'
 
 const Tab = createBottomTabNavigator()
@@ -33,7 +32,7 @@ const PlaylistView = ({ navigation, route }) => {
  * Wraps the VideoContainer so that it can
  * receive the proper props
  */
-const VideoView = ({ navigation, route }) => {
+const VideoView = ({ route }) => {
   return <VideoContainer url={route.params.url} />
 }
 
