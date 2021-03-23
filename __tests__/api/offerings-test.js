@@ -12,9 +12,9 @@ import { HTTP_STATUS_CODES } from '../../src/api'
 import {
   OFFERINGS_RESPONSE_1,
   OFFERINGS_RESPONSE_2,
-  SIGN_IN_RESPONSE,
   STARRED_OFFERINGS_RESPONSE,
-} from './mock-response'
+} from '../mock_responses/mock-offerings-response'
+import { SIGN_IN_RESPONSE } from '../mock_responses/mock-auth-response'
 
 const mock = new MockAdapter(axios)
 describe('Get starred offerings', () => {

@@ -5,7 +5,7 @@
  * @param {Array} args The literals to substitute the indicies with
  * @returns The formatted string
  */
-export const format = function (str, ...args) {
+export const format = (str, ...args) => {
   let fStr = str
 
   for (let i = 0; i < args.length; i += 1) {
