@@ -24,6 +24,7 @@ const CourseCard = ({departmentAcronym, courseNumber, courseName, courseDescript
     return `${courseName}`
   }
 
+
   return (
     <View style={styles.card}>
       <Text style={styles.courseTitle}>{getCourseTitle()}</Text>
