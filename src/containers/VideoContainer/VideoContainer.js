@@ -10,29 +10,27 @@ import styles from './VideoContainer.style'
 
 const VideoContainer = ({ url }) => {
   const video = React.useRef(null)
-<<<<<<< HEAD
-  const [status, setStatus] = React.useState({})
-
-=======
-  const [videoURI, setVideoURI] = React.useState(
-    'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'
-  )
   const [status, setStatus] = React.useState({
     isMuted: false,
     isPlaying: false,
     rate: 1.0,
   })
->>>>>>> f2fb030feeea6bcaec817c7e4037256304ec603e
+
+  // const [videoURI, setVideoURI] = React.useState(
+
+  //   // 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'
+  // )
+
   return (
     <View style={styles.container}>
       <View style={styles.input}>
-        <TextInput label="Video URI" value={videoURI} onChangeText={(text) => setVideoURI(text)} />
+        <TextInput label="Video URI" value={url} onChangeText={(text) => setVideoURI(text)} />
       </View>
       <Video
         ref={video}
         style={styles.video}
         source={{
-          uri: videoURI,
+          uri: url,
         }}
         useNativeControls
         resizeMode="contain"
