@@ -6,10 +6,9 @@ import { Video } from 'expo-av'
 import PropTypes from 'prop-types'
 import styles from './VideoContainer.style'
 
-const VideoContainer = ({url}) => {
+const VideoContainer = ({ url }) => {
   const video = React.useRef(null)
   const [status, setStatus] = React.useState({})
-  console.log(url)
 
   return (
     <View style={styles.container}>

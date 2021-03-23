@@ -3,5 +3,5 @@ export const STACK_SCREENS = {
   UNIVERSITY_LIST: "University List",
   COURSE_PLAYLISTS: 'Course Playlists',
   PLAYLIST: 'Playlist',
-  VIDEO: 'Video'
+  VIDEO: 'Video',
 }

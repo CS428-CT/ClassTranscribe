@@ -15,7 +15,7 @@ export const getPlaylistsByOffering = async (offeringId) => {
     if (resp?.status !== HTTP_STATUS_CODES.OK) return null
     return resp.data
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 
   return null
@@ -29,7 +29,7 @@ export const getVideosByPlaylist = async (playlistId) => {
     if (resp?.status !== HTTP_STATUS_CODES.OK) return null
     return resp.data
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 
   return null
