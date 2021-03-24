@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { TouchableNativeFeedback, Text, FlatList, View } from 'react-native'
+import { TouchableNativeFeedback, FlatList, View } from 'react-native'
 import PropTypes from 'prop-types'
 import { getStarredOfferingsData } from '../../api/offerings'
 import CourseCard from '../../components/Cards/CourseCard'
@@ -53,26 +53,16 @@ const Home = ({ navigation }) => {
     )
   }
 
-
   /**
    * Renders all of the users' starred courses into a FlatList
    */
   const renderStarredCourses = () => {
     if (courses == null) return null
 
-    return (
-      <FlatList
-        data={courses}
-        renderItem={renderCourseItem}
-      />
-    )
+    return <FlatList data={courses} renderItem={renderCourseItem} />
   }
 
-  return (
-    <View style={styles.viewStyle}>
-      {renderStarredCourses()}
-    </View>
-  )
+  return <View style={styles.viewStyle}>{renderStarredCourses()}</View>
 }
 
 Home.propTypes = {

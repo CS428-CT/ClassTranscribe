@@ -24,7 +24,7 @@ const CourseCardStyle = StyleSheet.create({
     fontSize: 20,
     backgroundColor: 'white',
   },
-  
+
   courseName: {
     color: '#333',
     fontWeight: 'bold',

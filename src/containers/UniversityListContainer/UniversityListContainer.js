@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { TouchableNativeFeedback, Text, FlatList, View } from 'react-native'
-import PropTypes from 'prop-types'
-import { getUniversities } from '../../api/universities'
-import CourseCard from '../../components/Cards/CourseCard'
-import { STACK_SCREENS } from '../CTNavigationContainer/index'
-import { getStarredOfferingsData } from '../../api/offerings'
+import { TouchableNativeFeedback, FlatList, View } from 'react-native'
+// import PropTypes from 'prop-types'
 import { ListItem } from 'react-native-elements'
-
+import { getUniversities } from '../../api/universities'
+import { STACK_SCREENS } from '../CTNavigationContainer/index'
 
 /**
  * Contains the home screen of the application. Lists starred courses and gives the user the ability
@@ -30,14 +27,12 @@ const UniversityListContainer = ({ navigation }) => {
     navigation.push(STACK_SCREENS.HOME, { courseId: '57afb8e6-76c8-4d22-b04c-5fbf912024ed' })
   }
 
-
   /**
    * Renders all of the users' starred courses into a FlatList
    */
-   const renderItem = ({ item }) => {
+  const renderItem = ({ item }) => {
     return (
-      <TouchableNativeFeedback
-        onPress={() => onUniversitySelected(item)}>
+      <TouchableNativeFeedback onPress={() => onUniversitySelected(item)}>
         <ListItem key={item.id} bottomDivider>
           <ListItem.Content>
             <ListItem.Title>{item.name}</ListItem.Title>

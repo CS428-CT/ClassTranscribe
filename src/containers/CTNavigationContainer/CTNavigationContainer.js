@@ -3,20 +3,23 @@ import * as React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { STACK_SCREENS } from './index'
 import Home from '../HomeContainers/Home'
 import CoursePlaylistsContainer from '../CoursePlaylistsContainer/CoursePlaylistsContainer'
 import VideoContainer from '../VideoContainer/VideoContainer'
 import UniversityListContainer from '../UniversityListContainer/UniversityListContainer'
 import PlaylistContainer from '../PlaylistContainer/PlaylistContainer'
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-
 
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
 
-const UniversityListView = ({ navigation, route }) => {
-  return <UniversityListContainer /*universityid= {route.params.universityId}/**/ navigation={navigation} />
+const UniversityListView = ({ navigation /* , route */ }) => {
+  return (
+    <UniversityListContainer
+      /* universityid= {route.params.universityId}/* */ navigation={navigation}
+    />
+  )
 }
 
 /**
@@ -67,18 +70,26 @@ const CTNavigationContainer = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeNavigator} options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
-          ),
-        }}/>
-        <Tab.Screen name="Video" component={VideoView} options={{
-          tabBarLabel: 'Video',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="video" color={color} size={size} />
-          ),
-        }}/>
+        <Tab.Screen
+          name="Home"
+          component={HomeNavigator}
+          options={{
+            tabBarLabel: 'Home',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="home" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Video"
+          component={VideoView}
+          options={{
+            tabBarLabel: 'Video',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="video" color={color} size={size} />
+            ),
+          }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   )

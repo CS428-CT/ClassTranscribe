@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, StatusBar } from 'react-native'
+import { Text, View } from 'react-native'
 import PropTypes from 'prop-types'
 import { truncateString } from '../../utils/string'
 import styles from './CourseCard.style'
@@ -15,7 +15,7 @@ const MAX_DESCRIPTION_LENGTH = 100
  * @returns
  */
 
-const CourseCard = ({departmentAcronym, courseNumber, courseName, courseDescription = '' }) => {
+const CourseCard = ({ departmentAcronym, courseNumber, courseName, courseDescription = '' }) => {
   const getCourseTitle = () => {
     return `${departmentAcronym} ${courseNumber}`
   }
@@ -23,7 +23,6 @@ const CourseCard = ({departmentAcronym, courseNumber, courseName, courseDescript
   const getCourseName = () => {
     return `${courseName}`
   }
-
 
   return (
     <View style={styles.card}>

@@ -8,9 +8,9 @@ const HomeStyle = StyleSheet.create({
   },
 
   viewStyle: {
-    flex: 1, 
-    justifyContent: 'center', 
-    alignItems: 'center', 
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: '3%',
   },
 })

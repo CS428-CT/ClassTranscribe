@@ -5,7 +5,6 @@ import { View } from 'react-native'
 import { Button, Text, TextInput } from 'react-native-paper'
 import { Video } from 'expo-av'
 import PropTypes from 'prop-types'
-import { Asset } from 'expo-asset';
 import styles from './VideoContainer.style'
 
 const VideoContainer = ({ url }) => {
@@ -15,11 +14,6 @@ const VideoContainer = ({ url }) => {
     isPlaying: false,
     rate: 1.0,
   })
-
-  // const [videoURI, setVideoURI] = React.useState(
-
-  //   // 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'
-  // )
 
   return (
     <View style={styles.container}>
@@ -51,7 +45,7 @@ const VideoContainer = ({ url }) => {
           {status.isMuted ? 'Unmute' : 'Mute'}
         </Button>
       </View>
-      
+
       <View style={styles.input}>
         <Button
           mode="contained"
@@ -85,12 +79,13 @@ const VideoContainer = ({ url }) => {
           Replay
         </Button>
 
-        <Button mode="contained" onPress={() => video.current.loadAsync('/storage/emulated/0/Download')}>
+        <Button
+          mode="contained"
+          onPress={() => video.current.loadAsync('/storage/emulated/0/Download')}
+        >
           Download
         </Button>
-
       </View>
-
     </View>
   )
 }
