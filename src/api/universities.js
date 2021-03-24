@@ -4,6 +4,8 @@ import { format } from '../utils/string'
 
 export const ENDPOINTS = {
   UNIVERSITIES: `${BASE_URL}Universities/{0}`,
+  DEPARTMENTS: `${BASE_URL}Departments/ByUniversity/{0}`,
+  COURSES: `${BASE_URL}Courses/ByDepartment/{0}`,
 }
 
 /**
@@ -32,7 +34,7 @@ export const getUniversities = async () => {
  * @returns The list of departments in a university
  */
 export const getUniversityDepartments = async (universityId) => {
-  const url = format(ENDPOINTS.UNIVERSITIES, universityId)
+  const url = format(ENDPOINTS.DEPARTMENTS, universityId.id)
 
   try {
     const resp = await axios.get(url)
@@ -48,13 +50,13 @@ export const getUniversityDepartments = async (universityId) => {
 }
 
 /**
- * Gets the list of courses for a department in a university
+ * Gets the list of departments for a university
  * @param {string} departmentId
- * @returns The list of courses in a departments in a university
+ * @returns The list of departments in a university
  */
-export const getCourses = async (universityId, deptId) => {
-  // TODO: CHANGE THE STR CONCATENTATION (should be something like universityId/deptId)
-  const url = format(ENDPOINTS.UNIVERSITIES, universityId)
+ export const getDepartmentCourses = async (departmentId) => {
+  console.log(departmentId)
+  const url = format(ENDPOINTS.COURSES, departmentId.id)
 
   try {
     const resp = await axios.get(url)
@@ -68,3 +70,25 @@ export const getCourses = async (universityId, deptId) => {
 
   return null
 }
+
+// /**
+//  * Gets the list of courses for a department in a university
+//  * @param {string} departmentId
+//  * @returns The list of courses in a departments in a university
+//  */
+// export const getCourses = async (universityId, deptId) => {
+//   // TODO: CHANGE THE STR CONCATENTATION (should be something like universityId/deptId)
+//   const url = format(ENDPOINTS.UNIVERSITIES, universityId)
+
+//   try {
+//     const resp = await axios.get(url)
+//     if (resp?.status !== HTTP_STATUS_CODES.OK) {
+//       return null
+//     }
+//     return resp.data
+//   } catch (error) {
+//     console.error(error)
+//   }
+
+//   return null
+// }

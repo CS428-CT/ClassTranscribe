@@ -10,15 +10,29 @@ import CoursePlaylistsContainer from '../CoursePlaylistsContainer/CoursePlaylist
 import VideoContainer from '../VideoContainer/VideoContainer'
 import UniversityListContainer from '../UniversityListContainer/UniversityListContainer'
 import PlaylistContainer from '../PlaylistContainer/PlaylistContainer'
+import DepartmentListContainer from '../DepartmentListContainer/DepartmentListContainer'
+import CourseListContainer from '../CourseListContainer/CourseListContainer'
 
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
 
-const UniversityListView = ({ navigation /* , route */ }) => {
+const UniversityListView = ({ navigation }) => {
   return (
-    <UniversityListContainer
-      /* universityid= {route.params.universityId}/* */ navigation={navigation}
-    />
+    <UniversityListContainer navigation={navigation}/>
+  )
+}
+
+const DepartmentListView = ({ navigation, route }) => {
+  return (
+    <DepartmentListContainer universityId={route.params.universityId} navigation={navigation}/>
+  )
+}
+
+const CourseListView = ({ navigation, route }) => {
+  return (
+    <CourseListContainer departmentId={route.params.departmentId} 
+                         acronym={ route.params.acronym } 
+                         navigation={navigation}/>
   )
 }
 
@@ -53,6 +67,8 @@ const HomeNavigator = () => {
   return (
     <Stack.Navigator initialRouteName={STACK_SCREENS.UNIVERSITY_LIST}>
       <Stack.Screen name={STACK_SCREENS.UNIVERSITY_LIST} component={UniversityListView} />
+      <Stack.Screen name={STACK_SCREENS.DEPT_LIST} component={DepartmentListView} />
+      <Stack.Screen name={STACK_SCREENS.COURSE_LIST} component={CourseListView} />
       <Stack.Screen name={STACK_SCREENS.HOME} component={Home} />
       <Stack.Screen name={STACK_SCREENS.COURSE_PLAYLISTS} component={CoursePlaylistsView} />
       <Stack.Screen name={STACK_SCREENS.PLAYLIST} component={PlaylistView} />
