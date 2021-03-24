@@ -22,7 +22,8 @@ const CourseListContainer = ({ departmentId, acronym, navigation }) => {
   }, [setCourses])
 
   const onCourseSelected = (courseId) => {    
-    navigation.push(STACK_SCREENS.COURSE_PLAYLISTS, { courseId: courseId })
+    navigation.push(STACK_SCREENS.HOME, { })
+    // navigation.push(STACK_SCREENS.COURSE_PLAYLISTS, { courseId: courseId })
   }
 
 

@@ -9,6 +9,10 @@ import { format } from '../../src/utils/string'
 import CoursePlaylistsContainer from '../../src/containers/CoursePlaylistsContainer/CoursePlaylistsContainer'
 import { STACK_SCREENS } from '../../src/containers/CTNavigationContainer'
 
+/* 
+Specifically for Comptuer Science department (department id: 2001)
+*/
+
 const mock = new MockAdapter(axios)
 describe('Check playlists rendering', () => {
   const offeringId = 'ac5b1727-629c-443b-8c1a-cc1bd541af6a'

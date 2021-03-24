@@ -3,7 +3,7 @@ import { HTTP_STATUS_CODES, BASE_URL } from '.'
 import { format } from '../utils/string'
 
 export const ENDPOINTS = {
-  UNIVERSITIES: `${BASE_URL}Universities/{0}`,
+  UNIVERSITIES: `${BASE_URL}Universities/`,
   DEPARTMENTS: `${BASE_URL}Departments/ByUniversity/{0}`,
   COURSES: `${BASE_URL}Courses/ByDepartment/{0}`,
 }
@@ -13,7 +13,7 @@ export const ENDPOINTS = {
  * @returns The list of universities
  */
 export const getUniversities = async () => {
-  const url = format(ENDPOINTS.UNIVERSITIES, '')
+  const url = ENDPOINTS.UNIVERSITIES
 
   try {
     const resp = await axios.get(url)
