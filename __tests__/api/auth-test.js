@@ -8,7 +8,7 @@ import {
   signOutUser,
 } from '../../src/api/auth'
 import { HTTP_STATUS_CODES } from '../../src/api'
-import { SIGN_IN_RESPONSE } from './mock-response'
+import { SIGN_IN_RESPONSE } from '../mock_responses/mock-auth-response'
 
 describe('Check authentication', () => {
   const mock = new MockAdapter(axios)
