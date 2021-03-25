@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { TouchableNativeFeedback, Text, FlatList, View } from 'react-native'
 import PropTypes from 'prop-types'
 import { getStarredOfferingsData } from '../../api/offerings'
+import {getPlaylistsByOffering} from '../../api/playlists'
 import CourseCard from '../../components/Cards/CourseCard'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
 import styles from './Home.style'
@@ -17,6 +18,8 @@ const Home = ({ navigation }) => {
     const fetchCourseInfo = async () => {
       const offerings = await getStarredOfferingsData()
       setCourses(offerings)
+      // const milk = await getPlaylistsByOffering(item.offering.id)
+      // console.log(milk)
     }
 
     fetchCourseInfo()
