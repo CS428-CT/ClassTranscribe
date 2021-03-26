@@ -13,8 +13,16 @@ import { STACK_SCREENS } from '../../src/containers/CTNavigationContainer'
 const mock = new MockAdapter(axios)
 describe('Check videos rendering', () => {
   const playlistId = '51519746-aa6c-485c-9894-549959c457b5'
-  const displayedKeys = ['name'];
-  const undisplayedKeys = ['index', 'duration', 'ready', 'sourceType', 'createdAt', 'playlistId', 'id'];
+  const displayedKeys = ['name']
+  const undisplayedKeys = [
+    'index',
+    'duration',
+    'ready',
+    'sourceType',
+    'createdAt',
+    'playlistId',
+    'id',
+  ]
 
   afterEach(() => {
     mock.reset()
@@ -34,18 +42,18 @@ describe('Check videos rendering', () => {
 
     for (let i = 0; i < videos.length; i += 1) {
       const video = VIDEOS_BY_PLAYLIST_RESPONSE.medias[i]
-        // Ensure items that should be rendered are rendered once
-        for (const key of displayedKeys) {
-          const videoItems = await waitFor(() => queryAllByText(String(video[key])))
-          expect(videoItems.length).toBe(1);
-        }
+      // Ensure items that should be rendered are rendered once
+      for (const key of displayedKeys) {
+        const videoItems = await waitFor(() => queryAllByText(String(video[key])))
+        expect(videoItems.length).toBe(1)
+      }
 
-        // Ensure items that shouldn't be rendered aren't rendered
-        for (const key of undisplayedKeys) {
-          const videoItems = await waitFor(() => queryAllByText(String(video[key])))
-          expect(videoItems.length).toBe(0);
-        }
-     }
+      // Ensure items that shouldn't be rendered aren't rendered
+      for (const key of undisplayedKeys) {
+        const videoItems = await waitFor(() => queryAllByText(String(video[key])))
+        expect(videoItems.length).toBe(0)
+      }
+    }
   })
 
   test('when given no videos', async () => {
