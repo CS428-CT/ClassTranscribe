@@ -37,7 +37,7 @@ const UniversityListContainer = ({ navigation }) => {
       <TouchableNativeFeedback useForeground={true} onPress={() => onUniversitySelected(item)}>
         <ListItem key={item.id} bottomDivider>
           <ListItem.Content>
-            <ListItem.Title>{item.name}</ListItem.Title>
+            <ListItem.Title accessibilityRole="button">{item.name}</ListItem.Title>
           </ListItem.Content>
         </ListItem>
       </TouchableNativeFeedback>
@@ -51,9 +51,5 @@ const UniversityListContainer = ({ navigation }) => {
   )
 }
 
-
-// UniversityListContainer.propTypes = {
-//     universityId: PropTypes.string.isRequired,
-// }
 
 export default UniversityListContainer
