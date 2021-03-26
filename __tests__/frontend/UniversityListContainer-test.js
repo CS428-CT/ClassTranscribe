@@ -16,7 +16,7 @@ describe('Check universities rendering', () => {
 
   test('Check that all universities show up', async () => {
     mock.onGet(`${ENDPOINTS.UNIVERSITIES}`).reply(HTTP_STATUS_CODES.OK, UNIVERSITY_RESPONSE)
-a
+
     const { queryByText, queryAllByA11yRole } = render(<UniversityListContainer />)
 
     const universityList = await waitFor(() => queryAllByA11yRole('button'))
@@ -54,12 +54,13 @@ describe('Check university navigation', () => {
     mock.onGet(`${ENDPOINTS.UNIVERSITIES}`).reply(HTTP_STATUS_CODES.OK, [UNIVERSITY_RESPONSE[0]])
 
     const { queryAllByA11yRole } = render(
-      <UniversityListContainer universityId={universityId} navigation={mockNaivgator} />
+      <UniversityListContainer navigation={mockNaivgator} />
     )
-    const departments = await waitFor(() => queryAllByA11yRole('button'))
-    expect(departments.length).not.toBe(0)
 
-    fireEvent.press(departments[0])
+    const universities = await waitFor(() => queryAllByA11yRole('button'))
+    expect(universities.length).not.toBe(0)
+
+    fireEvent.press(universities[0])
     const expectedUniversityId = UNIVERSITY_RESPONSE[0].id
 
     expect(mockNaivgator.push).toHaveBeenCalled()

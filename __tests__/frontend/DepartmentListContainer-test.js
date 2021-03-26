@@ -2,6 +2,7 @@ import axios from 'axios'
 import React from 'react'
 import MockAdapter from 'axios-mock-adapter'
 import { fireEvent, render, waitFor } from '@testing-library/react-native'
+import { format } from '../../src/utils/string'
 import { ENDPOINTS } from '../../src/api/universities'
 import { HTTP_STATUS_CODES } from '../../src/api'
 import { DEPARTMENTS_RESPONSE } from '../mock_responses/mock-department-response'
@@ -10,14 +11,23 @@ import { STACK_SCREENS } from '../../src/containers/CTNavigationContainer'
 
 const mock = new MockAdapter(axios)
 describe('Check departments rendering', () => {
+  const universityId = '1001'
+
   afterEach(() => {
     mock.reset()
   })
 
-  test('Check that all departments show up', async () => {
-    mock.onGet(`${ENDPOINTS.DEPARTMENTS}`).reply(HTTP_STATUS_CODES.OK, DEPARTMENTS_RESPONSE)
+  console.log('PRINTING OUT API CALL')
+  console.log(`${format(ENDPOINTS.DEPARTMENTS, universityId)}`)
 
-    const { queryByText, queryAllByA11yRole } = render(<DepartmentListContainer />)
+  test('Check that all departments show up', async () => {
+    mock
+      .onGet(`${format(ENDPOINTS.DEPARTMENTS, universityId)}`)
+      .reply(HTTP_STATUS_CODES.OK, DEPARTMENTS_RESPONSE)
+    
+    const { queryByText, queryAllByA11yRole } = render(
+      <DepartmentListContainer universityId={universityId} />
+    )
 
     const departmentList = await waitFor(() => queryAllByA11yRole('button'))
     expect(departmentList.length).not.toBe(0)
@@ -30,33 +40,35 @@ describe('Check departments rendering', () => {
   })
 
   test('when no departments', async () => {
-    mock.onGet(`${ENDPOINTS.DEPARTMENTS}`).reply(HTTP_STATUS_CODES.OK, [])
+    mock.onGet(`${format(ENDPOINTS.DEPARTMENTS, universityId)}`).reply(HTTP_STATUS_CODES.OK, [])
 
-    const { queryAllByA11yRole } = render(<DepartmentListContainer />)
+    const { queryAllByA11yRole } = render(<DepartmentListContainer universityId={universityId} />)
     const departmentList = await waitFor(() => queryAllByA11yRole('button'))
     expect(departmentList.length).toBe(0)
   })
 
   test('on network error', async () => {
-    mock.onGet(`${ENDPOINTS.DEPARTMENTS}`).networkError()
+    mock.onGet(`${format(ENDPOINTS.DEPARTMENTS, universityId)}`).networkError()
 
-    const { queryAllByA11yRole } = render(<DepartmentListContainer />)
+    const { queryAllByA11yRole } = render(<DepartmentListContainer universityId={universityId}/>)
     const departmentList = await waitFor(() => queryAllByA11yRole('button'))
     expect(departmentList.length).toBe(0)
   })
 })
 
-describe('Check university navigation', () => {
+describe('Check department navigation', () => {
+  const universityId = '1001'
   const departmentId = 'f56bfdd3-a67f-46bd-a21b-fcf88165bb4f'
   const deptAcronym = 'CHEM'
   const mockNaivgator = { push: jest.fn() }
 
   test('when clicking on first item', async () => {
-    mock.onGet(`${ENDPOINTS.DEPARTMENTS}`).reply(HTTP_STATUS_CODES.OK, [DEPARTMENTS_RESPONSE[0]])
+    mock.onGet(`${format(ENDPOINTS.DEPARTMENTS, universityId)}`).reply(HTTP_STATUS_CODES.OK, [DEPARTMENTS_RESPONSE[0]])
 
     const { queryAllByA11yRole } = render(
-      <DepartmentListContainer departmentId={departmentId} acronym={deptAcronym} navigation={mockNaivgator} />
+      <DepartmentListContainer universityId={universityId} navigation={mockNaivgator} />
     )
+
     const departments = await waitFor(() => queryAllByA11yRole('button'))
     expect(departments.length).not.toBe(0)
 

@@ -34,7 +34,7 @@ export const getUniversities = async () => {
  * @returns The list of departments in a university
  */
 export const getUniversityDepartments = async (universityId) => {
-  const url = format(ENDPOINTS.DEPARTMENTS, universityId.id)
+  const url = format(ENDPOINTS.DEPARTMENTS, universityId)
 
   try {
     const resp = await axios.get(url)
@@ -55,7 +55,7 @@ export const getUniversityDepartments = async (universityId) => {
  * @returns The list of departments in a university
  */
 export const getDepartmentCourses = async (departmentId) => {
-  const url = format(ENDPOINTS.COURSES, departmentId.id)
+  const url = format(ENDPOINTS.COURSES, departmentId)
 
   try {
     const resp = await axios.get(url)

@@ -23,7 +23,7 @@ const DepartmentListContainer = ({ universityId, navigation }) => {
 
   const onDepartmentSelected = (departmentId, departmentAcronym) => {
     navigation.push(STACK_SCREENS.COURSE_LIST, {
-      departmentId,
+      departmentId: departmentId,
       acronym: departmentAcronym,
     })
   }
@@ -35,7 +35,7 @@ const DepartmentListContainer = ({ universityId, navigation }) => {
     return (
       <TouchableNativeFeedback
         useForeground
-        onPress={() => onDepartmentSelected(item, item.acronym)}
+        onPress={() => onDepartmentSelected(item.id, item.acronym)}
       >
         <ListItem key={(item.id, item.acronym)} bottomDivider>
           <ListItem.Content>
