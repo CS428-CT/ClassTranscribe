@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { TouchableNativeFeedback, FlatList, View } from 'react-native'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import { ListItem } from 'react-native-elements'
 import { getUniversityDepartments } from '../../api/universities'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
@@ -14,15 +14,14 @@ const DepartmentListContainer = ({ universityId, navigation }) => {
 
   useEffect(() => {
     const fetchDepartmentInfo = async () => {
-      const departments = await getUniversityDepartments(universityId)
-      setDepartments(departments)
+      const uniDepartments = await getUniversityDepartments(universityId)
+      setDepartments(uniDepartments)
     }
 
     fetchDepartmentInfo()
   }, [setDepartments])
 
   const onDepartmentSelected = (departmentId, departmentAcronym) => {
-    // change this from hardcode
     navigation.push(STACK_SCREENS.COURSE_LIST, {
       departmentId,
       acronym: departmentAcronym,
@@ -54,8 +53,11 @@ const DepartmentListContainer = ({ universityId, navigation }) => {
   )
 }
 
-// UniversityListContainer.propTypes = {
-//     universityId: PropTypes.string.isRequired,
-// }
+DepartmentListContainer.propTypes = {
+  universityId: PropTypes.string.isRequired,
+  navigation: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+}
 
 export default DepartmentListContainer
