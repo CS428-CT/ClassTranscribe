@@ -51,7 +51,7 @@ const Home = ({ navigation }) => {
             />
           </View>
         </TouchableNativeFeedback>
-        <View>
+        <View style={{ width: '50%' }}>
           <Recommend navigation={navigation} courseId={courseId} mode={mode} />
         </View>
       </View>
@@ -96,7 +96,7 @@ const Home = ({ navigation }) => {
   }
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       {renderSwitch()}
       {renderStarredCourses()}
     </View>

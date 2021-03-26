@@ -6,6 +6,8 @@ const HomeStyle = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 10,
     marginBottom: 10,
+    flexWrap: 'wrap', 
+    width:'100%' 
   },
   placeholder: {
     height: 40,
