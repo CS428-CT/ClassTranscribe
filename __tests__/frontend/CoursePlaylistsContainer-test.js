@@ -16,6 +16,8 @@ Specifically for Comptuer Science department (department id: 2001)
 const mock = new MockAdapter(axios)
 describe('Check playlists rendering', () => {
   const offeringId = 'ac5b1727-629c-443b-8c1a-cc1bd541af6a'
+  const displayedKeys = ['name'];
+  const undisplayedKeys = ['id', 'createdAt', 'sourceType', 'offeringId', 'index', 'playlistIdentifier'];
 
   afterEach(() => {
     mock.reset()
@@ -26,7 +28,7 @@ describe('Check playlists rendering', () => {
       .onGet(`${format(ENDPOINTS.PLAYLISTS_BY_OFFERING, offeringId)}`)
       .reply(HTTP_STATUS_CODES.OK, PLAYLISTS_BY_OFFERING_RESPONSE)
 
-    const { queryByText, queryAllByA11yRole } = render(
+    const { queryAllByText, queryAllByA11yRole } = render(
       <CoursePlaylistsContainer courseId={offeringId} />
     )
     const playlists = await waitFor(() => queryAllByA11yRole('button'))
@@ -34,8 +36,18 @@ describe('Check playlists rendering', () => {
 
     for (let i = 0; i < playlists.length; i += 1) {
       const playlist = PLAYLISTS_BY_OFFERING_RESPONSE[i]
-      const playlistItem = await waitFor(() => queryByText(playlist.name))
-      expect(playlistItem).not.toBe(null)
+
+      // Ensure items that should be rendered are rendered once
+      for (const key of displayedKeys) {
+        const playlistItems = await waitFor(() => queryAllByText(String(playlist[key])))
+        expect(playlistItems.length).toBe(1);
+      }
+
+      // Ensure items that shouldn't be rendered aren't rendered
+      for (const key of undisplayedKeys) {
+        const playlistItems = await waitFor(() => queryAllByText(String(playlist[key])))
+        expect(playlistItems.length).toBe(0);
+      }
     }
   })
 
