@@ -2,7 +2,7 @@
 /* eslint-env es6 */
 import React from 'react'
 import { View } from 'react-native'
-import { Button, Text, TextInput } from 'react-native-paper'
+import { Button, Text } from 'react-native-paper'
 import { Video } from 'expo-av'
 import PropTypes from 'prop-types'
 import styles from './VideoContainer.style'
@@ -18,7 +18,7 @@ const VideoContainer = ({ url }) => {
   return (
     <View style={styles.container}>
       <View style={styles.input}>
-        <TextInput label="Video URI" value={url} onChangeText={(text) => setVideoURI(text)} />
+        <Text label="Video URI" value={url} />
       </View>
       <Video
         ref={video}
