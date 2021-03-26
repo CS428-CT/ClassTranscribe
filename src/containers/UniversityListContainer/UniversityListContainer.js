@@ -14,18 +14,14 @@ const UniversityListContainer = ({ navigation }) => {
 
   useEffect(() => {
     const fetchUniversityInfo = async () => {
-      const universities = await getUniversities()
-      setUniversities(universities)
+      const allUniversities = await getUniversities()
+      setUniversities(allUniversities)
     }
 
     fetchUniversityInfo()
   }, [setUniversities])
 
   const onUniversitySelected = (universityId) => {
-    // Retrieve all departments in selected uni
-    // Display the departments
-
-    // https://classtranscribe-dev.ncsa.illinois.edu/api/Departments/ByUniversity/
     navigation.push(STACK_SCREENS.DEPT_LIST, { universityId })
   }
 
@@ -49,6 +45,12 @@ const UniversityListContainer = ({ navigation }) => {
       <FlatList data={universities} renderItem={renderItem} />
     </View>
   )
+}
+
+UniversityListContainer.propTypes = {
+  navigation: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 }
 
 export default UniversityListContainer
