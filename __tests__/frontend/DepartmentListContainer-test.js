@@ -17,12 +17,11 @@ describe('Check departments rendering', () => {
     mock.reset()
   })
 
-
   test('Check that all departments show up', async () => {
     mock
       .onGet(`${format(ENDPOINTS.DEPARTMENTS, universityId)}`)
       .reply(HTTP_STATUS_CODES.OK, DEPARTMENTS_RESPONSE)
-    
+
     const { queryByText, queryAllByA11yRole } = render(
       <DepartmentListContainer universityId={universityId} />
     )
@@ -48,7 +47,7 @@ describe('Check departments rendering', () => {
   test('on network error', async () => {
     mock.onGet(`${format(ENDPOINTS.DEPARTMENTS, universityId)}`).networkError()
 
-    const { queryAllByA11yRole } = render(<DepartmentListContainer universityId={universityId}/>)
+    const { queryAllByA11yRole } = render(<DepartmentListContainer universityId={universityId} />)
     const departmentList = await waitFor(() => queryAllByA11yRole('button'))
     expect(departmentList.length).toBe(0)
   })
@@ -56,12 +55,12 @@ describe('Check departments rendering', () => {
 
 describe('Check department navigation', () => {
   const universityId = '1001'
-  const departmentId = 'f56bfdd3-a67f-46bd-a21b-fcf88165bb4f'
-  const deptAcronym = 'CHEM'
   const mockNavigator = { push: jest.fn() }
 
   test('when clicking on first item', async () => {
-    mock.onGet(`${format(ENDPOINTS.DEPARTMENTS, universityId)}`).reply(HTTP_STATUS_CODES.OK, [DEPARTMENTS_RESPONSE[0]])
+    mock
+      .onGet(`${format(ENDPOINTS.DEPARTMENTS, universityId)}`)
+      .reply(HTTP_STATUS_CODES.OK, [DEPARTMENTS_RESPONSE[0]])
 
     const { queryAllByA11yRole } = render(
       <DepartmentListContainer universityId={universityId} navigation={mockNavigator} />

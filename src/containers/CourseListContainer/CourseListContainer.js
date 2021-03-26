@@ -22,7 +22,9 @@ const CourseListContainer = ({ departmentId, acronym, navigation }) => {
   }, [setCourses])
 
   const onCourseSelected = (/* courseId */) => {
-    navigation.push(STACK_SCREENS.HOME, { /* courseId */ })
+    navigation.push(STACK_SCREENS.HOME, {
+      /* courseId */
+    })
   }
 
   /**
@@ -30,11 +32,15 @@ const CourseListContainer = ({ departmentId, acronym, navigation }) => {
    */
   const renderItem = ({ item }) => {
     return (
-      <TouchableNativeFeedback useForeground onPress={() => onCourseSelected( /*item*/ )}>
+      <TouchableNativeFeedback useForeground onPress={() => onCourseSelected(/* item */)}>
         <ListItem key={item.id} bottomDivider>
           <ListItem.Content>
-            <ListItem.Title accessibilityRole="button">{acronym} {item.courseNumber}</ListItem.Title>
-            <ListItem.Subtitle style={{ fontSize: 0, color: "#00000000" }}>{item.courseNumber}</ListItem.Subtitle>
+            <ListItem.Title accessibilityRole="button">
+              {acronym} {item.courseNumber}
+            </ListItem.Title>
+            <ListItem.Subtitle style={{ fontSize: 0, color: '#00000000' }}>
+              {item.courseNumber}
+            </ListItem.Subtitle>
           </ListItem.Content>
         </ListItem>
       </TouchableNativeFeedback>

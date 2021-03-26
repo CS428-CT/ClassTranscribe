@@ -22,7 +22,7 @@ describe('Check courses rendering', () => {
     mock
       .onGet(`${format(ENDPOINTS.COURSES, departmentId)}`)
       .reply(HTTP_STATUS_CODES.OK, COURSES_RESPONSE)
-    
+
     const { queryByText, queryAllByA11yRole } = render(
       <CourseListContainer departmentId={departmentId} acronym={departmentAcronym} />
     )
@@ -30,7 +30,6 @@ describe('Check courses rendering', () => {
     const courseList = await waitFor(() => queryAllByA11yRole('button'))
     expect(courseList.length).not.toBe(0)
 
-    console.log(courseList)
     for (let i = 0; i < courseList.length; i += 1) {
       const course = COURSES_RESPONSE[i]
       const courseItem = await waitFor(() => queryByText(course.courseNumber))
@@ -41,7 +40,9 @@ describe('Check courses rendering', () => {
   test('when no courses', async () => {
     mock.onGet(`${format(ENDPOINTS.COURSES, departmentId)}`).reply(HTTP_STATUS_CODES.OK, [])
 
-    const { queryAllByA11yRole } = render(<CourseListContainer departmentId={departmentId} acronym={departmentAcronym} />)
+    const { queryAllByA11yRole } = render(
+      <CourseListContainer departmentId={departmentId} acronym={departmentAcronym} />
+    )
     const courseList = await waitFor(() => queryAllByA11yRole('button'))
     expect(courseList.length).toBe(0)
   })
@@ -49,7 +50,9 @@ describe('Check courses rendering', () => {
   test('on network error', async () => {
     mock.onGet(`${format(ENDPOINTS.COURSES, departmentId)}`).networkError()
 
-    const { queryAllByA11yRole } = render(<CourseListContainer departmentId={departmentId} acronym={departmentAcronym}/>)
+    const { queryAllByA11yRole } = render(
+      <CourseListContainer departmentId={departmentId} acronym={departmentAcronym} />
+    )
     const courseList = await waitFor(() => queryAllByA11yRole('button'))
     expect(courseList.length).toBe(0)
   })
@@ -61,10 +64,16 @@ describe('Check course navigation', () => {
   const mockNavigator = { push: jest.fn() }
 
   test('when clicking on first item', async () => {
-    mock.onGet(`${format(ENDPOINTS.COURSES, departmentId)}`).reply(HTTP_STATUS_CODES.OK, [COURSES_RESPONSE[0]])
+    mock
+      .onGet(`${format(ENDPOINTS.COURSES, departmentId)}`)
+      .reply(HTTP_STATUS_CODES.OK, [COURSES_RESPONSE[0]])
 
     const { queryAllByA11yRole } = render(
-      <CourseListContainer departmentId={departmentId} acronym={departmentAcronym} navigation={mockNavigator} />
+      <CourseListContainer
+        departmentId={departmentId}
+        acronym={departmentAcronym}
+        navigation={mockNavigator}
+      />
     )
 
     const courses = await waitFor(() => queryAllByA11yRole('button'))

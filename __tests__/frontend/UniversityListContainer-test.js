@@ -47,15 +47,12 @@ describe('Check universities rendering', () => {
 })
 
 describe('Check university navigation', () => {
-  const universityId = '1001' // UIUC
   const mockNavigator = { push: jest.fn() }
 
   test('when clicking on first item', async () => {
     mock.onGet(`${ENDPOINTS.UNIVERSITIES}`).reply(HTTP_STATUS_CODES.OK, [UNIVERSITY_RESPONSE[0]])
 
-    const { queryAllByA11yRole } = render(
-      <UniversityListContainer navigation={mockNavigator} />
-    )
+    const { queryAllByA11yRole } = render(<UniversityListContainer navigation={mockNavigator} />)
 
     const universities = await waitFor(() => queryAllByA11yRole('button'))
     expect(universities.length).not.toBe(0)

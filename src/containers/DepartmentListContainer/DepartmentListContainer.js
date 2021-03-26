@@ -23,7 +23,7 @@ const DepartmentListContainer = ({ universityId, navigation }) => {
 
   const onDepartmentSelected = (departmentId, departmentAcronym) => {
     navigation.push(STACK_SCREENS.COURSE_LIST, {
-      departmentId: departmentId,
+      departmentId,
       acronym: departmentAcronym,
     })
   }
