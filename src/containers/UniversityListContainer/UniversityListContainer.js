@@ -21,8 +21,8 @@ const UniversityListContainer = ({ navigation }) => {
     fetchUniversityInfo()
   }, [setUniversities])
 
-  const onUniversitySelected = (universityId) => {
-    navigation.push(STACK_SCREENS.DEPT_LIST, { universityId })
+  const onUniversitySelected = (university) => {
+    navigation.push(STACK_SCREENS.DEPT_LIST, { universityId: university.id })
   }
 
   /**

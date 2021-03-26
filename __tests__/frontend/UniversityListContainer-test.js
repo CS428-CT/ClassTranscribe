@@ -61,16 +61,10 @@ describe('Check university navigation', () => {
 
     fireEvent.press(departments[0])
     const expectedUniversityId = UNIVERSITY_RESPONSE[0].id
-    const expectedDomain = UNIVERSITY_RESPONSE[0].domain
-    const expectedName = UNIVERSITY_RESPONSE[0].name
 
     expect(mockNaivgator.push).toHaveBeenCalled()
     expect(mockNaivgator.push).toHaveBeenCalledWith(STACK_SCREENS.DEPT_LIST, {
-      universityId: {
-        domain: expectedDomain,
-        id: expectedUniversityId,
-        name: expectedName,
-      },
+      universityId: expectedUniversityId,
     })
   })
 })
