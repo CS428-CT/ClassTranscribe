@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { TouchableNativeFeedback, Text, FlatList, View } from 'react-native'
+import { TouchableNativeFeedback, Switch, FlatList, View, Text } from 'react-native'
 import PropTypes from 'prop-types'
 import { getStarredOfferingsData } from '../../api/offerings'
-import {getPlaylistsByOffering} from '../../api/playlists'
 import CourseCard from '../../components/Cards/CourseCard'
 import Recommend from '../../components/Recommend/Recommend'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
@@ -53,7 +52,11 @@ const Home = ({ navigation }) => {
           </View>
         </TouchableNativeFeedback>
         <View>
-          <Recommend courseId={courseId}/>
+          <Recommend 
+            navigation={navigation}
+            courseId={courseId} 
+            mode={mode}
+          />
         </View>
       </View>
     )
@@ -81,8 +84,24 @@ const Home = ({ navigation }) => {
     )
   }
 
+  const [mode, setMode] = useState(false);
+  const renderSwitch = () => {
+    return(
+      <View style={styles.Container}>
+        <Text>Latest Video Mode: {(mode).toString()}</Text>
+        <Switch
+          trackColor={{ false: "black", true: "grey" }}
+          thumbColor={mode ? "purple" : "black"}
+          onValueChange={() => setMode(!mode)}
+          value={mode}
+        />
+      </View>
+    )
+  }
+
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      {renderSwitch()}
       {renderStarredCourses()}
     </View>
   )

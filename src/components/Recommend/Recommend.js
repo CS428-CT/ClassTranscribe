@@ -1,12 +1,22 @@
 import React, { useEffect, useState }from "react";
 import RNPickerSelect from "react-native-picker-select";
 import { StyleSheet, Text, View } from "react-native";
+import { TouchableNativeFeedback } from 'react-native-gesture-handler'
 import { getPlaylistsByOffering } from '../../api/playlists'
 import { getVideosByPlaylist } from '../../api/playlists'
-const Recommend = ({ courseId }) => {
+import { STACK_SCREENS } from '../../containers/CTNavigationContainer/index'
+import { FILE_SERVER_BASE_URL } from '../../constants'
+import { Switch } from "react-native";
+/**
+ * 
+ * @param {string} courseId courseId used for reccomend video
+ * @param {boolean} mode mode for latestvideo, false mean progress tracking.
+ * @returns 
+ */
+const Recommend = ({ navigation, courseId, mode }) => {
     const [playlists, setPlaylists] = useState([])
     const [selected, setSelected] = useState(null)
-    const [videos, setVideos] = useState([])
+    const [videos, setVideos] = useState(null)
     /**
      * Use Effect monitor playlist fetched
      */
@@ -25,7 +35,6 @@ const Recommend = ({ courseId }) => {
      */
     useEffect(() => {
         const fetchVideos = async () => {
-            console.log("CHOOSINGS: ", selected)
             const response = await getVideosByPlaylist(selected)
             if (!response) return
             const indexedVid = response.medias.sort((a, b) => a.index - b.index)
@@ -43,40 +52,123 @@ const Recommend = ({ courseId }) => {
         const pickItems = playlists.map(item => {
             return { label: item.name, value: item.id};
         });
-        // console.log(pickItems[0]["label"])
         if(pickItems.length > 0){
+            if(selected == null)
+                setSelected(pickItems[0]["value"])
             return(
-                <RNPickerSelect
-                    style = {{placeholder:{color:"black"}}}
-                    placeholder={{
-                        label: pickItems[0]["label"], 
-                        value: pickItems[0]["value"]
-                    }}
-                    onValueChange={(value) => setSelected(value)}
-                    items={pickItems.slice(1)}
-                />
+                <View>
+                    <RNPickerSelect
+                        style = {{placeholder:{color:"black"}}}
+                        placeholder={{
+                            label: pickItems[0]["label"], 
+                            value: pickItems[0]["value"]
+                        }}
+                        onValueChange={(value) => {
+                            setSelected(value)
+                            setVideos(null)
+                        }}
+                        items={pickItems.slice(1)}
+                    />
+                </View>
             )
         }
+    }
+    /**
+     * Navigate function for video tab
+     * @param {Object} rec video object of reccomend video
+     * @returns None
+     */
+    const onVideoSelected = (rec) => {
+        const urlExtension = rec?.video?.video1Path
+        if (!urlExtension) return
+    
+        const url = FILE_SERVER_BASE_URL + urlExtension
+        navigation.push(STACK_SCREENS.VIDEO, { url })
     }
 
     /**
      * Function to Render recommend video of given playlist
      */
      const renderVideo = () => {
-        const pickItems = videos.map(item => {
-            // console.log(item.name);
-            // console.log(item.watchHistory);
-        });
-        if(videos.length > 0){
-            return(
-                <View></View>
-            )
+        /**
+         * Custom Enum for code clean
+         */
+        const status = {
+            PROCESS: 0,
+            NOVIDEO: 1,
+            NORMAL: 2,
+            FINISH: 3,
+        }
+        let stat = status.PROCESS;
+        let rec = null;
+        if(videos){
+            if(!videos.length){
+                stat = status.NOVIDEO
+            }else if(mode){
+                rec = videos[videos.length-1];
+                if(rec.watchHistory)
+                    stat = status.FINISH
+                else
+                    stat = status.NORMAL
+            } else {
+                for (var i = videos.length - 1; i >= 0; i--) {
+                    if(videos[i].watchHistory){
+                        if(i === videos.length - 1){
+                            stat = status.FINISH
+                        } else {
+                            rec = videos[i+1]
+                            stat = status.NORMAL
+                        }
+                        break;
+                    }
+                }
+                rec = rec ? rec : videos[0]
+                stat = status.NORMAL
+            }   
+        }
+
+        /** Rendering part **/
+        switch (stat){
+            case status.PROCESS:
+                return(
+                    <View>
+                        <Text>
+                            Placeholder for waiting
+                        </Text>
+                    </View>
+                );
+            case status.NOVIDEO:
+                return(
+                    <View>
+                        <Text>
+                            Placeholder for no Video
+                        </Text>
+                    </View>
+                );
+            case status.FINISH:
+                return(
+                    <View>
+                        <Text>
+                            Placeholder for Finish
+                        </Text>
+                    </View>
+                );
+            case status.NORMAL:
+                return(
+                    <TouchableNativeFeedback onPress={() => onVideoSelected(rec)}>
+                        <View>
+                            <Text>
+                                {rec.name}
+                            </Text>
+                        </View>
+                    </TouchableNativeFeedback>
+                );
         }
     }
 
     return (
         <View style={styles.container}>
-            <Text>Test Picker</Text>
+            <Text>Active Playlist</Text>
             {renderPicker()}
             {renderVideo()}
         </View>
