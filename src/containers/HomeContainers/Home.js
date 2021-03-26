@@ -19,10 +19,7 @@ const Home = ({ navigation }) => {
     const fetchCourseInfo = async () => {
       const offerings = await getStarredOfferingsData()
       setCourses(offerings)
-      // const milk = await getPlaylistsByOffering(item.offering.id)
-      console.log(offerings)
     }
-
     fetchCourseInfo()
   }, [setCourses])
 
@@ -56,7 +53,7 @@ const Home = ({ navigation }) => {
           </View>
         </TouchableNativeFeedback>
         <View>
-          <Text>ssss</Text>
+          <Recommend courseId={courseId}/>
         </View>
       </View>
     )
@@ -87,7 +84,6 @@ const Home = ({ navigation }) => {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       {renderStarredCourses()}
-      <Recommend/>
     </View>
   )
 }

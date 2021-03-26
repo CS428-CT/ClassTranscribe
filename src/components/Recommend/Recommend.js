@@ -1,18 +1,45 @@
-import React from "react";
+import React, { useEffect, useState }from "react";
 import RNPickerSelect from "react-native-picker-select";
 import { StyleSheet, Text, View } from "react-native";
-export default function Recommend () {
+import { getPlaylistsByOffering } from '../../api/playlists'
+const Recommend = ({ courseId }) => {
+    const [playlists, setPlaylists] = useState([])
+    const [selected, setSelected] = useState([])
+
+    useEffect(() => {
+        const fetchPlaylists = async () => {
+            let response = await getPlaylistsByOffering(courseId)
+            if (!response) return
+            setPlaylists(response)
+        }
+
+        fetchPlaylists()
+
+    }, [courseId, setPlaylists])
+    
+    /**
+     * Function to Render to playlist picker for reccomend video
+     */
+    const renderPicker = () => {
+        const pickItems = playlists.map(item => {
+            return { label: item.name, value: item.id};
+        });
+        console.log("ATTEMTION")
+        console.log(pickItems)
+        return(
+            <RNPickerSelect
+                style = {{placeholder:{color:"black"}}}
+                placeholder={pickItems[0]}
+                onValueChange={(value) => console.log(value)}
+                items={pickItems.slice(1)}
+            />
+        )
+    }
+
     return (
         <View style={styles.container}>
             <Text>Test Picker</Text>
-            <RNPickerSelect
-                onValueChange={(value) => console.log(value)}
-                items={[
-                    { label: "Playlist1", value: "Playlist1" },
-                    { label: "Playlist2", value: "Playlist2" },
-                    { label: "Playlist3", value: "3" },
-                ]}
-            />
+            {renderPicker()}
         </View>
     );
 }
@@ -24,3 +51,5 @@ const styles = StyleSheet.create({
         justifyContent  : "center",
     },
 });
+
+export default Recommend;
