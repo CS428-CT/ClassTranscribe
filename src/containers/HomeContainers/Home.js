@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { getStarredOfferingsData } from '../../api/offerings'
 import {getPlaylistsByOffering} from '../../api/playlists'
 import CourseCard from '../../components/Cards/CourseCard'
+import Recommend from '../../components/Recommend/Recommend'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
 import styles from './Home.style'
 
@@ -19,7 +20,7 @@ const Home = ({ navigation }) => {
       const offerings = await getStarredOfferingsData()
       setCourses(offerings)
       // const milk = await getPlaylistsByOffering(item.offering.id)
-      // console.log(milk)
+      console.log(offerings)
     }
 
     fetchCourseInfo()
@@ -42,18 +43,22 @@ const Home = ({ navigation }) => {
     const courseId = item.offering.id
 
     return (
-      <TouchableNativeFeedback onPress={() => onCourseSelected(courseId)}>
-        <View style={styles.container}>
-          <CourseCard
-            key={courseId}
-            departmentAcronym={course.departmentAcronym}
-            courseNumber={course.courseNumber}
-            courseName={courseName}
-            courseDescription={courseDescription}
-          />
-          <Text style={styles.placeholder}>Video Placeholder</Text>
+      <View style={styles.container}>
+        <TouchableNativeFeedback onPress={() => onCourseSelected(courseId)}>
+          <View style={{width:"50%"}}>
+            <CourseCard
+              key={courseId}
+              departmentAcronym={course.departmentAcronym}
+              courseNumber={course.courseNumber}
+              courseName={courseName}
+              courseDescription={courseDescription}
+            />
+          </View>
+        </TouchableNativeFeedback>
+        <View>
+          <Text>ssss</Text>
         </View>
-      </TouchableNativeFeedback>
+      </View>
     )
   }
 
@@ -82,6 +87,7 @@ const Home = ({ navigation }) => {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       {renderStarredCourses()}
+      <Recommend/>
     </View>
   )
 }
