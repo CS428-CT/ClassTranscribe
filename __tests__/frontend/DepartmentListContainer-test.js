@@ -17,8 +17,6 @@ describe('Check departments rendering', () => {
     mock.reset()
   })
 
-  console.log('PRINTING OUT API CALL')
-  console.log(`${format(ENDPOINTS.DEPARTMENTS, universityId)}`)
 
   test('Check that all departments show up', async () => {
     mock
@@ -60,13 +58,13 @@ describe('Check department navigation', () => {
   const universityId = '1001'
   const departmentId = 'f56bfdd3-a67f-46bd-a21b-fcf88165bb4f'
   const deptAcronym = 'CHEM'
-  const mockNaivgator = { push: jest.fn() }
+  const mockNavigator = { push: jest.fn() }
 
   test('when clicking on first item', async () => {
     mock.onGet(`${format(ENDPOINTS.DEPARTMENTS, universityId)}`).reply(HTTP_STATUS_CODES.OK, [DEPARTMENTS_RESPONSE[0]])
 
     const { queryAllByA11yRole } = render(
-      <DepartmentListContainer universityId={universityId} navigation={mockNaivgator} />
+      <DepartmentListContainer universityId={universityId} navigation={mockNavigator} />
     )
 
     const departments = await waitFor(() => queryAllByA11yRole('button'))
@@ -76,8 +74,8 @@ describe('Check department navigation', () => {
     const expectedDepartmentId = DEPARTMENTS_RESPONSE[0].id
     const expectedDepartmentAcronym = DEPARTMENTS_RESPONSE[0].acronym
 
-    expect(mockNaivgator.push).toHaveBeenCalled()
-    expect(mockNaivgator.push).toHaveBeenCalledWith(STACK_SCREENS.COURSE_LIST, {
+    expect(mockNavigator.push).toHaveBeenCalled()
+    expect(mockNavigator.push).toHaveBeenCalledWith(STACK_SCREENS.COURSE_LIST, {
       departmentId: expectedDepartmentId,
       acronym: expectedDepartmentAcronym,
     })

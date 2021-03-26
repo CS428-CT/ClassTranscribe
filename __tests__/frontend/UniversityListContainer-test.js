@@ -48,13 +48,13 @@ describe('Check universities rendering', () => {
 
 describe('Check university navigation', () => {
   const universityId = '1001' // UIUC
-  const mockNaivgator = { push: jest.fn() }
+  const mockNavigator = { push: jest.fn() }
 
   test('when clicking on first item', async () => {
     mock.onGet(`${ENDPOINTS.UNIVERSITIES}`).reply(HTTP_STATUS_CODES.OK, [UNIVERSITY_RESPONSE[0]])
 
     const { queryAllByA11yRole } = render(
-      <UniversityListContainer navigation={mockNaivgator} />
+      <UniversityListContainer navigation={mockNavigator} />
     )
 
     const universities = await waitFor(() => queryAllByA11yRole('button'))
@@ -63,8 +63,8 @@ describe('Check university navigation', () => {
     fireEvent.press(universities[0])
     const expectedUniversityId = UNIVERSITY_RESPONSE[0].id
 
-    expect(mockNaivgator.push).toHaveBeenCalled()
-    expect(mockNaivgator.push).toHaveBeenCalledWith(STACK_SCREENS.DEPT_LIST, {
+    expect(mockNavigator.push).toHaveBeenCalled()
+    expect(mockNavigator.push).toHaveBeenCalledWith(STACK_SCREENS.DEPT_LIST, {
       universityId: expectedUniversityId,
     })
   })
