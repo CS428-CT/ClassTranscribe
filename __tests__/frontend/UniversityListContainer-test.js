@@ -16,7 +16,7 @@ describe('Check universities rendering', () => {
 
   test('Check that all universities show up', async () => {
     mock.onGet(`${ENDPOINTS.UNIVERSITIES}`).reply(HTTP_STATUS_CODES.OK, UNIVERSITY_RESPONSE)
-
+a
     const { queryByText, queryAllByA11yRole } = render(<UniversityListContainer />)
 
     const universityList = await waitFor(() => queryAllByA11yRole('button'))
