@@ -17,22 +17,22 @@ const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
 
 const UniversityListView = ({ navigation }) => {
-  return (
-    <UniversityListContainer navigation={navigation}/>
-  )
+  return <UniversityListContainer navigation={navigation} />
 }
 
 const DepartmentListView = ({ navigation, route }) => {
   return (
-    <DepartmentListContainer universityId={route.params.universityId} navigation={navigation}/>
+    <DepartmentListContainer universityId={route.params.universityId} navigation={navigation} />
   )
 }
 
 const CourseListView = ({ navigation, route }) => {
   return (
-    <CourseListContainer departmentId={route.params.departmentId} 
-                         acronym={ route.params.acronym } 
-                         navigation={navigation}/>
+    <CourseListContainer
+      departmentId={route.params.departmentId}
+      acronym={route.params.acronym}
+      navigation={navigation}
+    />
   )
 }
 

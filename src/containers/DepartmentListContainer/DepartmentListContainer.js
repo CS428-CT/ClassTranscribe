@@ -22,8 +22,11 @@ const DepartmentListContainer = ({ universityId, navigation }) => {
   }, [setDepartments])
 
   const onDepartmentSelected = (departmentId, departmentAcronym) => {
-    // change this from hardcode 
-    navigation.push(STACK_SCREENS.COURSE_LIST, { departmentId: departmentId, acronym: departmentAcronym })
+    // change this from hardcode
+    navigation.push(STACK_SCREENS.COURSE_LIST, {
+      departmentId,
+      acronym: departmentAcronym,
+    })
   }
 
   /**
@@ -31,8 +34,11 @@ const DepartmentListContainer = ({ universityId, navigation }) => {
    */
   const renderItem = ({ item }) => {
     return (
-      <TouchableNativeFeedback useForeground={true} onPress={() => onDepartmentSelected(item, item.acronym)}>
-        <ListItem key={item.id, item.acronym} bottomDivider>
+      <TouchableNativeFeedback
+        useForeground
+        onPress={() => onDepartmentSelected(item, item.acronym)}
+      >
+        <ListItem key={(item.id, item.acronym)} bottomDivider>
           <ListItem.Content>
             <ListItem.Title accessibilityRole="button">{item.name}</ListItem.Title>
           </ListItem.Content>

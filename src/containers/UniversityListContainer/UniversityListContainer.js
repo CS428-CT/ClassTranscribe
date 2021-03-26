@@ -26,7 +26,7 @@ const UniversityListContainer = ({ navigation }) => {
     // Display the departments
 
     // https://classtranscribe-dev.ncsa.illinois.edu/api/Departments/ByUniversity/
-    navigation.push(STACK_SCREENS.DEPT_LIST, { universityId: universityId })
+    navigation.push(STACK_SCREENS.DEPT_LIST, { universityId })
   }
 
   /**
@@ -34,7 +34,7 @@ const UniversityListContainer = ({ navigation }) => {
    */
   const renderItem = ({ item }) => {
     return (
-      <TouchableNativeFeedback useForeground={true} onPress={() => onUniversitySelected(item)}>
+      <TouchableNativeFeedback useForeground onPress={() => onUniversitySelected(item)}>
         <ListItem key={item.id} bottomDivider>
           <ListItem.Content>
             <ListItem.Title accessibilityRole="button">{item.name}</ListItem.Title>
@@ -50,6 +50,5 @@ const UniversityListContainer = ({ navigation }) => {
     </View>
   )
 }
-
 
 export default UniversityListContainer

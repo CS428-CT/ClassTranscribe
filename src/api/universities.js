@@ -54,8 +54,7 @@ export const getUniversityDepartments = async (universityId) => {
  * @param {string} departmentId
  * @returns The list of departments in a university
  */
- export const getDepartmentCourses = async (departmentId) => {
-  console.log(departmentId)
+export const getDepartmentCourses = async (departmentId) => {
   const url = format(ENDPOINTS.COURSES, departmentId.id)
 
   try {
