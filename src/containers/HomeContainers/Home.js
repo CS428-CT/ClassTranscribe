@@ -41,7 +41,7 @@ const Home = ({ navigation }) => {
     return (
       <View style={styles.container}>
         <TouchableNativeFeedback onPress={() => onCourseSelected(courseId)}>
-          <View style={{width:"50%"}}>
+          <View style={{ width: '50%' }}>
             <CourseCard
               key={courseId}
               departmentAcronym={course.departmentAcronym}
@@ -52,11 +52,7 @@ const Home = ({ navigation }) => {
           </View>
         </TouchableNativeFeedback>
         <View>
-          <Recommend 
-            navigation={navigation}
-            courseId={courseId} 
-            mode={mode}
-          />
+          <Recommend navigation={navigation} courseId={courseId} mode={mode} />
         </View>
       </View>
     )
@@ -84,14 +80,14 @@ const Home = ({ navigation }) => {
     )
   }
 
-  const [mode, setMode] = useState(false);
+  const [mode, setMode] = useState(false)
   const renderSwitch = () => {
-    return(
+    return (
       <View style={styles.Container}>
-        <Text>Latest Video Mode: {(mode).toString()}</Text>
+        <Text>Latest Video Mode: {mode.toString()}</Text>
         <Switch
-          trackColor={{ false: "black", true: "grey" }}
-          thumbColor={mode ? "purple" : "black"}
+          trackColor={{ false: 'black', true: 'grey' }}
+          thumbColor={mode ? 'purple' : 'black'}
           onValueChange={() => setMode(!mode)}
           value={mode}
         />

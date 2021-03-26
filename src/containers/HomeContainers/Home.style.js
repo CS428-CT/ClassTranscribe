@@ -4,8 +4,8 @@ const HomeStyle = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',
-    marginTop:10,
-    marginBottom:10,
+    marginTop: 10,
+    marginBottom: 10,
   },
   placeholder: {
     height: 40,
