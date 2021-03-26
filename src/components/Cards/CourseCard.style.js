@@ -1,22 +1,40 @@
 import { StyleSheet } from 'react-native'
 
 const CourseCardStyle = StyleSheet.create({
-  titleText: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  card: {
+    marginTop: '2%',
+    marginBottom: '2%',
+    backgroundColor: 'white',
+    width: '95%',
+    borderRadius: 5,
+    justifyContent: 'space-between',
+    alignContent: 'center',
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5,
   },
 
-  card: {
-    backgroundColor: 'rgba(0,0,0,0.2)',
-    width: '50%',
+  courseTitle: {
+    color: 'teal',
+    fontWeight: 'bold',
+    fontSize: 20,
+    backgroundColor: 'white',
   },
-  container: {
-    paddingVertical: 2,
-    paddingHorizontal: 16,
+
+  courseName: {
+    color: '#333',
+    fontWeight: 'bold',
+    fontSize: 16,
+    backgroundColor: 'white',
   },
-  blue: {
-    color: 'white',
-    backgroundColor: '#2196F3',
+
+  courseContent: {
+    paddingTop: 6,
+    backgroundColor: 'white',
   },
 })
 

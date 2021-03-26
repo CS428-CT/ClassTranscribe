@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { TouchableNativeFeedback, Text, FlatList, View } from 'react-native'
+import { TouchableNativeFeedback, FlatList, View } from 'react-native'
 import PropTypes from 'prop-types'
 import { getStarredOfferingsData } from '../../api/offerings'
 import CourseCard from '../../components/Cards/CourseCard'
@@ -48,17 +48,9 @@ const Home = ({ navigation }) => {
             courseName={courseName}
             courseDescription={courseDescription}
           />
-          <Text style={styles.placeholder}>Video Placeholder</Text>
         </View>
       </TouchableNativeFeedback>
     )
-  }
-
-  /**
-   * Renders the separator for the course list
-   */
-  const renderSeparator = () => {
-    return <View style={styles.seperator} />
   }
 
   /**
@@ -67,20 +59,10 @@ const Home = ({ navigation }) => {
   const renderStarredCourses = () => {
     if (courses == null) return null
 
-    return (
-      <FlatList
-        data={courses}
-        renderItem={renderCourseItem}
-        ItemSeparatorComponent={renderSeparator}
-      />
-    )
+    return <FlatList data={courses} renderItem={renderCourseItem} />
   }
 
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      {renderStarredCourses()}
-    </View>
-  )
+  return <View style={styles.viewStyle}>{renderStarredCourses()}</View>
 }
 
 Home.propTypes = {

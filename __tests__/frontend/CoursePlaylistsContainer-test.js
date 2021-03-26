@@ -9,6 +9,10 @@ import { format } from '../../src/utils/string'
 import CoursePlaylistsContainer from '../../src/containers/CoursePlaylistsContainer/CoursePlaylistsContainer'
 import { STACK_SCREENS } from '../../src/containers/CTNavigationContainer'
 
+/* 
+Specifically for Comptuer Science department (department id: 2001)
+*/
+
 const mock = new MockAdapter(axios)
 describe('Check playlists rendering', () => {
   const offeringId = 'ac5b1727-629c-443b-8c1a-cc1bd541af6a'
@@ -56,7 +60,7 @@ describe('Check playlists rendering', () => {
 
 describe('Check playlists navigation', () => {
   const offeringId = 'ac5b1727-629c-443b-8c1a-cc1bd541af6a'
-  const mockNaivgator = { push: jest.fn() }
+  const mockNavigator = { push: jest.fn() }
 
   test('when clicking on first item', async () => {
     mock
@@ -64,7 +68,7 @@ describe('Check playlists navigation', () => {
       .reply(HTTP_STATUS_CODES.OK, [PLAYLISTS_BY_OFFERING_RESPONSE[0]])
 
     const { queryAllByA11yRole } = render(
-      <CoursePlaylistsContainer courseId={offeringId} navigation={mockNaivgator} />
+      <CoursePlaylistsContainer courseId={offeringId} navigation={mockNavigator} />
     )
     const playlists = await waitFor(() => queryAllByA11yRole('button'))
     expect(playlists.length).not.toBe(0)
@@ -72,8 +76,8 @@ describe('Check playlists navigation', () => {
     fireEvent.press(playlists[0])
     const expectedPlaylistId = PLAYLISTS_BY_OFFERING_RESPONSE[0].id
 
-    expect(mockNaivgator.push).toHaveBeenCalled()
-    expect(mockNaivgator.push).toHaveBeenCalledWith(STACK_SCREENS.PLAYLIST, {
+    expect(mockNavigator.push).toHaveBeenCalled()
+    expect(mockNavigator.push).toHaveBeenCalledWith(STACK_SCREENS.PLAYLIST, {
       playlistId: expectedPlaylistId,
     })
   })

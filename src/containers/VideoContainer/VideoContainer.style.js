@@ -16,12 +16,16 @@ const VideoStyle = StyleSheet.create({
     alignSelf: 'center',
     width: 320,
     height: 200,
-    marginTop: '100%',
+    margin: 30,
+  },
+  input: {
+    width: 320,
   },
   buttons: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    margin: 10,
   },
 })
 
