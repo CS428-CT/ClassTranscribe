@@ -9,6 +9,12 @@ const HomeStyle = StyleSheet.create({
     flexWrap: 'wrap', 
     width:'100%' 
   },
+  cardContainer: {
+    width: '50%'
+  },
+  recContainer: {
+    width: '50%'
+  },
   placeholder: {
     height: 40,
     margin: 12,

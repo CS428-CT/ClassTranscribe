@@ -41,7 +41,7 @@ const Home = ({ navigation }) => {
     return (
       <View style={styles.container}>
         <TouchableNativeFeedback onPress={() => onCourseSelected(courseId)}>
-          <View style={{ width: '50%' }}>
+          <View style={styles.cardContainer}>
             <CourseCard
               key={courseId}
               departmentAcronym={course.departmentAcronym}
@@ -51,7 +51,7 @@ const Home = ({ navigation }) => {
             />
           </View>
         </TouchableNativeFeedback>
-        <View style={{ width: '50%' }}>
+        <View style={styles.recContainer}>
           <Recommend navigation={navigation} courseId={courseId} mode={mode} />
         </View>
       </View>
