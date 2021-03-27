@@ -30,6 +30,8 @@ describe('Check videos rendering -- mode false', () => {
       <Reccomend courseId={offeringId} navigation={mockNaivgator} mode={false}/>
     )
     expect(queryByText('Placeholder')).toBe(null);
+    expect(queryByText('ERR: Unexpected case occur')).toBe(null);
+    expect(queryByText('Active Playlist')).not.toBe(null);
     expect(queryByText(PLAYLISTS_BY_OFFERING_RESPONSE[0].name)).toBe(null);
     for(var i =0; i<3; i++)
       expect(queryByText(VIDEOS_BY_PLAYLIST_RESPONSE.medias[i].name)).toBe(null);
@@ -49,6 +51,8 @@ describe('Check videos rendering -- mode false', () => {
 
     expect(queryByText('dddd')).toBe(null);
     expect(queryByText(VIDEOS_BY_PLAYLIST_RESPONSE.medias[0].name)).toBe(null);
+    expect(queryByText('ERR: Unexpected case occur')).toBe(null);
+    expect(queryByText('Active Playlist')).not.toBe(null);
     for(var i =0; i<VIDEOS_BY_PLAYLIST_RESPONSE.length - 1; i++)
       expect(queryByText(VIDEOS_BY_PLAYLIST_RESPONSE.medias[i].name)).toBe(null);
   })
@@ -74,6 +78,8 @@ describe('Check videos rendering -- mode true', () => {
       <Reccomend courseId={offeringId} navigation={mockNaivgator} mode={true}/>
     )
     expect(queryByText('Placeholder')).toBe(null);
+    expect(queryByText('ERR: Unexpected case occur')).toBe(null);
+    expect(queryByText('Active Playlist')).not.toBe(null);
     expect(queryByText(PLAYLISTS_BY_OFFERING_RESPONSE[0].name)).toBe(null);
     for(var i =0; i<VIDEOS_BY_PLAYLIST_RESPONSE.length - 2; i++)
       expect(queryByText(VIDEOS_BY_PLAYLIST_RESPONSE.medias[i].name)).toBe(null);
@@ -93,6 +99,8 @@ describe('Check videos rendering -- mode true', () => {
 
     expect(queryByText('dddd')).toBe(null);
     expect(queryByText(VIDEOS_BY_PLAYLIST_RESPONSE.medias[0].name)).toBe(null);
+    expect(queryByText('ERR: Unexpected case occur')).toBe(null);
+    expect(queryByText('Active Playlist')).not.toBe(null);
     for(var i =0; i<VIDEOS_BY_PLAYLIST_RESPONSE.length - 1; i++)
       expect(queryByText(VIDEOS_BY_PLAYLIST_RESPONSE.medias[i].name)).toBe(null);
   })
