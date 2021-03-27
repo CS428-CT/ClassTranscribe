@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React from 'react'
 import MockAdapter from 'axios-mock-adapter'
-import { render } from '@testing-library/react-native'
+import { render, waitFor } from '@testing-library/react-native'
 import { ENDPOINTS } from '../../src/api/playlists'
 import { HTTP_STATUS_CODES } from '../../src/api'
 import {
@@ -31,12 +31,14 @@ describe('Check videos rendering -- mode false', () => {
     const { queryByText } = render(
       <Reccomend courseId={offeringId} navigation={mockNaivgator} mode={false} />
     )
-    expect(queryByText('Placeholder')).toBe(null)
-    expect(queryByText('ERR: Unexpected case occur')).toBe(null)
-    expect(queryByText('Active Playlist')).not.toBe(null)
-    expect(queryByText(PLAYLISTS_BY_OFFERING_RESPONSE[0].name)).toBe(null)
+    expect(await waitFor(() => queryByText('Placeholder'))).toBe(null)
+    expect(await waitFor(() => queryByText('ERR: Unexpected case occur'))).toBe(null)
+    expect(await waitFor(() => queryByText('Active Playlist'))).not.toBe(null)
+    expect(await waitFor(() => queryByText(PLAYLISTS_BY_OFFERING_RESPONSE[0].name))).toBe(null)
     for (let i = 0; i < 3; i += 1)
-      expect(queryByText(VIDEOS_BY_PLAYLIST_RESPONSE.medias[i].name)).toBe(null)
+      expect(await waitFor(() => queryByText(VIDEOS_BY_PLAYLIST_RESPONSE.medias[i].name))).toBe(
+        null
+      )
   })
 
   test('when given no Videos', async () => {
@@ -50,13 +52,15 @@ describe('Check videos rendering -- mode false', () => {
     const { queryByText } = render(
       <Reccomend courseId={offeringId} navigation={mockNaivgator} mode={false} />
     )
-
-    expect(queryByText('dddd')).toBe(null)
-    expect(queryByText(VIDEOS_BY_PLAYLIST_RESPONSE.medias[0].name)).toBe(null)
-    expect(queryByText('ERR: Unexpected case occur')).toBe(null)
-    expect(queryByText('Active Playlist')).not.toBe(null)
+    expect(await waitFor(() => queryByText('dddd'))).toBe(null)
+    expect(await waitFor(() => queryByText('Placeholder'))).toBe(null)
+    expect(await waitFor(() => queryByText('ERR: Unexpected case occur'))).toBe(null)
+    expect(await waitFor(() => queryByText('Active Playlist'))).not.toBe(null)
+    expect(await waitFor(() => queryByText(PLAYLISTS_BY_OFFERING_RESPONSE[0].name))).toBe(null)
     for (let i = 0; i < VIDEOS_BY_PLAYLIST_RESPONSE.length - 1; i += 1)
-      expect(queryByText(VIDEOS_BY_PLAYLIST_RESPONSE.medias[i].name)).toBe(null)
+      expect(await waitFor(() => queryByText(VIDEOS_BY_PLAYLIST_RESPONSE.medias[i].name))).toBe(
+        null
+      )
   })
 })
 
@@ -79,12 +83,14 @@ describe('Check videos rendering -- mode true', () => {
     const { queryByText } = render(
       <Reccomend courseId={offeringId} navigation={mockNaivgator} mode />
     )
-    expect(queryByText('Placeholder')).toBe(null)
-    expect(queryByText('ERR: Unexpected case occur')).toBe(null)
-    expect(queryByText('Active Playlist')).not.toBe(null)
-    expect(queryByText(PLAYLISTS_BY_OFFERING_RESPONSE[0].name)).toBe(null)
+    expect(await waitFor(() => queryByText('Placeholder'))).toBe(null)
+    expect(await waitFor(() => queryByText('ERR: Unexpected case occur'))).toBe(null)
+    expect(await waitFor(() => queryByText('Active Playlist'))).not.toBe(null)
+    expect(await waitFor(() => queryByText(PLAYLISTS_BY_OFFERING_RESPONSE[0].name))).toBe(null)
     for (let i = 0; i < VIDEOS_BY_PLAYLIST_RESPONSE.length - 2; i += 1)
-      expect(queryByText(VIDEOS_BY_PLAYLIST_RESPONSE.medias[i].name)).toBe(null)
+      expect(await waitFor(() => queryByText(VIDEOS_BY_PLAYLIST_RESPONSE.medias[i].name))).toBe(
+        null
+      )
   })
 
   test('when given no Videos', async () => {
@@ -99,11 +105,14 @@ describe('Check videos rendering -- mode true', () => {
       <Reccomend courseId={offeringId} navigation={mockNaivgator} mode />
     )
 
-    expect(queryByText('dddd')).toBe(null)
-    expect(queryByText(VIDEOS_BY_PLAYLIST_RESPONSE.medias[0].name)).toBe(null)
-    expect(queryByText('ERR: Unexpected case occur')).toBe(null)
-    expect(queryByText('Active Playlist')).not.toBe(null)
+    expect(await waitFor(() => queryByText('dddd'))).toBe(null)
+    expect(await waitFor(() => queryByText('Placeholder'))).toBe(null)
+    expect(await waitFor(() => queryByText('ERR: Unexpected case occur'))).toBe(null)
+    expect(await waitFor(() => queryByText('Active Playlist'))).not.toBe(null)
+    expect(await waitFor(() => queryByText(PLAYLISTS_BY_OFFERING_RESPONSE[0].name))).toBe(null)
     for (let i = 0; i < VIDEOS_BY_PLAYLIST_RESPONSE.length - 1; i += 1)
-      expect(queryByText(VIDEOS_BY_PLAYLIST_RESPONSE.medias[i].name)).toBe(null)
+      expect(await waitFor(() => queryByText(VIDEOS_BY_PLAYLIST_RESPONSE.medias[i].name))).toBe(
+        null
+      )
   })
 })
