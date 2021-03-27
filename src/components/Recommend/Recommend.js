@@ -112,7 +112,7 @@ const Recommend = ({ navigation, courseId, mode }) => {
       } else {
         for (let i = videos.length - 1; i >= 0; i -= 1) {
           if (videos[i].watchHistory) {
-            if (i == videos.length - 1) {
+            if (i === videos.length - 1) {
               stat = status.FINISH
             } else {
               rec = videos[i + 1]
@@ -121,7 +121,7 @@ const Recommend = ({ navigation, courseId, mode }) => {
             break
           }
         }
-        if(stat == status.PROCESS){
+        if (stat === status.PROCESS) {
           rec = videos[0]
           stat = status.NORMAL
         }

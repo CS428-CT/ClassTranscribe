@@ -40,7 +40,7 @@ const CourseListView = ({ navigation, route }) => {
 /**
  * The navigator of the home tab. Contains a stack navigator.
  */
- const HomeNaivgator = () => {
+const HomeNaivgator = () => {
   return (
     <Stack.Navigator initialRouteName={STACK_SCREENS.HOME}>
       <Stack.Screen name={STACK_SCREENS.HOME} component={Home} />
