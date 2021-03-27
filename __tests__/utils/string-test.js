@@ -1,4 +1,4 @@
-import { format } from '../../src/utils/string'
+import { format, truncateString } from '../../src/utils/string'
 
 describe('Check formatting', () => {
   test('single replacement', () => {
@@ -27,5 +27,19 @@ describe('Check formatting', () => {
 
   test('too few arguments', () => {
     expect(format('HELLO {0} {1}', 'WORLD')).toBe('HELLO WORLD {1}')
+  })
+})
+
+describe('Check truncation', () => {
+  test('already short enough', () => {
+    expect(truncateString('hello', 10)).toBe('hello')
+  })
+
+  test('too long', () => {
+    expect(truncateString('hello world', 5)).toBe('hello...')
+  })
+
+  test('exact length', () => {
+    expect(truncateString('hello', 5)).toBe('hello')
   })
 })

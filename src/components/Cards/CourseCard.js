@@ -1,54 +1,40 @@
-/* eslint-disable react/prop-types */
-import React, { Component } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import React from 'react'
+import { Text, View } from 'react-native'
+import PropTypes from 'prop-types'
+import { truncateString } from '../../utils/string'
+import styles from './CourseCard.style'
 
-class CourseCard extends Component {
-  styles = StyleSheet.create({
-    titleText: {
-      fontSize: 20,
-      fontWeight: 'bold',
-    },
+const MAX_DESCRIPTION_LENGTH = 100
 
-    card: {
-      backgroundColor: 'rgba(0,0,0,0.2)',
-      width: '50%',
-    },
-    container: {
-      padding: '0.01em 16px',
-    },
-    blue: {
-      color: 'white',
-      backgroundColor: '#2196F3',
-    },
-  })
-
-  constructor(props) {
-    super(props)
-    const { courseInfo } = this.props
-    this.state = { courseInfo }
+/**
+ * Component to render a single course item. Displays information about the course -- used in the HomeContainer
+ * @param {String} departmentAcronym Example: "CS" or "ECE"
+ * @param {String} courseNumber Example: "400" or "429"
+ * @param {String} courseName The name of the course to be displayed
+ * @param {String} courseDescription The full description of the course. Long course names will be truncated.
+ * @returns
+ */
+const CourseCard = ({ departmentAcronym, courseNumber, courseName, courseDescription = '' }) => {
+  const getCourseTitle = () => {
+    return `${departmentAcronym} ${courseNumber}: ${courseName}`
   }
 
-  empHandle = (text) => {
-    return text == null ? 'Content missing' : text
-  }
+  return (
+    <View style={styles.card}>
+      <Text style={(styles.container, styles.blue)}>{getCourseTitle()}</Text>
 
-  render() {
-    const { courseInfo } = this.state
-    return (
-      <View style={this.styles.card}>
-        <Text style={(this.styles.container, this.styles.blue)}>
-          {courseInfo.departmentAcronym} {courseInfo.courseNumber}:{' '}
-          {this.empHandle(courseInfo.courseName)}
-        </Text>
+      <Text style={styles.container}>
+        {truncateString(courseDescription, MAX_DESCRIPTION_LENGTH)}
+      </Text>
+    </View>
+  )
+}
 
-        <Text style={this.styles.container}>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit
-        </Text>
-
-        <Text style={(this.styles.container, this.styles.blue)}>Footer</Text>
-      </View>
-    )
-  }
+CourseCard.propTypes = {
+  departmentAcronym: PropTypes.string.isRequired,
+  courseNumber: PropTypes.string.isRequired,
+  courseName: PropTypes.string.isRequired,
+  courseDescription: PropTypes.string,
 }
 
 export default CourseCard

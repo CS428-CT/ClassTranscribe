@@ -3,18 +3,20 @@
 import React from 'react'
 import { View, Button } from 'react-native'
 import { Video } from 'expo-av'
+import PropTypes from 'prop-types'
 import styles from './VideoContainer.style'
 
-export default function VideoContainer() {
+const VideoContainer = ({ url }) => {
   const video = React.useRef(null)
   const [status, setStatus] = React.useState({})
+
   return (
     <View style={styles.container}>
       <Video
         ref={video}
         style={styles.video}
         source={{
-          uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
+          uri: url,
         }}
         useNativeControls
         resizeMode="contain"
@@ -32,3 +34,9 @@ export default function VideoContainer() {
     </View>
   )
 }
+
+VideoContainer.propTypes = {
+  url: PropTypes.string.isRequired,
+}
+
+export default VideoContainer

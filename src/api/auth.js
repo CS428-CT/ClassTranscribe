@@ -54,7 +54,7 @@ export const authenticateUser = async () => {
     if (resp?.status !== HTTP_STATUS_CODES.OK) return
     currentAuthenticatedUser = resp.data
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 }
 

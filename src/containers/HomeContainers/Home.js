@@ -1,79 +1,112 @@
-import React, { Component } from 'react'
-import { Text, FlatList, View, StyleSheet } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { TouchableNativeFeedback, Switch, FlatList, View, Text } from 'react-native'
+import PropTypes from 'prop-types'
 import { getStarredOfferingsData } from '../../api/offerings'
 import CourseCard from '../../components/Cards/CourseCard'
+import Recommend from '../../components/Recommend/Recommend'
+import { STACK_SCREENS } from '../CTNavigationContainer/index'
+import styles from './Home.style'
 
-class Home extends Component {
-  styles = StyleSheet.create({
-    container: {
-      display: 'flex',
-      flexDirection: 'row',
-    },
-    placeholder: {
-      height: 40,
-      margin: 12,
-      borderWidth: 1,
-    },
-  })
+/**
+ * Contains the home screen of the application. Lists starred courses and gives the user the ability
+ * to search for courses. Clicking on a course shows the playlists for it.
+ */
+const Home = ({ navigation }) => {
+  const [courses, setCourses] = useState([])
 
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      courses: null,
+  useEffect(() => {
+    const fetchCourseInfo = async () => {
+      const offerings = await getStarredOfferingsData()
+      setCourses(offerings)
     }
+    fetchCourseInfo()
+  }, [setCourses])
+
+  const onCourseSelected = (courseId) => {
+    navigation.push(STACK_SCREENS.COURSE_PLAYLISTS, { courseId })
   }
 
-  componentDidMount() {
-    this.fetchCourseInfo()
-  }
+  /**
+   * Renders a single course in the course list.
+   * @param {Object} item The underlying data for the item to render.
+   */
+  const renderCourseItem = ({ item }) => {
+    if (item.length === 0) return null
 
-  fetchCourseInfo() {
-    getStarredOfferingsData()
-      .then((response) => {
-        return response
-      })
-      .then((data) => this.setState({ courses: data }))
-  }
+    const course = item.courses[0]
+    const { courseName } = item.offering
+    const courseDescription = item.offering.description
+    const courseId = item.offering.id
 
-  renderCourseItem = ({ item }) => {
     return (
-      <View style={this.styles.container}>
-        {/* <Text>{item.courses[0].courseId}</Text>
-                <Text>{item.courses[0].courseName}</Text>
-                <Text>{item.courses[0].departmentAcronym} {item.courses[0].courseNumber}</Text> */}
-        <CourseCard courseInfo={item.courses[0]} />
-        <Text style={this.styles.placeholder}>Video Placeholder</Text>
+      <View style={styles.container}>
+        <TouchableNativeFeedback onPress={() => onCourseSelected(courseId)}>
+          <View style={styles.cardContainer}>
+            <CourseCard
+              key={courseId}
+              departmentAcronym={course.departmentAcronym}
+              courseNumber={course.courseNumber}
+              courseName={courseName}
+              courseDescription={courseDescription}
+            />
+          </View>
+        </TouchableNativeFeedback>
+        <View style={styles.recContainer}>
+          <Recommend navigation={navigation} courseId={courseId} mode={mode} />
+        </View>
       </View>
     )
   }
 
-  renderSeparator = () => {
+  /**
+   * Renders the separator for the course list
+   */
+  const renderSeparator = () => {
+    return <View style={styles.seperator} />
+  }
+
+  /**
+   * Renders all of the users' starred courses into a FlatList
+   */
+  const renderStarredCourses = () => {
+    if (courses == null) return null
+
     return (
-      <View
-        style={{
-          height: 2,
-          width: '100%',
-          backgroundColor: '#CED0CD',
-        }}
+      <FlatList
+        data={courses}
+        renderItem={renderCourseItem}
+        ItemSeparatorComponent={renderSeparator}
       />
     )
   }
 
-  render() {
-    const { courses } = this.state
+  const [mode, setMode] = useState(false)
+  const renderSwitch = () => {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        {courses != null && (
-          <FlatList
-            data={courses}
-            renderItem={this.renderCourseItem}
-            ItemSeparatorComponent={this.renderSeparator}
-          />
-        )}
+      <View style={styles.Container}>
+        <Text>Latest Video Mode: {mode.toString()}</Text>
+        <Switch
+          trackColor={{ false: 'black', true: 'grey' }}
+          thumbColor={mode ? 'purple' : 'black'}
+          onValueChange={() => setMode(!mode)}
+          value={mode}
+        />
       </View>
     )
   }
+
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      {renderSwitch()}
+      {renderStarredCourses()}
+    </View>
+  )
+}
+
+Home.propTypes = {
+  navigation: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 }
 
 export default Home
