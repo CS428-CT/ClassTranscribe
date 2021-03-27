@@ -18,6 +18,7 @@
     "no-use-before-define": "off",
     "no-restricted-syntax": "off",
     "no-await-in-loop": "off",
+    "prefer-destructuring": "off",
     "no-console": ["error", {"allow":["error"]}],
     "react/jsx-filename-extension": [
         1,
