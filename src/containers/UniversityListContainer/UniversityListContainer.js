@@ -6,8 +6,10 @@ import { getUniversities } from '../../api/universities'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
 
 /**
- * Contains the home screen of the application. Lists starred courses and gives the user the ability
- * to search for courses. Clicking on a course shows the playlists for it.
+ * Contains the university screen of the application. Lists all universities
+ * that participate (i.e. have registered departments in the application)
+ * in Class Transcribe (CT). Clicking on a university shows the departments
+ * with courses that participate in CT.
  */
 const UniversityListContainer = ({ navigation }) => {
   const [universities, setUniversities] = useState([])

@@ -17,26 +17,6 @@ import Download from '../DownloadContainer/Download'
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
 
-const UniversityListView = ({ navigation }) => {
-  return <UniversityListContainer navigation={navigation} />
-}
-
-const DepartmentListView = ({ navigation, route }) => {
-  return (
-    <DepartmentListContainer universityId={route.params.universityId} navigation={navigation} />
-  )
-}
-
-const CourseListView = ({ navigation, route }) => {
-  return (
-    <CourseListContainer
-      departmentId={route.params.departmentId}
-      acronym={route.params.acronym}
-      navigation={navigation}
-    />
-  )
-}
-
 /**
  * The navigator of the home tab. Contains a stack navigator.
  */
@@ -48,6 +28,38 @@ const HomeNaivgator = () => {
       <Stack.Screen name={STACK_SCREENS.PLAYLIST} component={PlaylistView} />
       <Stack.Screen name={STACK_SCREENS.VIDEO} component={VideoView} />
     </Stack.Navigator>
+  )
+}
+
+/**
+ * Wraps the UniversityListContainer so that it can
+ * receive the proper props
+ */
+const UniversityListView = ({ navigation }) => {
+  return <UniversityListContainer navigation={navigation} />
+}
+
+/**
+ * Wraps the DepartmentListContainer so that it can
+ * receive the proper props
+ */
+const DepartmentListView = ({ navigation, route }) => {
+  return (
+    <DepartmentListContainer universityId={route.params.universityId} navigation={navigation} />
+  )
+}
+
+/**
+ * Wraps the CourseListContainer so that it can
+ * receive the proper props
+ */
+const CourseListView = ({ navigation, route }) => {
+  return (
+    <CourseListContainer
+      departmentId={route.params.departmentId}
+      acronym={route.params.acronym}
+      navigation={navigation}
+    />
   )
 }
 
@@ -74,6 +86,7 @@ const PlaylistView = ({ navigation, route }) => {
 const VideoView = ({ route }) => {
   return <VideoContainer url={route.params.url} />
 }
+
 
 /**
  * The navigator of the Course tab. Contains a stack navigator.

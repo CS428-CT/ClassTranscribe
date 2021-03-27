@@ -6,8 +6,9 @@ import { ListItem } from 'react-native-elements'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
 
 /**
- * Contains the home screen of the application. Lists starred courses and gives the user the ability
- * to search for courses. Clicking on a course shows the playlists for it.
+ * A screen to show all the video files that a user downloaded. 
+ * Clicking on a download item in the list will take you to the video
+ * downloaded in the app.
  */
 const Download = ({ navigation }) => {
   const [localVideos, setLocalVideos] = useState([]) // an array of local video names

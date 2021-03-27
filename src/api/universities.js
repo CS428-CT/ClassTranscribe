@@ -50,9 +50,9 @@ export const getUniversityDepartments = async (universityId) => {
 }
 
 /**
- * Gets the list of departments for a university
+ * Gets the list of courses for a university's department
  * @param {string} departmentId
- * @returns The list of departments in a university
+ * @returns The list of courses in a university
  */
 export const getDepartmentCourses = async (departmentId) => {
   const url = format(ENDPOINTS.COURSES, departmentId)
@@ -69,25 +69,3 @@ export const getDepartmentCourses = async (departmentId) => {
 
   return null
 }
-
-// /**
-//  * Gets the list of courses for a department in a university
-//  * @param {string} departmentId
-//  * @returns The list of courses in a departments in a university
-//  */
-// export const getCourses = async (universityId, deptId) => {
-//   // TODO: CHANGE THE STR CONCATENTATION (should be something like universityId/deptId)
-//   const url = format(ENDPOINTS.UNIVERSITIES, universityId)
-
-//   try {
-//     const resp = await axios.get(url)
-//     if (resp?.status !== HTTP_STATUS_CODES.OK) {
-//       return null
-//     }
-//     return resp.data
-//   } catch (error) {
-//     console.error(error)
-//   }
-
-//   return null
-// }

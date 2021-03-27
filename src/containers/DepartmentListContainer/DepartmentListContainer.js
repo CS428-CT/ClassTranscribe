@@ -6,8 +6,10 @@ import { getUniversityDepartments } from '../../api/universities'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
 
 /**
- * Contains the home screen of the application. Lists starred courses and gives the user the ability
- * to search for courses. Clicking on a course shows the playlists for it.
+ * Contains the department list screen. Lists all departments that 
+ * participate in Class Transcribe (CT) at a particular university.
+ * Clicking on a department shows all the courses that participate
+ * in CT.
  */
 const DepartmentListContainer = ({ universityId, navigation }) => {
   const [departments, setDepartments] = useState([])
@@ -29,7 +31,7 @@ const DepartmentListContainer = ({ universityId, navigation }) => {
   }
 
   /**
-   * Renders all of the users' starred courses into a FlatList
+   * Renders all of the departments in a particular university into a FlatList
    */
   const renderItem = ({ item }) => {
     return (
