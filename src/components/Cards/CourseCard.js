@@ -14,16 +14,21 @@ const MAX_DESCRIPTION_LENGTH = 100
  * @param {String} courseDescription The full description of the course. Long course names will be truncated.
  * @returns
  */
+
 const CourseCard = ({ departmentAcronym, courseNumber, courseName, courseDescription = '' }) => {
   const getCourseTitle = () => {
-    return `${departmentAcronym} ${courseNumber}: ${courseName}`
+    return `${departmentAcronym} ${courseNumber}`
+  }
+
+  const getCourseName = () => {
+    return `${courseName}`
   }
 
   return (
     <View style={styles.card}>
-      <Text style={(styles.container, styles.blue)}>{getCourseTitle()}</Text>
-
-      <Text style={styles.container}>
+      <Text style={styles.courseTitle}>{getCourseTitle()}</Text>
+      <Text style={styles.courseName}>{getCourseName()}</Text>
+      <Text style={styles.courseContent}>
         {truncateString(courseDescription, MAX_DESCRIPTION_LENGTH)}
       </Text>
     </View>

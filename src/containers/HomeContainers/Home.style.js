@@ -15,15 +15,12 @@ const HomeStyle = StyleSheet.create({
   recContainer: {
     width: '50%',
   },
-  placeholder: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-  },
-  seperator: {
-    height: 2,
-    width: '100%',
-    backgroundColor: '#CED0CD',
+
+  viewStyle: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '3%',
   },
 })
 

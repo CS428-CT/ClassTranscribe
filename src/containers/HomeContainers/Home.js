@@ -59,25 +59,12 @@ const Home = ({ navigation }) => {
   }
 
   /**
-   * Renders the separator for the course list
-   */
-  const renderSeparator = () => {
-    return <View style={styles.seperator} />
-  }
-
-  /**
    * Renders all of the users' starred courses into a FlatList
    */
   const renderStarredCourses = () => {
     if (courses == null) return null
 
-    return (
-      <FlatList
-        data={courses}
-        renderItem={renderCourseItem}
-        ItemSeparatorComponent={renderSeparator}
-      />
-    )
+    return <FlatList data={courses} renderItem={renderCourseItem} />
   }
 
   const [mode, setMode] = useState(false)
@@ -96,7 +83,7 @@ const Home = ({ navigation }) => {
   }
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={styles.viewStyle}>
       {renderSwitch()}
       {renderStarredCourses()}
     </View>

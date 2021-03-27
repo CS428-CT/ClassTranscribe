@@ -3,14 +3,53 @@ import * as React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { STACK_SCREENS } from './index'
 import Home from '../HomeContainers/Home'
 import CoursePlaylistsContainer from '../CoursePlaylistsContainer/CoursePlaylistsContainer'
 import VideoContainer from '../VideoContainer/VideoContainer'
+import UniversityListContainer from '../UniversityListContainer/UniversityListContainer'
 import PlaylistContainer from '../PlaylistContainer/PlaylistContainer'
+import DepartmentListContainer from '../DepartmentListContainer/DepartmentListContainer'
+import CourseListContainer from '../CourseListContainer/CourseListContainer'
+import Download from '../DownloadContainer/Download'
 
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
+
+const UniversityListView = ({ navigation }) => {
+  return <UniversityListContainer navigation={navigation} />
+}
+
+const DepartmentListView = ({ navigation, route }) => {
+  return (
+    <DepartmentListContainer universityId={route.params.universityId} navigation={navigation} />
+  )
+}
+
+const CourseListView = ({ navigation, route }) => {
+  return (
+    <CourseListContainer
+      departmentId={route.params.departmentId}
+      acronym={route.params.acronym}
+      navigation={navigation}
+    />
+  )
+}
+
+/**
+ * The navigator of the home tab. Contains a stack navigator.
+ */
+ const HomeNaivgator = () => {
+  return (
+    <Stack.Navigator initialRouteName={STACK_SCREENS.HOME}>
+      <Stack.Screen name={STACK_SCREENS.HOME} component={Home} />
+      <Stack.Screen name={STACK_SCREENS.COURSE_PLAYLISTS} component={CoursePlaylistsView} />
+      <Stack.Screen name={STACK_SCREENS.PLAYLIST} component={PlaylistView} />
+      <Stack.Screen name={STACK_SCREENS.VIDEO} component={VideoView} />
+    </Stack.Navigator>
+  )
+}
 
 /**
  * Wraps the CoursePlaylistsContainer so that it can
@@ -37,21 +76,25 @@ const VideoView = ({ route }) => {
 }
 
 /**
- * The navigator of the home tab. Contains a stack navigator.
+ * The navigator of the Course tab. Contains a stack navigator.
  */
-const HomeNaivgator = () => {
+const CourseNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName={STACK_SCREENS.HOME}>
+    <Stack.Navigator initialRouteName={STACK_SCREENS.UNIVERSITY_LIST}>
+      <Stack.Screen name={STACK_SCREENS.UNIVERSITY_LIST} component={UniversityListView} />
+      <Stack.Screen name={STACK_SCREENS.DEPT_LIST} component={DepartmentListView} />
+      <Stack.Screen name={STACK_SCREENS.COURSE_LIST} component={CourseListView} />
       <Stack.Screen name={STACK_SCREENS.HOME} component={Home} />
       <Stack.Screen name={STACK_SCREENS.COURSE_PLAYLISTS} component={CoursePlaylistsView} />
       <Stack.Screen name={STACK_SCREENS.PLAYLIST} component={PlaylistView} />
       <Stack.Screen name={STACK_SCREENS.VIDEO} component={VideoView} />
+      <Stack.Screen name={STACK_SCREENS.DOWNLOAD} component={Download} />
     </Stack.Navigator>
   )
 }
 
 /**
- * This is the root naivagator for the entire application.
+ * This is the root navigator for the entire application.
  * Contains a home tab and a video tab. Within each tab, there may be additional navigators
  * such as a stack navigator.
  */
@@ -59,8 +102,47 @@ const CTNavigationContainer = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen name="HomeNavigator" component={HomeNaivgator} />
-        <Tab.Screen name="Video" component={VideoView} />
+        <Tab.Screen
+          name="Course"
+          component={CourseNavigator}
+          options={{
+            tabBarLabel: 'Course',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="school" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Home"
+          component={HomeNaivgator}
+          options={{
+            tabBarLabel: 'Home',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="home" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Video"
+          component={VideoView}
+          initialParams={{ url: null }}
+          options={{
+            tabBarLabel: 'Video',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="video" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Download"
+          component={Download}
+          options={{
+            tabBarLabel: 'Download',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="download" color={color} size={size} />
+            ),
+          }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   )

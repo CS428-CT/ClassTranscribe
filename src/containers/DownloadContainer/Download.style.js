@@ -1,6 +1,19 @@
 import { StyleSheet } from 'react-native'
 
-const CourseCardStyle = StyleSheet.create({
+const DownloadStyle = StyleSheet.create({
+  container: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
+  viewStyle: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '3%',
+  },
+
   card: {
     marginTop: '2%',
     marginBottom: '2%',
@@ -38,4 +51,4 @@ const CourseCardStyle = StyleSheet.create({
   },
 })
 
-export default CourseCardStyle
+export default DownloadStyle
