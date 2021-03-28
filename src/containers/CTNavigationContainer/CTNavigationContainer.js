@@ -12,7 +12,6 @@ import UniversityListContainer from '../UniversityListContainer/UniversityListCo
 import PlaylistContainer from '../PlaylistContainer/PlaylistContainer'
 import DepartmentListContainer from '../DepartmentListContainer/DepartmentListContainer'
 import CourseListContainer from '../CourseListContainer/CourseListContainer'
-import Download from '../DownloadContainer/Download'
 
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
@@ -88,7 +87,6 @@ const CourseNavigator = () => {
       <Stack.Screen name={STACK_SCREENS.COURSE_PLAYLISTS} component={CoursePlaylistsView} />
       <Stack.Screen name={STACK_SCREENS.PLAYLIST} component={PlaylistView} />
       <Stack.Screen name={STACK_SCREENS.VIDEO} component={VideoView} />
-      <Stack.Screen name={STACK_SCREENS.DOWNLOAD} component={Download} />
     </Stack.Navigator>
   )
 }
@@ -125,21 +123,10 @@ const CTNavigationContainer = () => {
         <Tab.Screen
           name="Video"
           component={VideoView}
-          initialParams={{ url: null }}
           options={{
             tabBarLabel: 'Video',
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="video" color={color} size={size} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Download"
-          component={Download}
-          options={{
-            tabBarLabel: 'Download',
-            tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="download" color={color} size={size} />
             ),
           }}
         />
