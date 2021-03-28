@@ -6,8 +6,10 @@ import { getDepartmentCourses } from '../../api/universities'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
 
 /**
- * Contains the home screen of the application. Lists starred courses and gives the user the ability
- * to search for courses. Clicking on a course shows the playlists for it.
+ * Contains the course screen of the application. Lists all courses
+ * that participate (i.e. instructor has registered the courses and
+ * uploads videos) in Class Transcribe. Clicking on a course shows the user's
+ * starred offerings for it.
  */
 const CourseListContainer = ({ departmentId, acronym, navigation }) => {
   const [courses, setCourses] = useState([])
