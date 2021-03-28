@@ -9,7 +9,7 @@ import styles from './VideoContainer.style'
 
 const VideoContainer = ({ url }) => {
   const video = React.useRef(null)
-  const [videoURI, setVideoURI] = React.useState()
+  const [videoURI, setVideoURI] = React.useState(url)
   const [status, setStatus] = React.useState({
     isMuted: false,
     isPlaying: false,
