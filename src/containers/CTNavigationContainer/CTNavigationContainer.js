@@ -87,7 +87,6 @@ const VideoView = ({ route }) => {
   return <VideoContainer url={route.params.url} />
 }
 
-
 /**
  * The navigator of the Course tab. Contains a stack navigator.
  */

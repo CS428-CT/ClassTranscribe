@@ -6,7 +6,7 @@ import { getUniversityDepartments } from '../../api/universities'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
 
 /**
- * Contains the department list screen. Lists all departments that 
+ * Contains the department list screen. Lists all departments that
  * participate in Class Transcribe (CT) at a particular university.
  * Clicking on a department shows all the courses that participate
  * in CT.

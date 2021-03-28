@@ -6,8 +6,8 @@ import { getDepartmentCourses } from '../../api/universities'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
 
 /**
- * Contains the course screen of the application. Lists all courses 
- * that participate (i.e. instructor has registered the courses and 
+ * Contains the course screen of the application. Lists all courses
+ * that participate (i.e. instructor has registered the courses and
  * uploads videos) in Class Transcribe. Clicking on a course shows the user's
  * starred offerings for it.
  */
