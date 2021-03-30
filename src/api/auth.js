@@ -27,7 +27,8 @@ axios.interceptors.request.use(
 let currentAuthenticatedUser = null
 
 export const ENDPOINTS = {
-  SIGN_IN: `${BASE_URL}Account/TestSignIn`,
+  TEST_SIGN_IN: `${BASE_URL}Account/TestSignIn`,
+  SIGN_IN: `${BASE_URL}Account/SignIn`,
 }
 
 /**
