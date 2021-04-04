@@ -12,11 +12,10 @@ import { STACK_SCREENS } from '../../src/containers/CTNavigationContainer'
 const universityId = '1001'
 const mock = new MockAdapter(axios)
 const assertNoButtonsRendered = async () => {
-    const { queryAllByA11yRole } = render(<DepartmentListContainer universityId={universityId} />)
-    const departmentList = await waitFor(() => queryAllByA11yRole('button'))
-    expect(departmentList.length).toBe(0)
+  const { queryAllByA11yRole } = render(<DepartmentListContainer universityId={universityId} />)
+  const departmentList = await waitFor(() => queryAllByA11yRole('button'))
+  expect(departmentList.length).toBe(0)
 }
-
 
 describe('Check departments rendering', () => {
   afterEach(() => {
@@ -44,12 +43,12 @@ describe('Check departments rendering', () => {
 
   test('when no departments', async () => {
     mock.onGet(`${format(ENDPOINTS.DEPARTMENTS, universityId)}`).reply(HTTP_STATUS_CODES.OK, [])
-    await assertNoButtonsRendered();
+    await assertNoButtonsRendered()
   })
 
   test('on network error', async () => {
     mock.onGet(`${format(ENDPOINTS.DEPARTMENTS, universityId)}`).networkError()
-    await assertNoButtonsRendered();
+    await assertNoButtonsRendered()
   })
 })
 

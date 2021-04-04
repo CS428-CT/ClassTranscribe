@@ -46,12 +46,12 @@ describe('Check courses rendering', () => {
 
   test('when no courses', async () => {
     mock.onGet(`${format(ENDPOINTS.COURSES, departmentId)}`).reply(HTTP_STATUS_CODES.OK, [])
-    await assertNoButtonsRendered();
+    await assertNoButtonsRendered()
   })
 
   test('on network error', async () => {
     mock.onGet(`${format(ENDPOINTS.COURSES, departmentId)}`).networkError()
-    await assertNoButtonsRendered();
+    await assertNoButtonsRendered()
   })
 })
 
