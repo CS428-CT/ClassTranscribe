@@ -74,7 +74,6 @@ describe('Check playlists rendering', () => {
 })
 
 describe('Check playlists navigation', () => {
-  const offeringId = 'ac5b1727-629c-443b-8c1a-cc1bd541af6a'
   const mockNavigator = { push: jest.fn() }
 
   test('when clicking on first item', async () => {
