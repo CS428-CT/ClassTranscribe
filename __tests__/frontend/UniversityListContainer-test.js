@@ -9,9 +9,9 @@ import UniversityListContainer from '../../src/containers/UniversityListContaine
 import { STACK_SCREENS } from '../../src/containers/CTNavigationContainer'
 
 const assertNoButtonsRendered = async () => {
-    const { queryAllByA11yRole } = render(<UniversityListContainer />)
-    const universityList = await waitFor(() => queryAllByA11yRole('button'))
-    expect(universityList.length).toBe(0)
+  const { queryAllByA11yRole } = render(<UniversityListContainer />)
+  const universityList = await waitFor(() => queryAllByA11yRole('button'))
+  expect(universityList.length).toBe(0)
 }
 
 const mock = new MockAdapter(axios)
@@ -36,12 +36,12 @@ describe('Check universities rendering', () => {
 
   test('when no universities', async () => {
     mock.onGet(`${ENDPOINTS.UNIVERSITIES}`).reply(HTTP_STATUS_CODES.OK, [])
-    await assertNoButtonsRendered();
+    await assertNoButtonsRendered()
   })
 
   test('on network error', async () => {
     mock.onGet(`${ENDPOINTS.UNIVERSITIES}`).networkError()
-    await assertNoButtonsRendered();
+    await assertNoButtonsRendered()
   })
 })
 
