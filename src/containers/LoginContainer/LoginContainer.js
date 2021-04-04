@@ -8,15 +8,18 @@ import * as AuthSession from 'expo-auth-session'
 import jwtDecode from 'jwt-decode';
 
 // TODO: STORE IN .ENV
+const AUTH0_DOMAIN="https://dev-scwjtb5k.us.auth0.com"
+const AUTH0_CLIENT_ID="8fOQ5pHc0jf3zSWIUH6agDYO4F3MimpJ"
+const CALLBACK_URL="https://auth.expo.io/@mattwalo32/class-transcribe";
+
 const auth0Domain = AUTH0_DOMAIN
 const auth0ClientId = AUTH0_CLIENT_ID
 const callbackURL = CALLBACK_URL
 
 const authorizationEndpoint = `${auth0Domain}/authorize`;
-
-//const useProxy = Platform.select({ web: false, default: true });
-//const redirectUri = AuthSession.makeRedirectUri({ useProxy });
-const redirectUri = callbackURL
+const useProxy = Platform.select({ web: false, default: true });
+const redirectUri = AuthSession.makeRedirectUri({ useProxy });
+//const redirectUri = callbackURL
 console.log(redirectUri)
 
 /**
@@ -55,7 +58,9 @@ const LoginContainer = ({ onAuthLevelChange }) => {
         // Retrieve the JWT token and decode it
         const jwtToken = result.params.id_token;
         console.log(jwtToken)
+
         const decoded = jwtDecode(jwtToken);
+        //console.log(decoded)
 
         const { name } = decoded;
       }
@@ -67,9 +72,7 @@ const LoginContainer = ({ onAuthLevelChange }) => {
    * authentication flow and calls onAuthLevelChange upon completion.
    */
   const onAuthenticate = async () => {
-    const supported = await Linking.canOpenURL(CALLBACK_URL);
-    console.log("IS SUPPORTED: " + supported)
-    promptAsync()
+    promptAsync({useProxy})
     //await authenticateUser()
     //onAuthLevelChange(isUserAuthenticated())
   }
