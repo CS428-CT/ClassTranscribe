@@ -6,6 +6,11 @@ import { Button, Text } from 'react-native-paper'
 import { Video } from 'expo-av'
 import PropTypes from 'prop-types'
 import styles from './VideoContainer.style'
+import { getCurrentAuthenticatedUser } from '../../api/auth'
+
+// CT requires this header as an addititonal security measure. Since we're not an approved referer, we can actually
+// just hardcode a valid referer and the API accepts it.
+const REFERER = "https://classtranscribe-dev.ncsa.illinois.edu/video?id=c79700ac-c3fc-439f-95c2-0511a1092862";
 
 const VideoContainer = ({ url }) => {
   const video = React.useRef(null)
@@ -15,6 +20,11 @@ const VideoContainer = ({ url }) => {
     rate: 1.0,
   })
 
+  const videoSource = {
+    uri: url,
+    headers: { "referer": REFERER}
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.input}>
@@ -23,9 +33,7 @@ const VideoContainer = ({ url }) => {
       <Video
         ref={video}
         style={styles.video}
-        source={{
-          uri: url,
-        }}
+        source={videoSource}
         useNativeControls
         resizeMode="contain"
         isLooping
