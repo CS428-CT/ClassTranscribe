@@ -9,13 +9,15 @@ import { format } from '../../src/utils/string'
 import CoursePlaylistsContainer from '../../src/containers/CoursePlaylistsContainer/CoursePlaylistsContainer'
 import { STACK_SCREENS } from '../../src/containers/CTNavigationContainer'
 
-/* 
-Specifically for Comptuer Science department (department id: 2001)
-*/
-
 const mock = new MockAdapter(axios)
+const offeringId = 'ac5b1727-629c-443b-8c1a-cc1bd541af6a'
+const assertNoButtonsRendered = async () => {
+    const { queryAllByA11yRole } = render(<CoursePlaylistsContainer courseId={offeringId} />)
+    const playlists = await waitFor(() => queryAllByA11yRole('button'))
+    expect(playlists.length).toBe(0)
+}
+
 describe('Check playlists rendering', () => {
-  const offeringId = 'ac5b1727-629c-443b-8c1a-cc1bd541af6a'
   const displayedKeys = ['name']
   const undisplayedKeys = [
     'id',
@@ -62,18 +64,12 @@ describe('Check playlists rendering', () => {
     mock
       .onGet(`${format(ENDPOINTS.PLAYLISTS_BY_OFFERING, offeringId)}`)
       .reply(HTTP_STATUS_CODES.OK, [])
-
-    const { queryAllByA11yRole } = render(<CoursePlaylistsContainer courseId={offeringId} />)
-    const playlists = await waitFor(() => queryAllByA11yRole('button'))
-    expect(playlists.length).toBe(0)
+    await assertNoButtonsRendered();
   })
 
   test('on network error', async () => {
     mock.onGet(`${format(ENDPOINTS.PLAYLISTS_BY_OFFERING, offeringId)}`).networkError()
-
-    const { queryAllByA11yRole } = render(<CoursePlaylistsContainer courseId={offeringId} />)
-    const playlists = await waitFor(() => queryAllByA11yRole('button'))
-    expect(playlists.length).toBe(0)
+    await assertNoButtonsRendered();
   })
 })
 
