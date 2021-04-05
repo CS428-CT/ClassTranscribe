@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react'
-import  { AUTH0_DOMAIN, AUTH0_CLIENT_ID } from "@env"
+import { AUTH0_DOMAIN, AUTH0_CLIENT_ID } from '@env'
 import { View, Button } from 'react-native'
 import PropTypes from 'prop-types'
+import * as AuthSession from 'expo-auth-session'
+import jwtDecode from 'jwt-decode'
 import { authenticateUser, isUserAuthenticated } from '../../api/auth'
 import styles from './LoginContainer.style'
-import * as AuthSession from 'expo-auth-session'
-import jwtDecode from 'jwt-decode';
 
-const authorizationEndpoint = `${AUTH0_DOMAIN}/authorize`;
-const useProxy = Platform.select({ web: false, default: true });
-const redirectUri = AuthSession.makeRedirectUri({ useProxy });
+const authorizationEndpoint = `${AUTH0_DOMAIN}/authorize`
+const useProxy = Platform.select({ web: false, default: true })
+const redirectUri = AuthSession.makeRedirectUri({ useProxy })
 
 /**
  * Contains the log in screen. If a user is not authenticated, this screen should be shown.
@@ -17,7 +17,6 @@ const redirectUri = AuthSession.makeRedirectUri({ useProxy });
  *                                     Takes 1 boolean parameter that is true if the user is authenticated.
  */
 const LoginContainer = ({ onAuthLevelChange }) => {
-
   const [_, result, promptAsync] = AuthSession.useAuthRequest(
     {
       redirectUri,
@@ -29,7 +28,7 @@ const LoginContainer = ({ onAuthLevelChange }) => {
       },
     },
     { authorizationEndpoint }
-  );
+  )
 
   useEffect(() => {
     if (result) {
@@ -37,25 +36,25 @@ const LoginContainer = ({ onAuthLevelChange }) => {
         console.log(
           'Authentication error',
           result.params.error_description || 'something went wrong'
-        );
-        return;
+        )
+        return
       }
       if (result.type === 'success') {
-        const jwtToken = result.params.id_token;
-        const decoded = jwtDecode(jwtToken);
-        const { name } = decoded;
+        const jwtToken = result.params.id_token
+        const decoded = jwtDecode(jwtToken)
+        const { name } = decoded
       }
     }
-  }, [result]);
+  }, [result])
 
   /**
    * Called when the user clicks the "Log in" button. Initiates the
    * authentication flow and calls onAuthLevelChange upon completion.
    */
   const onAuthenticate = async () => {
-    promptAsync({useProxy})
-    //await authenticateUser()
-    //onAuthLevelChange(isUserAuthenticated())
+    promptAsync({ useProxy })
+    // await authenticateUser()
+    // onAuthLevelChange(isUserAuthenticated())
   }
 
   return (
