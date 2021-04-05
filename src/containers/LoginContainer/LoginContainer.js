@@ -1,26 +1,15 @@
 import React, { useEffect } from 'react'
-//import  { AUTH0_DOMAIN, AUTH0_CLIENT_ID, CALLBACK_URL} from "@env"
-import { View, Button, Linking } from 'react-native'
+import  { AUTH0_DOMAIN, AUTH0_CLIENT_ID } from "@env"
+import { View, Button } from 'react-native'
 import PropTypes from 'prop-types'
 import { authenticateUser, isUserAuthenticated } from '../../api/auth'
 import styles from './LoginContainer.style'
 import * as AuthSession from 'expo-auth-session'
 import jwtDecode from 'jwt-decode';
 
-// TODO: STORE IN .ENV
-const AUTH0_DOMAIN="https://dev-scwjtb5k.us.auth0.com"
-const AUTH0_CLIENT_ID="8fOQ5pHc0jf3zSWIUH6agDYO4F3MimpJ"
-const CALLBACK_URL="https://auth.expo.io/@mattwalo32/class-transcribe";
-
-const auth0Domain = AUTH0_DOMAIN
-const auth0ClientId = AUTH0_CLIENT_ID
-const callbackURL = CALLBACK_URL
-
-const authorizationEndpoint = `${auth0Domain}/authorize`;
+const authorizationEndpoint = `${AUTH0_DOMAIN}/authorize`;
 const useProxy = Platform.select({ web: false, default: true });
 const redirectUri = AuthSession.makeRedirectUri({ useProxy });
-//const redirectUri = callbackURL
-console.log(redirectUri)
 
 /**
  * Contains the log in screen. If a user is not authenticated, this screen should be shown.
@@ -29,16 +18,13 @@ console.log(redirectUri)
  */
 const LoginContainer = ({ onAuthLevelChange }) => {
 
-  const [request, result, promptAsync] = AuthSession.useAuthRequest(
+  const [_, result, promptAsync] = AuthSession.useAuthRequest(
     {
       redirectUri,
-      clientId: auth0ClientId,
-      // id_token will return a JWT token
+      clientId: AUTH0_CLIENT_ID,
       responseType: 'id_token',
-      // retrieve the user's profile
       scopes: ['openid', 'profile', 'email', 'org.cilogon.userinfo'],
       extraParams: {
-        // ideally, this will be a random value
         nonce: 'nonce',
       },
     },
@@ -55,13 +41,8 @@ const LoginContainer = ({ onAuthLevelChange }) => {
         return;
       }
       if (result.type === 'success') {
-        // Retrieve the JWT token and decode it
         const jwtToken = result.params.id_token;
-        console.log(jwtToken)
-
         const decoded = jwtDecode(jwtToken);
-        //console.log(decoded)
-
         const { name } = decoded;
       }
     }
