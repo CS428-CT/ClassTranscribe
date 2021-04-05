@@ -37,7 +37,7 @@ export const getUserMetadata = async () => {
   try {
     const resp = await axios.get(ENDPOINTS.USER_METADATA)
     if (resp?.status !== HTTP_STATUS_CODES.OK) return
-    return resp.data
+    currentAuthenticatedUser.metaData = resp.data;
   } catch (error) {
     console.error(error)
   }
