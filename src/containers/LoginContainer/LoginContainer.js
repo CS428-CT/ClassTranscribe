@@ -1,15 +1,19 @@
 import React, { useEffect } from 'react'
-import { AUTH0_DOMAIN, AUTH0_CLIENT_ID } from '@env'
+//import { AUTH0_DOMAIN, AUTH0_CLIENT_ID } from '@env'
 import { View, Button } from 'react-native'
 import PropTypes from 'prop-types'
 import * as AuthSession from 'expo-auth-session'
 import jwtDecode from 'jwt-decode'
-import { authenticateUser, isUserAuthenticated } from '../../api/auth'
+import { authenticateUser, getUserMetadata, isUserAuthenticated, setAuthToken } from '../../api/auth'
 import styles from './LoginContainer.style'
+import { WebView } from "react-native-webview";
+
 
 const authorizationEndpoint = `${AUTH0_DOMAIN}/authorize`
 const useProxy = Platform.select({ web: false, default: true })
 const redirectUri = AuthSession.makeRedirectUri({ useProxy })
+
+// TODO: Change expo credentials then get Angrave to add the callback url
 
 /**
  * Contains the log in screen. If a user is not authenticated, this screen should be shown.
@@ -22,7 +26,7 @@ const LoginContainer = ({ onAuthLevelChange }) => {
       redirectUri,
       clientId: AUTH0_CLIENT_ID,
       responseType: 'id_token',
-      scopes: ['openid', 'profile', 'email', 'org.cilogon.userinfo'],
+      scopes: ['openid', 'profile', 'email'],
       extraParams: {
         nonce: 'nonce',
       },
@@ -41,6 +45,7 @@ const LoginContainer = ({ onAuthLevelChange }) => {
       }
       if (result.type === 'success') {
         const jwtToken = result.params.id_token
+        console.log(jwtToken)
         const decoded = jwtDecode(jwtToken)
         const { name } = decoded
       }
@@ -57,8 +62,24 @@ const LoginContainer = ({ onAuthLevelChange }) => {
     // onAuthLevelChange(isUserAuthenticated())
   }
 
+  const injectedJavascript = `
+    const getToken = () => {
+      window.ReactNativeWebView.postMessage(localStorage["authToken"])
+    }
+
+    setTimeout(getToken, 10000);
+  `;
+
+  const onBrowserMessage = async (event) => {
+    console.log(event);
+    setAuthToken(event.nativeEvent.data) 
+    const data = await getUserMetadata();
+    console.log(data)
+  }
+
   return (
     <View style={styles.container}>
+      <WebView style={{height: 300, width: 300}} source={{ uri: "https://classtranscribe.illinois.edu"}} injectedJavaScript={injectedJavascript} onMessage={onBrowserMessage}/>
       <Button
         onPress={onAuthenticate}
         title="Log in with CI Logon"
