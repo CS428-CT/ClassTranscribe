@@ -33,7 +33,7 @@ export const ENDPOINTS = {
 }
 
 export const getUserMetadata = async () => {
-  if (!isUserAuthenticated()) return null
+  if (!isUserAuthenticated()) return
 
   try {
     const resp = await axios.get(ENDPOINTS.USER_METADATA)
@@ -43,8 +43,6 @@ export const getUserMetadata = async () => {
   } catch (error) {
     console.error(error)
   }
-
-  return null
 }
 
 export const setAuthToken = (token) => {

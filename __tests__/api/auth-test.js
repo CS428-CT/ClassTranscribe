@@ -9,7 +9,7 @@ import {
   getUserMetadata,
 } from '../../src/api/auth'
 import { HTTP_STATUS_CODES } from '../../src/api'
-import { METADATA_RESPONSE, SIGN_IN_RESPONSE } from '../mock_responses/mock-auth-response'
+import { METADATA_RESPONSE } from '../mock_responses/mock-auth-response'
 
 describe('Check get user metadata', () => {
   const MOCK_AUTH_TOKEN = 'A'
@@ -37,7 +37,7 @@ describe('Check get user metadata', () => {
   test('with bad status code', async () => {
     mock
       .onGet(`${ENDPOINTS.USER_METADATA}`)
-      .reply(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR, SIGN_IN_RESPONSE)
+      .reply(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR, METADATA_RESPONSE)
     setAuthToken(MOCK_AUTH_TOKEN)
     await getUserMetadata()
 
