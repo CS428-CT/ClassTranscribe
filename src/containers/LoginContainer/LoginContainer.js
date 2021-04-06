@@ -57,7 +57,6 @@ const LoginContainer = ({ onAuthLevelChange }) => {
       source={{ uri: 'https://classtranscribe.illinois.edu' }}
       injectedJavaScript={injectedJavascript}
       onMessage={onBrowserMessage}
-      accessibilityRole="browser"
     />
   )
 }
