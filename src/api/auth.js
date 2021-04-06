@@ -9,7 +9,8 @@ axios.interceptors.request.use(
   (request) => {
     const userData = getCurrentAuthenticatedUser()
     if (userData?.authToken != null) request.headers.Authorization = `Bearer ${userData.authToken}`
-    request.headers.referer = "https://classtranscribe.illinois.edu/offering/e740770d-e6fb-4ddb-86ca-a49a8dcc7d28"
+    request.headers.referer =
+      'https://classtranscribe.illinois.edu/offering/e740770d-e6fb-4ddb-86ca-a49a8dcc7d28'
     return request
   },
   (error) => {
@@ -28,29 +29,27 @@ axios.interceptors.request.use(
 let currentAuthenticatedUser = null
 
 export const ENDPOINTS = {
-  USER_METADATA: `${BASE_URL}Account/GetUserMetadata/GetUserMetadata`
+  USER_METADATA: `${BASE_URL}Account/GetUserMetadata/GetUserMetadata`,
 }
 
 export const getUserMetadata = async () => {
-  if (!isUserAuthenticated())
-    return null;
+  if (!isUserAuthenticated()) return null
 
   try {
     const resp = await axios.get(ENDPOINTS.USER_METADATA)
     if (resp?.status !== HTTP_STATUS_CODES.OK) return
-    currentAuthenticatedUser.metadata = {};
+    currentAuthenticatedUser.metadata = {}
     currentAuthenticatedUser.metadata.starredOfferings = resp.data.starredOfferings
   } catch (error) {
     console.error(error)
   }
 
-  return null;
+  return null
 }
 
 export const setAuthToken = (token) => {
-  if (!currentAuthenticatedUser)
-    currentAuthenticatedUser = {};
-  currentAuthenticatedUser.authToken = token;
+  if (!currentAuthenticatedUser) currentAuthenticatedUser = {}
+  currentAuthenticatedUser.authToken = token
 }
 
 /**

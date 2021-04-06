@@ -10,8 +10,7 @@ import { getCurrentAuthenticatedUser } from '../../api/auth'
 
 // CT requires this header as an addititonal security measure. Since we're not an approved referer, we can actually
 // just hardcode a valid referer and the API accepts it.
-const REFERER =
-  'https://classtranscribe.illinois.edu/video?id=5ce157b0-713a-4182-94e9-065f68f9abf6'
+const REFERER = 'https://classtranscribe.illinois.edu/video?id=5ce157b0-713a-4182-94e9-065f68f9abf6'
 
 const VideoContainer = ({ url }) => {
   const video = React.useRef(null)
@@ -23,7 +22,10 @@ const VideoContainer = ({ url }) => {
 
   const videoSource = {
     uri: url,
-    headers: { referer: REFERER, authorization: `Bearer ${getCurrentAuthenticatedUser()?.authToken}` },
+    headers: {
+      referer: REFERER,
+      authorization: `Bearer ${getCurrentAuthenticatedUser()?.authToken}`,
+    },
   }
 
   return (

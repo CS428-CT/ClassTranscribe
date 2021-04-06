@@ -11,10 +11,9 @@ import { getUserMetadata, isUserAuthenticated, setAuthToken } from '../../api/au
  *                                     Takes 1 boolean parameter that is true if the user is authenticated.
  */
 const LoginContainer = ({ onAuthLevelChange }) => {
-
   /**
    * This is the javascript that we inject into the web browser in order to extract the auth token.
-   * We check periodically to see if we can access a valid token. Once we can, we post a message containing 
+   * We check periodically to see if we can access a valid token. Once we can, we post a message containing
    * the token. @onBrowerMessage handles the rest.
    */
   const injectedJavascript = `
@@ -38,7 +37,7 @@ const LoginContainer = ({ onAuthLevelChange }) => {
     }
 
     getToken();
-  `;
+  `
 
   /**
    * Listener for the injected javascript message. When the message is received, we
@@ -46,16 +45,19 @@ const LoginContainer = ({ onAuthLevelChange }) => {
    * @param {Object} event The event object representing the message
    */
   const onBrowserMessage = async (event) => {
-    if (!event?.nativeEvent?.data)
-      return;
+    if (!event?.nativeEvent?.data) return
 
-    setAuthToken(event.nativeEvent.data) 
-    await getUserMetadata();
-    onAuthLevelChange(isUserAuthenticated());
+    setAuthToken(event.nativeEvent.data)
+    await getUserMetadata()
+    onAuthLevelChange(isUserAuthenticated())
   }
 
   return (
-    <WebView source={{ uri: "https://classtranscribe.illinois.edu"}} injectedJavaScript={injectedJavascript} onMessage={onBrowserMessage}/>
+    <WebView
+      source={{ uri: 'https://classtranscribe.illinois.edu' }}
+      injectedJavaScript={injectedJavascript}
+      onMessage={onBrowserMessage}
+    />
   )
 }
 

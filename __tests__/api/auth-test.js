@@ -12,7 +12,7 @@ import { HTTP_STATUS_CODES } from '../../src/api'
 import { METADATA_RESPONSE, SIGN_IN_RESPONSE } from '../mock_responses/mock-auth-response'
 
 describe('Check get user metadata', () => {
-  const MOCK_AUTH_TOKEN = "A";
+  const MOCK_AUTH_TOKEN = 'A'
   const mock = new MockAdapter(axios)
 
   afterEach(async () => {
@@ -28,7 +28,7 @@ describe('Check get user metadata', () => {
   test('after successful sign in', async () => {
     mock.onGet(`${ENDPOINTS.USER_METADATA}`).reply(HTTP_STATUS_CODES.OK, METADATA_RESPONSE)
     setAuthToken(MOCK_AUTH_TOKEN)
-    await getUserMetadata();
+    await getUserMetadata()
 
     expect(isUserAuthenticated()).toBe(true)
     expect(getCurrentAuthenticatedUser().metadata).toStrictEqual(METADATA_RESPONSE)
@@ -38,24 +38,24 @@ describe('Check get user metadata', () => {
     mock
       .onGet(`${ENDPOINTS.USER_METADATA}`)
       .reply(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR, SIGN_IN_RESPONSE)
-    setAuthToken(MOCK_AUTH_TOKEN);
-    await getUserMetadata();
+    setAuthToken(MOCK_AUTH_TOKEN)
+    await getUserMetadata()
 
     expect(getCurrentAuthenticatedUser().metadata).toBe(undefined)
   })
 
   test('after sign in with network error', async () => {
     mock.onGet(`${ENDPOINTS.USER_METADATA}`).networkError()
-    setAuthToken(MOCK_AUTH_TOKEN);
-    await getUserMetadata();
+    setAuthToken(MOCK_AUTH_TOKEN)
+    await getUserMetadata()
 
     expect(getCurrentAuthenticatedUser().metadata).toBe(undefined)
   })
 
   test('after logging out', async () => {
     mock.onGet(`${ENDPOINTS.USER_METADATA}`).reply(HTTP_STATUS_CODES.OK, METADATA_RESPONSE)
-    setAuthToken(MOCK_AUTH_TOKEN);
-    await getUserMetadata();
+    setAuthToken(MOCK_AUTH_TOKEN)
+    await getUserMetadata()
     expect(isUserAuthenticated()).toBe(true)
 
     await signOutUser()
