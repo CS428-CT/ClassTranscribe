@@ -38,6 +38,8 @@ const Recommend = ({ navigation, courseId, mode }) => {
   useEffect(() => {
     const fetchVideos = async () => {
       const response = await getVideosByPlaylist(selected)
+      console.log("!!!!")
+      console.log(response)
       if (!response) return
       const indexedVid = response.medias.sort((a, b) => a.index - b.index)
       setVideos(indexedVid)
