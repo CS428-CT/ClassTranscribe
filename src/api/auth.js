@@ -37,7 +37,8 @@ export const getUserMetadata = async () => {
   try {
     const resp = await axios.get(ENDPOINTS.USER_METADATA)
     if (resp?.status !== HTTP_STATUS_CODES.OK) return
-    currentAuthenticatedUser.metaData = resp.data;
+    currentAuthenticatedUser.metadata = {};
+    currentAuthenticatedUser.metadata.starredOfferings = resp.data.starredOfferings
   } catch (error) {
     console.error(error)
   }
@@ -63,7 +64,7 @@ export const getCurrentAuthenticatedUser = () => {
  * @returns True if the user is authenticated, false otherwise
  */
 export const isUserAuthenticated = () => {
-  return currentAuthenticatedUser !== null
+  return currentAuthenticatedUser != null
 }
 
 /**
