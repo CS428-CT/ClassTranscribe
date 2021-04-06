@@ -5,7 +5,6 @@ import { ListItem } from 'react-native-elements'
 import { TouchableNativeFeedback } from 'react-native-gesture-handler'
 import { getVideosByPlaylist } from '../../api/playlists'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
-import { FILE_SERVER_BASE_URL } from '../../constants'
 
 const PlaylistContainer = ({ navigation, playlistId }) => {
   const [videos, setVideos] = useState([])
@@ -15,6 +14,10 @@ const PlaylistContainer = ({ navigation, playlistId }) => {
       const response = await getVideosByPlaylist(playlistId)
       if (!response) return
       const sortedVideos = response.medias.sort((a, b) => a.index - b.index)
+      // Get rid of undefined indexs
+      for (let i = 0; i < sortedVideos.length; i += 1) {
+        sortedVideos[i].index = i
+      }
       setVideos(sortedVideos)
     }
 
@@ -24,9 +27,11 @@ const PlaylistContainer = ({ navigation, playlistId }) => {
   const onVideoSelected = (videoData) => {
     const urlExtension = videoData?.video?.video1Path
     if (!urlExtension) return
-
-    const url = FILE_SERVER_BASE_URL + urlExtension
-    navigation.push(STACK_SCREENS.VIDEO, { url })
+    const param = {
+      videos,
+      index: videoData.index,
+    }
+    navigation.push(STACK_SCREENS.VIDEO, param)
   }
 
   const renderItem = ({ item }) => {

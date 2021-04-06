@@ -19,6 +19,7 @@ const VideoContainer = ({ videos, index, navigation }) => {
   const url = videos[index].video.video1Path
   const video = React.useRef(null)
   const initPos = videos[index].watchHistory?.json?.timestamp || 0
+
   const [status, setStatus] = React.useState({
     isMuted: false,
     isPlaying: false,
@@ -33,11 +34,11 @@ const VideoContainer = ({ videos, index, navigation }) => {
   const renderLinkVideo = () => {
     const prev = {
       videos,
-      rec: index - 1,
+      index: index - 1,
     }
     const next = {
       videos,
-      rec: index + 1,
+      index: index + 1,
     }
     return (
       <View style={styles.buttons}>

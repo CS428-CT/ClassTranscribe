@@ -82,7 +82,11 @@ const Recommend = ({ navigation, courseId, mode }) => {
   const onVideoSelected = (rec) => {
     const urlExtension = videos[rec]?.video?.video1Path
     if (!urlExtension) return
-    navigation.push(STACK_SCREENS.VIDEO, { videos, rec })
+    const params = {
+      videos,
+      index: rec,
+    }
+    navigation.push(STACK_SCREENS.VIDEO, params)
   }
 
   /**

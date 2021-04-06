@@ -84,7 +84,11 @@ const PlaylistView = ({ navigation, route }) => {
  */
 const VideoView = ({ navigation, route }) => {
   return (
-    <VideoContainer videos={route.params.videos} index={route.params.rec} navigation={navigation} />
+    <VideoContainer
+      videos={route.params.videos}
+      index={route.params.index}
+      navigation={navigation}
+    />
   )
 }
 
