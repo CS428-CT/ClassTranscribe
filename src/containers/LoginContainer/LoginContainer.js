@@ -1,17 +1,16 @@
-import React, { useEffect } from 'react'
-import { View, Button } from 'react-native'
+import React from 'react'
 import PropTypes from 'prop-types'
 import WebView from 'react-native-webview'
-import { authenticateUser, getUserMetadata, isUserAuthenticated, setAuthToken } from '../../api/auth'
-import styles from './LoginContainer.style'
+import { getUserMetadata, isUserAuthenticated, setAuthToken } from '../../api/auth'
 
 /**
  * Contains the log in screen. If a user is not authenticated, this screen should be shown.
+ * The login screen simply renders a web version of the CT application, and then steals the authentication token
+ * from the browser before returning to the application.
  * @param {Function} onAuthLevelChange Callback function for when the user's auth level is changed.
  *                                     Takes 1 boolean parameter that is true if the user is authenticated.
  */
 const LoginContainer = ({ onAuthLevelChange }) => {
-
 
   /**
    * This is the javascript that we inject into the web browser in order to extract the auth token.

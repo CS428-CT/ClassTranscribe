@@ -68,19 +68,6 @@ export const isUserAuthenticated = () => {
 }
 
 /**
- * Authenticates the user. The result is stored in currentAuthenticatedUser
- */
-export const authenticateUser = async () => {
-  try {
-    const resp = await axios.get(ENDPOINTS.SIGN_IN)
-    if (resp?.status !== HTTP_STATUS_CODES.OK) return
-    currentAuthenticatedUser = resp.data
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-/**
  * Terminates the current users session
  */
 export const signOutUser = async () => {

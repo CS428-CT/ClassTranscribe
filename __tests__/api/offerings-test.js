@@ -1,6 +1,6 @@
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import { authenticateUser, ENDPOINTS as AUTH_ENDPOINTS, signOutUser } from '../../src/api/auth'
+import { ENDPOINTS as AUTH_ENDPOINTS, getUserMetadata, setAuthToken, signOutUser } from '../../src/api/auth'
 import { format } from '../../src/utils/string'
 import {
   ENDPOINTS as OFFERING_ENDPOINTS,
@@ -14,12 +14,13 @@ import {
   OFFERINGS_RESPONSE_2,
   STARRED_OFFERINGS_RESPONSE,
 } from '../mock_responses/mock-offerings-response'
-import { SIGN_IN_RESPONSE } from '../mock_responses/mock-auth-response'
+import { METADATA_RESPONSE } from '../mock_responses/mock-auth-response'
 
+const MOCK_AUTH_TOKEN = "a";
 const mock = new MockAdapter(axios)
 describe('Get starred offerings', () => {
   beforeEach(() => {
-    mock.onGet(`${AUTH_ENDPOINTS.SIGN_IN}`).reply(HTTP_STATUS_CODES.OK, SIGN_IN_RESPONSE)
+    mock.onGet(`${AUTH_ENDPOINTS.USER_METADATA}`).reply(HTTP_STATUS_CODES.OK, METADATA_RESPONSE)
   })
 
   afterEach(async () => {
@@ -28,7 +29,8 @@ describe('Get starred offerings', () => {
   })
 
   test('when authenticated', async () => {
-    await authenticateUser()
+    setAuthToken(MOCK_AUTH_TOKEN)
+    await getUserMetadata();
     const starredOfferings = await getStarredOfferings()
     expect(starredOfferings).toStrictEqual(STARRED_OFFERINGS_RESPONSE)
   })
@@ -41,7 +43,7 @@ describe('Get starred offerings', () => {
 
 describe('Get offerings data', () => {
   beforeEach(() => {
-    mock.onGet(`${AUTH_ENDPOINTS.SIGN_IN}`).reply(HTTP_STATUS_CODES.OK, SIGN_IN_RESPONSE)
+    mock.onGet(`${AUTH_ENDPOINTS.USER_METADATA}`).reply(HTTP_STATUS_CODES.OK, METADATA_RESPONSE)
   })
 
   afterEach(async () => {
@@ -54,7 +56,7 @@ describe('Get offerings data', () => {
     mock
       .onGet(`${format(OFFERING_ENDPOINTS.OFFERING, offeringId)}`)
       .reply(HTTP_STATUS_CODES.OK, OFFERINGS_RESPONSE_1)
-    await authenticateUser()
+    setAuthToken(MOCK_AUTH_TOKEN);
 
     const offeringData = await getOfferingData(offeringId)
     expect(offeringData).toStrictEqual(OFFERINGS_RESPONSE_1)
@@ -72,7 +74,7 @@ describe('Get offerings data', () => {
 
 describe('Get starred offerings data', () => {
   beforeEach(() => {
-    mock.onGet(`${AUTH_ENDPOINTS.SIGN_IN}`).reply(HTTP_STATUS_CODES.OK, SIGN_IN_RESPONSE)
+    mock.onGet(`${AUTH_ENDPOINTS.USER_METADATA}`).reply(HTTP_STATUS_CODES.OK, METADATA_RESPONSE)
   })
 
   afterEach(async () => {
@@ -91,7 +93,8 @@ describe('Get starred offerings data', () => {
     mock
       .onGet(`${format(OFFERING_ENDPOINTS.OFFERING, offerings[1])}`)
       .reply(HTTP_STATUS_CODES.OK, OFFERINGS_RESPONSE_2)
-    await authenticateUser()
+    setAuthToken(MOCK_AUTH_TOKEN);
+    await getUserMetadata();
 
     const starredOfferings = await getStarredOfferingsData()
     expect(starredOfferings).toStrictEqual([OFFERINGS_RESPONSE_1, OFFERINGS_RESPONSE_2])
@@ -105,7 +108,8 @@ describe('Get starred offerings data', () => {
     ]
     mock.onGet(`${format(OFFERING_ENDPOINTS.OFFERING, offerings[0])}`).networkError()
     mock.onGet(`${format(OFFERING_ENDPOINTS.OFFERING, offerings[1])}`).networkError()
-    await authenticateUser()
+    setAuthToken(MOCK_AUTH_TOKEN);
+    await getUserMetadata();
 
     const starredOfferings = await getStarredOfferingsData()
     expect(starredOfferings).toStrictEqual([])
