@@ -28,12 +28,13 @@ axios.interceptors.request.use(
 let currentAuthenticatedUser = null
 
 export const ENDPOINTS = {
-  TEST_SIGN_IN: `${BASE_URL}Account/TestSignIn`,
-  SIGN_IN: `${BASE_URL}Account/SignIn`,
   USER_METADATA: `${BASE_URL}Account/GetUserMetadata/GetUserMetadata`
 }
 
 export const getUserMetadata = async () => {
+  if (!isUserAuthenticated())
+    return null;
+
   try {
     const resp = await axios.get(ENDPOINTS.USER_METADATA)
     if (resp?.status !== HTTP_STATUS_CODES.OK) return
