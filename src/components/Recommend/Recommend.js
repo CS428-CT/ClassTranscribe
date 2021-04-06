@@ -6,7 +6,6 @@ import { TouchableNativeFeedback } from 'react-native-gesture-handler'
 import PropTypes from 'prop-types'
 import { getPlaylistsByOffering, getVideosByPlaylist } from '../../api/playlists'
 import { STACK_SCREENS } from '../../containers/CTNavigationContainer/index'
-import { FILE_SERVER_BASE_URL } from '../../constants'
 import styles from './Recommend.style'
 
 /**
@@ -38,8 +37,6 @@ const Recommend = ({ navigation, courseId, mode }) => {
   useEffect(() => {
     const fetchVideos = async () => {
       const response = await getVideosByPlaylist(selected)
-      console.log("!!!!")
-      console.log(response)
       if (!response) return
       const indexedVid = response.medias.sort((a, b) => a.index - b.index)
       setVideos(indexedVid)
@@ -83,11 +80,9 @@ const Recommend = ({ navigation, courseId, mode }) => {
    * @returns None
    */
   const onVideoSelected = (rec) => {
-    const urlExtension = rec?.video?.video1Path
+    const urlExtension = videos[rec]?.video?.video1Path
     if (!urlExtension) return
-
-    const url = FILE_SERVER_BASE_URL + urlExtension
-    navigation.push(STACK_SCREENS.VIDEO, { url })
+    navigation.push(STACK_SCREENS.VIDEO, { videos, rec })
   }
 
   /**
@@ -109,7 +104,7 @@ const Recommend = ({ navigation, courseId, mode }) => {
       if (!videos.length) {
         stat = status.NOVIDEO
       } else if (mode) {
-        rec = videos[videos.length - 1]
+        rec = videos.length - 1
         if (rec.watchHistory) stat = status.FINISH
         else stat = status.NORMAL
       } else {
@@ -118,14 +113,14 @@ const Recommend = ({ navigation, courseId, mode }) => {
             if (i === videos.length - 1) {
               stat = status.FINISH
             } else {
-              rec = videos[i + 1]
+              rec = i + 1
               stat = status.NORMAL
             }
             break
           }
         }
         if (stat === status.PROCESS) {
-          rec = videos[0]
+          rec = 0
           stat = status.NORMAL
         }
       }
@@ -155,7 +150,7 @@ const Recommend = ({ navigation, courseId, mode }) => {
         return (
           <TouchableNativeFeedback onPress={() => onVideoSelected(rec)}>
             <View>
-              <Text>{rec.name}</Text>
+              <Text>{videos[rec].name}</Text>
             </View>
           </TouchableNativeFeedback>
         )
