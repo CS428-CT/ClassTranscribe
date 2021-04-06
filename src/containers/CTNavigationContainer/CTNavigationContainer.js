@@ -82,14 +82,8 @@ const PlaylistView = ({ navigation, route }) => {
  * Wraps the VideoContainer so that it can
  * receive the proper props
  */
-const VideoView = ({ navigation, route }) => {
-  return (
-    <VideoContainer
-      videos={route.params.videos}
-      index={route.params.index}
-      navigation={navigation}
-    />
-  )
+const VideoView = ({ route }) => {
+  return <VideoContainer videos={route.params.videos} index={route.params.index} />
 }
 
 /**

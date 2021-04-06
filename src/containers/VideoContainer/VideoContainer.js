@@ -1,12 +1,11 @@
 /* eslint no-shadow: ["error", { "allow": ["status"] }] */
 /* eslint-env es6 */
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { View } from 'react-native'
 import { Button, Text } from 'react-native-paper'
 import { Video } from 'expo-av'
 import PropTypes from 'prop-types'
 import { FILE_SERVER_BASE_URL } from '../../constants'
-import { STACK_SCREENS } from '../CTNavigationContainer/index'
 import styles from './VideoContainer.style'
 
 // CT requires this header as an addititonal security measure. Since we're not an approved referer, we can actually
@@ -14,50 +13,54 @@ import styles from './VideoContainer.style'
 const REFERER =
   'https://classtranscribe-dev.ncsa.illinois.edu/video?id=c79700ac-c3fc-439f-95c2-0511a1092862'
 
-const VideoContainer = ({ videos, index, navigation }) => {
+const VideoContainer = ({ videos, index }) => {
   // Passing a list of videos would not be a bad approach because react pass object as reference
-  const url = videos[index].video.video1Path
-  const video = React.useRef(null)
-  const initPos = videos[index].watchHistory?.json?.timestamp || 0
+  const [vidIndex, setVidIndex] = useState(index)
+  const url = videos[vidIndex]?.video?.video1Path
+  const videoRef = React.useRef(null)
 
+  const videoSource = {
+    uri: FILE_SERVER_BASE_URL + url,
+    headers: { referer: REFERER },
+  }
   const [status, setStatus] = React.useState({
     isMuted: false,
     isPlaying: false,
     rate: 1.0,
   })
 
-  const videoSource = {
-    uri: FILE_SERVER_BASE_URL + url,
-    headers: { referer: REFERER },
-  }
+  useEffect(() => {
+    setStatus({
+      isMuted: false,
+      isPlaying: false,
+      rate: 1.0,
+    })
+    videoRef.current.unloadAsync().then(() => {
+      videoRef.current.loadAsync(
+        videoSource,
+        { positionMillis: (videos[vidIndex].watchHistory?.json?.timestamp || 0) * 1000 },
+        true
+      )
+    })
+  }, [vidIndex])
 
   const renderLinkVideo = () => {
-    const prev = {
-      videos,
-      index: index - 1,
-    }
-    const next = {
-      videos,
-      index: index + 1,
-    }
     return (
       <View style={styles.buttons}>
         <Button
           mode="contained"
-          disabled={index === 0}
+          disabled={vidIndex === 0}
           onPress={() => {
-            navigation.pop()
-            navigation.push(STACK_SCREENS.VIDEO, prev)
+            setVidIndex(vidIndex - 1)
           }}
         >
           Previous Video
         </Button>
         <Button
           mode="contained"
-          disabled={index + 1 >= videos.length}
+          disabled={vidIndex + 1 >= videos.length}
           onPress={() => {
-            navigation.pop()
-            navigation.push(STACK_SCREENS.VIDEO, next)
+            setVidIndex(vidIndex + 1)
           }}
         >
           Next Video
@@ -65,18 +68,18 @@ const VideoContainer = ({ videos, index, navigation }) => {
       </View>
     )
   }
+  // positionMillis={(videos[vidIndex].watchHistory?.json?.timestamp || 0) * 1000}
   return (
     <View style={styles.container}>
       <View style={styles.input}>
         <Text label="Video URI" value={url} />
       </View>
       <Video
-        ref={video}
+        ref={videoRef}
         style={styles.video}
         source={videoSource}
         useNativeControls
         resizeMode="contain"
-        positionMillis={initPos * 1000}
         isLooping
         onPlaybackStatusUpdate={(status) => setStatus(() => status)}
       />
@@ -85,12 +88,12 @@ const VideoContainer = ({ videos, index, navigation }) => {
         <Button
           mode="contained"
           onPress={() =>
-            status.isPlaying ? video.current.pauseAsync() : video.current.playAsync()
+            status.isPlaying ? videoRef.current.pauseAsync() : videoRef.current.playAsync()
           }
         >
           {status.isPlaying ? 'Pause' : 'Play'}
         </Button>
-        <Button mode="contained" onPress={() => video.current.setIsMutedAsync(!status.isMuted)}>
+        <Button mode="contained" onPress={() => videoRef.current.setIsMutedAsync(!status.isMuted)}>
           {status.isMuted ? 'Unmute' : 'Mute'}
         </Button>
       </View>
@@ -98,14 +101,14 @@ const VideoContainer = ({ videos, index, navigation }) => {
       <View style={styles.input}>
         <Button
           mode="contained"
-          onPress={() => video.current.setRateAsync(status.rate - 0.1, true)}
+          onPress={() => videoRef.current.setRateAsync(status.rate - 0.1, true)}
         >
           Decrease Rate
         </Button>
         <Text>Play Rate: {status.rate}</Text>
         <Button
           mode="contained"
-          onPress={() => video.current.setRateAsync(status.rate + 0.1, true)}
+          onPress={() => videoRef.current.setRateAsync(status.rate + 0.1, true)}
         >
           Increase Rate
         </Button>
@@ -114,23 +117,23 @@ const VideoContainer = ({ videos, index, navigation }) => {
       <View style={styles.buttons}>
         <Button
           mode="contained"
-          onPress={() => video.current.setPositionAsync(status.positionMillis - 5 * 1000)}
+          onPress={() => videoRef.current.setPositionAsync(status.positionMillis - 5 * 1000)}
         >
           - 5s
         </Button>
         <Button
           mode="contained"
-          onPress={() => video.current.setPositionAsync(status.positionMillis + 5 * 1000)}
+          onPress={() => videoRef.current.setPositionAsync(status.positionMillis + 5 * 1000)}
         >
           + 5s
         </Button>
-        <Button mode="contained" onPress={() => video.current.playFromPositionAsync(0)}>
+        <Button mode="contained" onPress={() => videoRef.current.playFromPositionAsync(0)}>
           Replay
         </Button>
 
         <Button
           mode="contained"
-          onPress={() => video.current.loadAsync('/storage/emulated/0/Download')}
+          onPress={() => videoRef.current.loadAsync('/storage/emulated/0/Download')}
         >
           Download
         </Button>
@@ -141,10 +144,6 @@ const VideoContainer = ({ videos, index, navigation }) => {
 }
 
 VideoContainer.propTypes = {
-  navigation: PropTypes.shape({
-    pop: PropTypes.func.isRequired,
-    push: PropTypes.func.isRequired,
-  }).isRequired,
   videos: PropTypes.arrayOf(
     PropTypes.shape({
       video: PropTypes.shape({
