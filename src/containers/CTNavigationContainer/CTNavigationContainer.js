@@ -91,10 +91,7 @@ const VideoView = ({ route }) => {
  */
 const CourseNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName={STACK_SCREENS.UNIVERSITY_LIST}>
-      <Stack.Screen name={STACK_SCREENS.UNIVERSITY_LIST} component={UniversityListView} />
-      <Stack.Screen name={STACK_SCREENS.DEPT_LIST} component={DepartmentListView} />
-      <Stack.Screen name={STACK_SCREENS.COURSE_LIST} component={CourseListView} />
+    <Stack.Navigator initialRouteName={STACK_SCREENS.HOME}>
       <Stack.Screen name={STACK_SCREENS.HOME} component={Home} />
       <Stack.Screen name={STACK_SCREENS.COURSE_PLAYLISTS} component={CoursePlaylistsView} />
       <Stack.Screen name={STACK_SCREENS.PLAYLIST} component={PlaylistView} />
