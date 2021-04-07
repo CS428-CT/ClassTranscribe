@@ -9,11 +9,18 @@ import { COURSES_RESPONSE } from '../mock_responses/mock-course-response'
 import CourseListContainer from '../../src/containers/CourseListContainer/CourseListContainer'
 import { STACK_SCREENS } from '../../src/containers/CTNavigationContainer'
 
+const departmentId = '2001'
+const departmentAcronym = 'CS'
 const mock = new MockAdapter(axios)
-describe('Check courses rendering', () => {
-  const departmentId = '2001'
-  const departmentAcronym = 'CS'
+const assertNoButtonsRendered = async () => {
+  const { queryAllByA11yRole } = render(
+    <CourseListContainer departmentId={departmentId} acronym={departmentAcronym} />
+  )
+  const courseList = await waitFor(() => queryAllByA11yRole('button'))
+  expect(courseList.length).toBe(0)
+}
 
+describe('Check courses rendering', () => {
   afterEach(() => {
     mock.reset()
   })
@@ -39,28 +46,16 @@ describe('Check courses rendering', () => {
 
   test('when no courses', async () => {
     mock.onGet(`${format(ENDPOINTS.COURSES, departmentId)}`).reply(HTTP_STATUS_CODES.OK, [])
-
-    const { queryAllByA11yRole } = render(
-      <CourseListContainer departmentId={departmentId} acronym={departmentAcronym} />
-    )
-    const courseList = await waitFor(() => queryAllByA11yRole('button'))
-    expect(courseList.length).toBe(0)
+    await assertNoButtonsRendered()
   })
 
   test('on network error', async () => {
     mock.onGet(`${format(ENDPOINTS.COURSES, departmentId)}`).networkError()
-
-    const { queryAllByA11yRole } = render(
-      <CourseListContainer departmentId={departmentId} acronym={departmentAcronym} />
-    )
-    const courseList = await waitFor(() => queryAllByA11yRole('button'))
-    expect(courseList.length).toBe(0)
+    await assertNoButtonsRendered()
   })
 })
 
 describe('Check course navigation', () => {
-  const departmentId = '2001'
-  const departmentAcronym = 'CS'
   const mockNavigator = { push: jest.fn() }
 
   test('when clicking on first item', async () => {
