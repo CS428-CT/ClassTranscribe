@@ -2,6 +2,7 @@
   "dependencies": {
     "@expo/vector-icons": "^12.0.4",
     "@react-native-community/masked-view": "0.1.10",
+    "@react-native-community/picker": "^1.8.1",
     "@react-native-picker/picker": "1.9.2",
     "@react-navigation/bottom-tabs": "^5.11.8",
     "@react-navigation/native": "^5.9.3",
@@ -32,15 +33,15 @@
     "react-native-elements": "^3.3.2",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-navigation": "^7.11.2",
-    "react-native-picker-select": "^8.0.4",
+    "react-native-paper": "^4.7.2",
+    "react-native-picker-select": "8.0.0",
     "react-native-reanimated": "~1.13.0",
     "react-native-safe-area-context": "3.1.9",
     "react-native-screens": "~2.15.2",
     "react-native-unimodules": "^0.13.0",
+    "react-native-vector-icons": "^8.1.0",
     "react-native-web": "^0.15.0",
     "react-test-renderer": "^17.0.1",
-    "react-native-paper": "^4.7.2",
-    "react-native-vector-icons": "^8.1.0",
     "rn-fetch-blob": "^0.12.0"
   },
   "devDependencies": {

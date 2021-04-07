@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { TouchableNativeFeedback, Switch, FlatList, View, Text } from 'react-native'
-// import { Picker } from '@react-native-picker/picker';
+import { Picker } from '@react-native-community/picker';
 import PropTypes from 'prop-types'
 import { getStarredOfferingsData, getOfferingsData } from '../../api/offerings'
-// import { getCurrentAuthenticatedUser } from '../../api/auth'
+import { getUniversities } from '../../api/universities'
+import { getCurrentAuthenticatedUser } from '../../api/auth'
 import CourseCard from '../../components/Cards/CourseCard'
 import Recommend from '../../components/Recommend/Recommend'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
@@ -62,32 +63,51 @@ const Home = ({ navigation }) => {
   /**
    * Render user's login information
    */
-  // const [universities, setSelectedUniversity] = useState([]);
-  // useEffect(() => {
-  //   const fetchUniversityInfo = async () => {
-  //     const allUniversities = await getUniversities()
-  //     setSelectedUniversity(allUniversities)
-  //   }
-  //   fetchUniversityInfo()
-  // }, [setSelectedUniversity])
+  const renderUniversityDropDown = () => {
+      const currentUser = getCurrentAuthenticatedUser()
+      const universityId = currentUser.universityId
 
-  // const renderUniversityDropDown = () => {
-  //     const currentUser = getCurrentAuthenticatedUser()
-  //     const universityId = currentUser.universityId
+      // Don't need to use useState and useEffect, just need to get the async
+      const [universities, setAllUniversities] = useState([])
+      useEffect(() => {
+        const fetchUniversities = async () => {
+          const allUnis = await getUniversities()
+          setAllUniversities(allUnis)
+        }
+        fetchUniversities()
+      }, [setAllUniversities])
 
-  //     console.log("WERE HERE!!!!!!!!!!!!!!")
-  //     console.log(universities)
-  //     const universityItems = universities.map( (uni) => {
-  //       return <Picker.Item value={uni.name} label={uni.id}/>
-  //     })
-  //     return (<Picker
-  //             selectedValue={ universityId }
-  //             onValueChange={(university) => setSelectedUniversity(university)}
-  //             mode='dropdown'>
-  //               { universityItems }
-  //     </Picker>)
-  //   // return <Text>{ universityId }</Text>
-  // }
+       
+      // var currUniversity = null
+      // for (var i = 0; i < universities.length; i++) {
+      //   console.log(universities[i])
+      //   if (universities[i].id == universityId) {
+      //     currUniversity = universities[i] //.id
+      //   }
+      // }
+      // console.log("Current university")
+      // console.log(currUniversity)
+
+      let universityItems = universities.map( (uni) => {
+        return <Picker.Item key={uni.id} value={uni.id} label={uni.name} />
+      });
+
+      const [university, setUniversity] = useState(universityId)
+
+      const onUniversitySelected = (universityId) => {
+        // Reload the page for the selected universityId
+        setUniversity(universityId)
+        console.log("GOT HERE")
+        console.log(universityId)
+      }
+
+      return (<Picker
+        style={{flex:0, width: '100%'}}
+        selectedValue={university}
+        onValueChange={universityId => onUniversitySelected(universityId)}>
+          { universityItems }
+      </Picker>)
+  }
 
   /**
    * Renders all of the users' courses into a FlatList
@@ -115,7 +135,7 @@ const Home = ({ navigation }) => {
 
   return (
     <View style={styles.viewStyle}>
-      {/* {renderUniversityDropDown()} */}
+      {renderUniversityDropDown()}
       {renderSwitch()}
       {renderStarredCourses()}
     </View>
