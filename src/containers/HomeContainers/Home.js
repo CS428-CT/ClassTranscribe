@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { TouchableNativeFeedback, Switch, FlatList, View, Text } from 'react-native'
 import PropTypes from 'prop-types'
-import { getStarredOfferingsData } from '../../api/offerings'
+import { getStarredOfferingsData, getOfferingsData } from '../../api/offerings'
 import CourseCard from '../../components/Cards/CourseCard'
 import Recommend from '../../components/Recommend/Recommend'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
@@ -16,7 +16,7 @@ const Home = ({ navigation }) => {
 
   useEffect(() => {
     const fetchCourseInfo = async () => {
-      const offerings = await getStarredOfferingsData()
+      const offerings = await getOfferingsData()
       setCourses(offerings)
     }
     fetchCourseInfo()
