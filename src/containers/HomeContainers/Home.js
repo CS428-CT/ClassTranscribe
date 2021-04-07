@@ -39,11 +39,10 @@ const Home = ({ navigation }) => {
     const courseId = item.offering.id
 
     return (
-      <View style={styles.container}>
+      <View style={styles.container} key={courseId}>
         <TouchableNativeFeedback onPress={() => onCourseSelected(courseId)}>
           <View style={styles.cardContainer}>
             <CourseCard
-              key={courseId}
               departmentAcronym={course.departmentAcronym}
               courseNumber={course.courseNumber}
               courseName={courseName}
