@@ -34,7 +34,11 @@ const CourseListContainer = ({ departmentId, acronym, navigation }) => {
    */
   const renderItem = ({ item }) => {
     return (
-      <TouchableNativeFeedback key={item.id} useForeground onPress={() => onCourseSelected(/* item */)}>
+      <TouchableNativeFeedback
+        key={item.id}
+        useForeground
+        onPress={() => onCourseSelected(/* item */)}
+      >
         <ListItem bottomDivider>
           <ListItem.Content>
             <ListItem.Title accessibilityRole="button">
