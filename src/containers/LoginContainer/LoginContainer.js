@@ -35,6 +35,7 @@ const LoginContainer = ({ onAuthLevelChange }) => {
       }
 
       window.ReactNativeWebView.postMessage(localStorage["authToken"])
+      window.ReactNativeWebView.postMessage(userInfoString)
     }
 
     getToken();
@@ -48,9 +49,16 @@ const LoginContainer = ({ onAuthLevelChange }) => {
   const onBrowserMessage = async (event) => {
     if (!event?.nativeEvent?.data) return
 
-    setAuthToken(event.nativeEvent.data)
-    await getUserMetadata()
-    onAuthLevelChange(isUserAuthenticated())
+    const data = event.nativeEvent.data
+
+    try {
+      const userData = JSON.parse(data)
+    } catch (e) {
+        console.log("CALLED " + data)
+        setAuthToken(data)
+        await getUserMetadata()
+        onAuthLevelChange(isUserAuthenticated())
+    }
   }
 
   return (
