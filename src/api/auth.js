@@ -50,6 +50,13 @@ export const setAuthToken = (token) => {
   currentAuthenticatedUser.authToken = token
 }
 
+export const setUserData= (userData) => {
+  if (!currentAuthenticatedUser) currentAuthenticatedUser = {}
+  currentAuthenticatedUser.userId = userData.userId
+  currentAuthenticatedUser.universityId = userData.universityId
+  currentAuthenticatedUser.emailId = userData.emailId
+}
+
 /**
  * Returns the signed in user's data or null if no one is signed in.
  * See @currentAuthenticatedUser for the attributes returned in the object

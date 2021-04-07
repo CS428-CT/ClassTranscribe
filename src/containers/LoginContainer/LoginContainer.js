@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import WebView from 'react-native-webview'
-import { getUserMetadata, isUserAuthenticated, setAuthToken } from '../../api/auth'
+import { getUserMetadata, isUserAuthenticated, setAuthToken, setUserData } from '../../api/auth'
 import { FILE_SERVER_BASE_URL } from '../../constants'
 
 /**
@@ -53,8 +53,8 @@ const LoginContainer = ({ onAuthLevelChange }) => {
 
     try {
       const userData = JSON.parse(data)
+      setUserData(userData)
     } catch (e) {
-        console.log("CALLED " + data)
         setAuthToken(data)
         await getUserMetadata()
         onAuthLevelChange(isUserAuthenticated())

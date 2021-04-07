@@ -64,6 +64,7 @@ const Home = ({ navigation }) => {
    */
   const renderUniversityDropDown = () => {
       const currentUser = getCurrentAuthenticatedUser()
+      console.log(currentUser)
       const universityId = currentUser.universityId
 
       // Don't need to use useState and useEffect, just need to get the async
@@ -76,16 +77,7 @@ const Home = ({ navigation }) => {
         fetchUniversities()
       }, [setAllUniversities])
 
-       
-      // var currUniversity = null
-      // for (var i = 0; i < universities.length; i++) {
-      //   console.log(universities[i])
-      //   if (universities[i].id == universityId) {
-      //     currUniversity = universities[i] //.id
-      //   }
-      // }
-      // console.log("Current university")
-      // console.log(currUniversity)
+
 
       let universityItems = universities.map( (uni) => {
         return <Picker.Item key={uni.id} value={uni.id} label={uni.name} />
