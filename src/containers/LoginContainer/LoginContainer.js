@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import WebView from 'react-native-webview'
 import { getUserMetadata, isUserAuthenticated, setAuthToken } from '../../api/auth'
+import { FILE_SERVER_BASE_URL } from '../../constants'
 
 /**
  * Contains the log in screen. If a user is not authenticated, this screen should be shown.
@@ -54,7 +55,7 @@ const LoginContainer = ({ onAuthLevelChange }) => {
 
   return (
     <WebView
-      source={{ uri: 'https://classtranscribe.illinois.edu' }}
+      source={{ uri: FILE_SERVER_BASE_URL }}
       injectedJavaScript={injectedJavascript}
       onMessage={onBrowserMessage}
     />

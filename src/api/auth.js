@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { HTTP_STATUS_CODES, BASE_URL } from '.'
+import { HTTP_STATUS_CODES } from '.'
+import { API_BASE_URL, REFERRER_URL } from '../constants'
 
 /**
  * Interceptor signs every request with the token of the user.
@@ -9,8 +10,7 @@ axios.interceptors.request.use(
   (request) => {
     const userData = getCurrentAuthenticatedUser()
     if (userData?.authToken != null) request.headers.Authorization = `Bearer ${userData.authToken}`
-    request.headers.referer =
-      'https://classtranscribe.illinois.edu/offering/e740770d-e6fb-4ddb-86ca-a49a8dcc7d28'
+    request.headers.referer = REFERRER_URL
     return request
   },
   (error) => {
@@ -29,7 +29,7 @@ axios.interceptors.request.use(
 let currentAuthenticatedUser = null
 
 export const ENDPOINTS = {
-  USER_METADATA: `${BASE_URL}Account/GetUserMetadata/GetUserMetadata`,
+  USER_METADATA: `${API_BASE_URL}Account/GetUserMetadata/GetUserMetadata`,
 }
 
 export const getUserMetadata = async () => {
