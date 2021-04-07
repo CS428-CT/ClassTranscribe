@@ -77,7 +77,7 @@ describe('Check videos rendering', () => {
 
 describe('Check video navigation', () => {
   const playlistId = '51519746-aa6c-485c-9894-549959c457b5'
-  const mockNaivgator = { push: jest.fn() }
+  const mockNavigator = { push: jest.fn() }
 
   test('when clicking on first item', async () => {
     mock
@@ -85,7 +85,7 @@ describe('Check video navigation', () => {
       .reply(HTTP_STATUS_CODES.OK, VIDEOS_BY_PLAYLIST_RESPONSE)
 
     const { queryAllByA11yRole } = render(
-      <PlaylistContainer playlistId={playlistId} navigation={mockNaivgator} />
+      <PlaylistContainer playlistId={playlistId} navigation={mockNavigator} />
     )
     const videos = await waitFor(() => queryAllByA11yRole('button'))
     expect(videos.length).not.toBe(0)
@@ -94,7 +94,7 @@ describe('Check video navigation', () => {
     const firstVideo = VIDEOS_BY_PLAYLIST_RESPONSE.medias.find((v) => v.index === 0)
     const expectedVideoUrl = FILE_SERVER_BASE_URL + firstVideo.video.video1Path
 
-    expect(mockNaivgator.push).toHaveBeenCalled()
-    expect(mockNaivgator.push).toHaveBeenCalledWith(STACK_SCREENS.VIDEO, { url: expectedVideoUrl })
+    expect(mockNavigator.push).toHaveBeenCalled()
+    expect(mockNavigator.push).toHaveBeenCalledWith(STACK_SCREENS.VIDEO, { url: expectedVideoUrl })
   })
 })

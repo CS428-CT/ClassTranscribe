@@ -19,7 +19,7 @@ const Stack = createStackNavigator()
 /**
  * The navigator of the home tab. Contains a stack navigator.
  */
-const HomeNaivgator = () => {
+const HomeNavigator = () => {
   return (
     <Stack.Navigator initialRouteName={STACK_SCREENS.HOME}>
       <Stack.Screen name={STACK_SCREENS.HOME} component={Home} />
@@ -124,7 +124,7 @@ const CTNavigationContainer = () => {
         />
         <Tab.Screen
           name="Home"
-          component={HomeNaivgator}
+          component={HomeNavigator}
           options={{
             tabBarLabel: 'Home',
             tabBarIcon: ({ color, size }) => (
