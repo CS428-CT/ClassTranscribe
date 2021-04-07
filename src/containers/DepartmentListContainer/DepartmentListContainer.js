@@ -37,9 +37,10 @@ const DepartmentListContainer = ({ universityId, navigation }) => {
     return (
       <TouchableNativeFeedback
         useForeground
+        key={(item.id, item.acronym)} 
         onPress={() => onDepartmentSelected(item.id, item.acronym)}
       >
-        <ListItem key={(item.id, item.acronym)} bottomDivider>
+        <ListItem bottomDivider>
           <ListItem.Content>
             <ListItem.Title accessibilityRole="button">{item.name}</ListItem.Title>
           </ListItem.Content>
