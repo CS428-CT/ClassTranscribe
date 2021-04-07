@@ -8,6 +8,12 @@ import { UNIVERSITY_RESPONSE } from '../mock_responses/mock-university-response'
 import UniversityListContainer from '../../src/containers/UniversityListContainer/UniversityListContainer'
 import { STACK_SCREENS } from '../../src/containers/CTNavigationContainer'
 
+const assertNoButtonsRendered = async () => {
+  const { queryAllByA11yRole } = render(<UniversityListContainer />)
+  const universityList = await waitFor(() => queryAllByA11yRole('button'))
+  expect(universityList.length).toBe(0)
+}
+
 const mock = new MockAdapter(axios)
 describe('Check universities rendering', () => {
   afterEach(() => {
@@ -18,7 +24,6 @@ describe('Check universities rendering', () => {
     mock.onGet(`${ENDPOINTS.UNIVERSITIES}`).reply(HTTP_STATUS_CODES.OK, UNIVERSITY_RESPONSE)
 
     const { queryByText, queryAllByA11yRole } = render(<UniversityListContainer />)
-
     const universityList = await waitFor(() => queryAllByA11yRole('button'))
     expect(universityList.length).not.toBe(0)
 
@@ -31,18 +36,12 @@ describe('Check universities rendering', () => {
 
   test('when no universities', async () => {
     mock.onGet(`${ENDPOINTS.UNIVERSITIES}`).reply(HTTP_STATUS_CODES.OK, [])
-
-    const { queryAllByA11yRole } = render(<UniversityListContainer />)
-    const universityList = await waitFor(() => queryAllByA11yRole('button'))
-    expect(universityList.length).toBe(0)
+    await assertNoButtonsRendered()
   })
 
   test('on network error', async () => {
     mock.onGet(`${ENDPOINTS.UNIVERSITIES}`).networkError()
-
-    const { queryAllByA11yRole } = render(<UniversityListContainer />)
-    const universityList = await waitFor(() => queryAllByA11yRole('button'))
-    expect(universityList.length).toBe(0)
+    await assertNoButtonsRendered()
   })
 })
 
@@ -53,7 +52,6 @@ describe('Check university navigation', () => {
     mock.onGet(`${ENDPOINTS.UNIVERSITIES}`).reply(HTTP_STATUS_CODES.OK, [UNIVERSITY_RESPONSE[0]])
 
     const { queryAllByA11yRole } = render(<UniversityListContainer navigation={mockNavigator} />)
-
     const universities = await waitFor(() => queryAllByA11yRole('button'))
     expect(universities.length).not.toBe(0)
 

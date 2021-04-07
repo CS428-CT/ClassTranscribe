@@ -1,10 +1,11 @@
 import axios from 'axios'
-import { HTTP_STATUS_CODES, BASE_URL } from '.'
+import { HTTP_STATUS_CODES } from '.'
+import { API_BASE_URL } from '../constants'
 import { format } from '../utils/string'
 
 export const ENDPOINTS = {
-  PLAYLISTS_BY_OFFERING: `${BASE_URL}Playlists/ByOffering/{0}`,
-  VIDEOS_BY_PLAYLIST: `${BASE_URL}Playlists/{0}`,
+  PLAYLISTS_BY_OFFERING: `${API_BASE_URL}Playlists/ByOffering/{0}`,
+  VIDEOS_BY_PLAYLIST: `${API_BASE_URL}Playlists/{0}`,
 }
 
 export const getPlaylistsByOffering = async (offeringId) => {

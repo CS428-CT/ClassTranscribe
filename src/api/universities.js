@@ -1,11 +1,12 @@
 import axios from 'axios'
-import { HTTP_STATUS_CODES, BASE_URL } from '.'
+import { HTTP_STATUS_CODES } from '.'
+import { API_BASE_URL } from '../constants'
 import { format } from '../utils/string'
 
 export const ENDPOINTS = {
-  UNIVERSITIES: `${BASE_URL}Universities/`,
-  DEPARTMENTS: `${BASE_URL}Departments/ByUniversity/{0}`,
-  COURSES: `${BASE_URL}Courses/ByDepartment/{0}`,
+  UNIVERSITIES: `${API_BASE_URL}Universities/`,
+  DEPARTMENTS: `${API_BASE_URL}Departments/ByUniversity/{0}`,
+  COURSES: `${API_BASE_URL}Courses/ByDepartment/{0}`,
 }
 
 /**
