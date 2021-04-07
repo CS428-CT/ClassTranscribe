@@ -7,6 +7,11 @@ import { Video } from 'expo-av'
 import PropTypes from 'prop-types'
 import styles from './VideoContainer.style'
 
+// CT requires this header as an addititonal security measure. Since we're not an approved referer, we can actually
+// just hardcode a valid referer and the API accepts it.
+const REFERER =
+  'https://classtranscribe-dev.ncsa.illinois.edu/video?id=c79700ac-c3fc-439f-95c2-0511a1092862'
+
 const VideoContainer = ({ url }) => {
   const video = React.useRef(null)
   const [status, setStatus] = React.useState({
@@ -14,6 +19,11 @@ const VideoContainer = ({ url }) => {
     isPlaying: false,
     rate: 1.0,
   })
+
+  const videoSource = {
+    uri: url,
+    headers: { referer: REFERER },
+  }
 
   return (
     <View style={styles.container}>
@@ -23,9 +33,7 @@ const VideoContainer = ({ url }) => {
       <Video
         ref={video}
         style={styles.video}
-        source={{
-          uri: url,
-        }}
+        source={videoSource}
         useNativeControls
         resizeMode="contain"
         isLooping
