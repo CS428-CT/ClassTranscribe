@@ -31,6 +31,10 @@ describe('Check formatting', () => {
 })
 
 describe('Check truncation', () => {
+  test('check null string', () => {
+    expect(truncateString(null, 10)).toBe('')
+  })
+
   test('already short enough', () => {
     expect(truncateString('hello', 10)).toBe('hello')
   })
