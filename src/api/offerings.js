@@ -1,10 +1,11 @@
 import axios from 'axios'
-import { HTTP_STATUS_CODES, BASE_URL } from '.'
+import { HTTP_STATUS_CODES } from '.'
+import { API_BASE_URL } from '../constants'
 import { format } from '../utils/string'
 import { getCurrentAuthenticatedUser, isUserAuthenticated } from './auth'
 
 export const ENDPOINTS = {
-  OFFERING: `${BASE_URL}Offerings/{0}`,
+  OFFERING: `${API_BASE_URL}Offerings/{0}`,
 }
 
 /**

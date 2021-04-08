@@ -26,8 +26,8 @@ const CoursePlaylistsContainer = ({ courseId, navigation }) => {
 
   const renderItem = ({ item }) => {
     return (
-      <TouchableNativeFeedback onPress={() => onPlaylistSelected(item.id)}>
-        <ListItem key={item.id} bottomDivider>
+      <TouchableNativeFeedback key={item.id} onPress={() => onPlaylistSelected(item.id)}>
+        <ListItem bottomDivider>
           <ListItem.Content>
             <ListItem.Title accessibilityRole="button">{item.name}</ListItem.Title>
           </ListItem.Content>

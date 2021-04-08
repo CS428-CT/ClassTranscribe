@@ -2,6 +2,7 @@
   "name": "ClassTranscribe",
   "displayName": "ClassTranscribe",
   "expo": {
+    "scheme": "com.classtranscribe.mobile",
     "name": "ClassTranscribe",
     "slug": "class-transcribe",
     "version": "1.0.0",

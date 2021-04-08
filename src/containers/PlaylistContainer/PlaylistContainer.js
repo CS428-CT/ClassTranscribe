@@ -36,8 +36,8 @@ const PlaylistContainer = ({ navigation, playlistId }) => {
 
   const renderItem = ({ item }) => {
     return (
-      <TouchableNativeFeedback onPress={() => onVideoSelected(item)}>
-        <ListItem key={item.id} bottomDivider>
+      <TouchableNativeFeedback key={item.id} onPress={() => onVideoSelected(item)}>
+        <ListItem bottomDivider>
           <ListItem.Content>
             <ListItem.Title accessibilityRole="button">{item.name}</ListItem.Title>
           </ListItem.Content>
