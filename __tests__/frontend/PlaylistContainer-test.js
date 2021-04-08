@@ -7,7 +7,6 @@ import { HTTP_STATUS_CODES } from '../../src/api'
 import { VIDEOS_BY_PLAYLIST_RESPONSE } from '../mock_responses/mock-playlists-response'
 import { format } from '../../src/utils/string'
 import PlaylistContainer from '../../src/containers/PlaylistContainer/PlaylistContainer'
-// import { FILE_SERVER_BASE_URL } from '../../src/constants'
 import { STACK_SCREENS } from '../../src/containers/CTNavigationContainer'
 
 const mock = new MockAdapter(axios)
