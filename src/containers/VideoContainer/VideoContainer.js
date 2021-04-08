@@ -87,7 +87,7 @@ const VideoContainer = ({ videos, index }) => {
         isLooping
         onPlaybackStatusUpdate={(status) => setStatus(() => status)}
       />
-
+      <Text>{videos[vidIndex].jsonMetadata.title}</Text>
       <View style={styles.buttons}>
         <Button
           mode="contained"
@@ -153,6 +153,9 @@ VideoContainer.propTypes = {
       video: PropTypes.shape({
         video1Path: PropTypes.string.isRequired,
       }).isRequired,
+      jsonMetadata: PropTypes.shape({
+        title: PropTypes.string,
+      }),
       watchHistory: PropTypes.shape({
         json: PropTypes.shape({
           timestamp: PropTypes.number,
