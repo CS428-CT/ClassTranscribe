@@ -6,7 +6,8 @@ import { format } from '../../src/utils/string'
 import { ENDPOINTS } from '../../src/api/universities'
 import { HTTP_STATUS_CODES } from '../../src/api'
 import { DEPARTMENTS_RESPONSE } from '../mock_responses/mock-department-response'
-import { VideoContainer } from '../../src/containers/VideoContainer/VideoContainer'
+//import { VideoContainer } from '../../src/containers/VideoContainer/VideoContainer'
+import {App} from '../../App'
 
 describe('Check rendering', () => {
   afterEach(() => {

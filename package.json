@@ -22,6 +22,7 @@
     "expo-av": "~8.7.0",
     "expo-file-system": "~9.3.0",
     "expo-random": "~10.0.0",
+    "jest-expo": "^40.0.2",
     "jwt-decode": "2.2.0",
     "prettier": "^2.2.1",
     "prop-types": "^15.7.2",
@@ -60,7 +61,7 @@
     "testPathIgnorePatterns": [
       "mock_response/*"
     ],
-    "preset": "react-native",
+    "preset": "jest-expo",
     "setupFilesAfterEnv": [
       "@testing-library/jest-native/extend-expect"
     ]
