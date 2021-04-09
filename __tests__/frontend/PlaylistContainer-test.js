@@ -7,7 +7,6 @@ import { HTTP_STATUS_CODES } from '../../src/api'
 import { VIDEOS_BY_PLAYLIST_RESPONSE } from '../mock_responses/mock-playlists-response'
 import { format } from '../../src/utils/string'
 import PlaylistContainer from '../../src/containers/PlaylistContainer/PlaylistContainer'
-import { FILE_SERVER_BASE_URL } from '../../src/constants'
 import { STACK_SCREENS } from '../../src/containers/CTNavigationContainer'
 
 const mock = new MockAdapter(axios)
@@ -91,10 +90,11 @@ describe('Check video navigation', () => {
     expect(videos.length).not.toBe(0)
 
     fireEvent.press(videos[0])
-    const firstVideo = VIDEOS_BY_PLAYLIST_RESPONSE.medias.find((v) => v.index === 0)
-    const expectedVideoUrl = FILE_SERVER_BASE_URL + firstVideo.video.video1Path
 
     expect(mockNaivgator.push).toHaveBeenCalled()
-    expect(mockNaivgator.push).toHaveBeenCalledWith(STACK_SCREENS.VIDEO, { url: expectedVideoUrl })
+    expect(mockNaivgator.push).toHaveBeenCalledWith(STACK_SCREENS.VIDEO, {
+      videos: VIDEOS_BY_PLAYLIST_RESPONSE.medias,
+      index: 0,
+    })
   })
 })

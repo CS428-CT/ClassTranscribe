@@ -22,7 +22,7 @@
     "expo-av": "~8.7.0",
     "expo-file-system": "~9.3.0",
     "expo-random": "~10.0.0",
-    "jest": "^26.6.3",
+    "jest-expo": "^40.0.2",
     "jwt-decode": "2.2.0",
     "prettier": "^2.2.1",
     "prop-types": "^15.7.2",
@@ -49,16 +49,19 @@
   "devDependencies": {
     "@babel/core": "~7.9.0",
     "@testing-library/jest-native": "^4.0.1",
-    "@testing-library/react-native": "^7.2.0"
+    "@testing-library/react-native": "^7.2.0",
+    "babel-jest": "^26.6.3",
+    "jest": "^26.6.3",
+    "regenerator-runtime": "^0.13.7"
   },
   "jest": {
     "transformIgnorePatterns": [
-      "node_modules/(?!(jest-)?react-native|@react-native-community|@react-native-picker)"
+      "node_modules/(?!(jest-)?react-native|@react-native-community|@react-native-picker|expo-av|@react-native-community|@unimodules|unimodules-permissions-interface|expo-asset|expo-constants|)"
     ],
     "testPathIgnorePatterns": [
       "mock_response/*"
     ],
-    "preset": "react-native",
+    "preset": "jest-expo",
     "setupFilesAfterEnv": [
       "@testing-library/jest-native/extend-expect"
     ]
