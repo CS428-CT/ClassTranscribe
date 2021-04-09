@@ -87,7 +87,7 @@ const VideoContainer = ({ videos, index }) => {
         isLooping
         onPlaybackStatusUpdate={(status) => setStatus(() => status)}
       />
-      <Text>{videos[vidIndex].jsonMetadata.title}</Text>
+      <Text>{videos[vidIndex].name}</Text>
       <View style={styles.buttons}>
         <Button
           mode="contained"
