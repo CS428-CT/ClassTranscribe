@@ -153,9 +153,7 @@ VideoContainer.propTypes = {
       video: PropTypes.shape({
         video1Path: PropTypes.string.isRequired,
       }).isRequired,
-      jsonMetadata: PropTypes.shape({
-        title: PropTypes.string,
-      }),
+      title: PropTypes.string,
       watchHistory: PropTypes.shape({
         json: PropTypes.shape({
           timestamp: PropTypes.number,
