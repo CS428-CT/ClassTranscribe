@@ -15,7 +15,7 @@ import styles from './Home.style'
  */
 const Home = ({ navigation }) => {
   const currentUser = getCurrentAuthenticatedUser()
-  const universityId = currentUser.universityId
+  var universityId = currentUser.universityId
 
   /**
    * Helper function to filter courses by university id
@@ -92,17 +92,15 @@ const Home = ({ navigation }) => {
     })
 
     const [university, setUniversity] = useState(universityId)
-
     const onUniversitySelected = async (newUniversityId) => {
-      // Reload the page for the selected universityId
       setUniversity(newUniversityId)
+      universityId = newUniversityId
 
       const newUnicourses = await getOfferingsData()
       const newCourses = filterCourses(newUnicourses)
 
       try {
         setCourses(newCourses)
-        renderCourseItem()
       } catch (error) {
         console.error(error)
       }
