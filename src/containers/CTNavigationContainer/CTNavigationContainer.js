@@ -83,7 +83,7 @@ const PlaylistView = ({ navigation, route }) => {
  * receive the proper props
  */
 const VideoView = ({ route }) => {
-  return <VideoContainer url={route.params.url} />
+  return <VideoContainer videos={route.params.videos} index={route.params.index} />
 }
 
 /**
