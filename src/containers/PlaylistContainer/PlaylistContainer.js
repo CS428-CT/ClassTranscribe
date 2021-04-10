@@ -14,7 +14,7 @@ const PlaylistContainer = ({ navigation, playlistId }) => {
       const response = await getVideosByPlaylist(playlistId)
       if (!response) return
       const sortedVideos = response.medias.sort((a, b) => a.index - b.index)
-      // Get rid of undefined indexs
+      // Get rid of undefined indices
       for (let i = 0; i < sortedVideos.length; i += 1) {
         sortedVideos[i].index = i
       }

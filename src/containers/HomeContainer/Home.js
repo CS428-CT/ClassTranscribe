@@ -15,11 +15,29 @@ import styles from './Home.style'
  * to search for courses. Clicking on a course shows the playlists for it.
  */
 const Home = ({ navigation }) => {
+  const currentUser = getCurrentAuthenticatedUser()
+  var universityId = currentUser.universityId
+
+  const filterCourses = (offerings, universityId) => {
+    var newOfferings = []
+    for (const i in offerings) {
+      if (offerings[i].term.universityId == universityId) {
+        newOfferings.push(offerings[i])
+      }
+    }
+    
+    return newOfferings
+  }
+
   const [courses, setCourses] = useState([])
   useEffect(() => {
     const fetchCourseInfo = async () => {
       const offerings = await getOfferingsData()
-      setCourses(offerings)
+      const studentCourses = filterCourses(offerings, universityId)
+      
+      console.log(studentCourses)
+      
+      setCourses(studentCourses)
     }
     fetchCourseInfo()
   }, [setCourses])
@@ -60,13 +78,9 @@ const Home = ({ navigation }) => {
   }
 
   /**
-   * Render user's login information
+   * Render universities
    */
   const renderUniversityDropDown = () => {
-    const currentUser = getCurrentAuthenticatedUser()
-    console.log(currentUser)
-    const universityId = currentUser.universityId
-
     // Don't need to use useState and useEffect, just need to get the async
     const [universities, setAllUniversities] = useState([])
     useEffect(() => {
@@ -78,16 +92,28 @@ const Home = ({ navigation }) => {
     }, [setAllUniversities])
 
     const universityItems = universities.map((uni) => {
-      return <Picker.Item key={uni.id} value={uni.id} label={uni.name} />
+      return <Picker.Item accessibilityRole='button' key={uni.id} value={uni.id} label={uni.name} />
     })
 
     const [university, setUniversity] = useState(universityId)
 
-    const onUniversitySelected = (universityId) => {
+    const onUniversitySelected = async (universityId) => {
       // Reload the page for the selected universityId
       setUniversity(universityId)
       console.log('GOT HERE')
+      // console.log(universityId)
+      const newUnicourses = await getOfferingsData()
+      const newCourses = filterCourses(newUnicourses, universityId)
       console.log(universityId)
+      // console.log(newCourses)
+      try {
+        setCourses(newCourses)
+      } catch (error) {
+        console.error(error)
+      }
+      
+      renderCourseItem()
+      // window.location.reload()
     }
 
     return (

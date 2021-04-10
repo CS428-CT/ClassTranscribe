@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { STACK_SCREENS } from './index'
-import Home from '../HomeContainers/Home'
+import Home from '../HomeContainer/Home'
 import CoursePlaylistsContainer from '../CoursePlaylistsContainer/CoursePlaylistsContainer'
 import VideoContainer from '../VideoContainer/VideoContainer'
 import UniversityListContainer from '../UniversityListContainer/UniversityListContainer'
@@ -21,13 +21,17 @@ const Stack = createStackNavigator()
  */
 const HomeNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName={STACK_SCREENS.HOME}>
-      <Stack.Screen name={STACK_SCREENS.HOME} component={Home} />
+    <Stack.Navigator initialRouteName={STACK_SCREENS.HOME} >
+      <Stack.Screen name={STACK_SCREENS.HOME} component={HomeView} />
       <Stack.Screen name={STACK_SCREENS.COURSE_PLAYLISTS} component={CoursePlaylistsView} />
       <Stack.Screen name={STACK_SCREENS.PLAYLIST} component={PlaylistView} />
       <Stack.Screen name={STACK_SCREENS.VIDEO} component={VideoView} />
     </Stack.Navigator>
   )
+}
+
+const HomeView = ({ navigation }) => {
+  return <Home navigation={navigation} />
 }
 
 /**
@@ -91,8 +95,8 @@ const VideoView = ({ route }) => {
  */
 const CourseNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName={STACK_SCREENS.HOME}>
-      <Stack.Screen name={STACK_SCREENS.HOME} component={Home} />
+    <Stack.Navigator initialRouteName={STACK_SCREENS.HOME} >
+      <Stack.Screen name={STACK_SCREENS.HOME} component={HomeView} />
       <Stack.Screen name={STACK_SCREENS.COURSE_PLAYLISTS} component={CoursePlaylistsView} />
       <Stack.Screen name={STACK_SCREENS.PLAYLIST} component={PlaylistView} />
       <Stack.Screen name={STACK_SCREENS.VIDEO} component={VideoView} />
