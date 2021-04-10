@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { TouchableNativeFeedback, Switch, FlatList, View, Text } from 'react-native'
+import { TouchableNativeFeedback, FlatList, View } from 'react-native'
 import { Picker } from '@react-native-community/picker'
 import PropTypes from 'prop-types'
 import { getOfferingsData } from '../../api/offerings'
 import { getUniversities } from '../../api/universities'
 import { getCurrentAuthenticatedUser } from '../../api/auth'
 import CourseCard from '../../components/Cards/CourseCard'
-import Recommend from '../../components/Recommend/Recommend'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
 import styles from './Home.style'
 
