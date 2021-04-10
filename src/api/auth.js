@@ -60,9 +60,9 @@ export const setAuthToken = (token) => {
  */
 export const setUserData = (userData) => {
   if (!currentAuthenticatedUser) currentAuthenticatedUser = {}
-  currentAuthenticatedUser.userId = userData.userId
-  currentAuthenticatedUser.universityId = userData.universityId
-  currentAuthenticatedUser.emailId = userData.emailId
+  currentAuthenticatedUser.userId = userData?.userId
+  currentAuthenticatedUser.universityId = userData?.universityId
+  currentAuthenticatedUser.emailId = userData?.emailId
 }
 
 /**
