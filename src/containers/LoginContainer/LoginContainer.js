@@ -55,9 +55,9 @@ const LoginContainer = ({ onAuthLevelChange }) => {
       const userData = JSON.parse(data)
       setUserData(userData)
     } catch (e) {
-        setAuthToken(data)
-        await getUserMetadata()
-        onAuthLevelChange(isUserAuthenticated())
+      setAuthToken(data)
+      await getUserMetadata()
+      onAuthLevelChange(isUserAuthenticated())
     }
   }
 

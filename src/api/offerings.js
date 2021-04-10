@@ -29,15 +29,13 @@ export const getOfferingData = async (offeringId) => {
   return null
 }
 
-
-///////////////////       STUDENT OFFERING FUNCTIONS       ////////////////////
-
+/// ////////////////       STUDENT OFFERING FUNCTIONS       ////////////////////
 
 /**
  * Gets the data for an offering from the CT API if the student is authenticated
  * @returns The offering data
  */
- export const getOfferingsByStudent = async () => {
+export const getOfferingsByStudent = async () => {
   if (!isUserAuthenticated()) return null
 
   const url = format(ENDPOINTS.OFFERING, 'ByStudent')
@@ -60,7 +58,7 @@ export const getOfferingData = async (offeringId) => {
  * If no user is signed in, null is returned.
  * @returns Array of offerings data
  */
- export const getOfferingsData = async () => {
+export const getOfferingsData = async () => {
   const offerings = []
 
   const studentOfferings = await getOfferingsByStudent()
@@ -74,17 +72,14 @@ export const getOfferingData = async (offeringId) => {
   return offerings
 }
 
-
-///////////////////       STARRED OFFERING CALLS       //////////////////////
-
-
+/// ////////////////       STARRED OFFERING CALLS       //////////////////////
 
 /**
  * Returns an array of all the starred offering data for the current user.
  * If no user is signed in, null is returned.
  * @returns Array of offerings data
  */
- export const getStarredOfferingsData = async () => {
+export const getStarredOfferingsData = async () => {
   const offerings = []
 
   const starredOfferings = getStarredOfferings()
@@ -98,13 +93,12 @@ export const getOfferingData = async (offeringId) => {
   return offerings
 }
 
-
 /**
  * Gets the starred offering course IDs for the current user.
  * If no user is signed in, null is returned
  * @returns An object, where each key is the starred course ID and each value is 'starred'.
  */
- export const getStarredOfferings = () => {
+export const getStarredOfferings = () => {
   if (!isUserAuthenticated()) return null
 
   const user = getCurrentAuthenticatedUser()

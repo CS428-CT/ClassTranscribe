@@ -7,7 +7,7 @@ import { STACK_SCREENS } from '../CTNavigationContainer/index'
 
 /**
  * NEW CONTENT HERE!!!
- * 
+ *
  * Contains the course screen of the application. Lists all courses
  * that participate (i.e. instructor has registered the courses and
  * uploads videos) in Class Transcribe. Clicking on a course shows the user's
@@ -28,7 +28,6 @@ const TranscriptContainer = ({ navigation, transcriptId }) => {
   const onLineSelected = (transcriptLine) => {
     // Allow user to edit the line and save/cancel it
     // somewhat like how web is structured
-    
   }
 
   /**
@@ -39,9 +38,7 @@ const TranscriptContainer = ({ navigation, transcriptId }) => {
       <TouchableNativeFeedback useForeground onPress={() => onLineSelected(item.text)}>
         <ListItem key={item.id} bottomDivider>
           <ListItem.Content>
-            <ListItem.Title accessibilityRole="button">
-              {item.text}
-            </ListItem.Title>
+            <ListItem.Title accessibilityRole="button">{item.text}</ListItem.Title>
           </ListItem.Content>
         </ListItem>
       </TouchableNativeFeedback>

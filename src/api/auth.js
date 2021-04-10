@@ -50,7 +50,7 @@ export const setAuthToken = (token) => {
   currentAuthenticatedUser.authToken = token
 }
 
-export const setUserData= (userData) => {
+export const setUserData = (userData) => {
   if (!currentAuthenticatedUser) currentAuthenticatedUser = {}
   currentAuthenticatedUser.userId = userData.userId
   currentAuthenticatedUser.universityId = userData.universityId

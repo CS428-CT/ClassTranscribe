@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { TouchableNativeFeedback, Switch, FlatList, View, Text } from 'react-native'
-import { Picker } from '@react-native-community/picker';
+import { Picker } from '@react-native-community/picker'
 import PropTypes from 'prop-types'
 import { getStarredOfferingsData, getOfferingsData } from '../../api/offerings'
 import { getUniversities } from '../../api/universities'
@@ -63,41 +63,42 @@ const Home = ({ navigation }) => {
    * Render user's login information
    */
   const renderUniversityDropDown = () => {
-      const currentUser = getCurrentAuthenticatedUser()
-      console.log(currentUser)
-      const universityId = currentUser.universityId
+    const currentUser = getCurrentAuthenticatedUser()
+    console.log(currentUser)
+    const universityId = currentUser.universityId
 
-      // Don't need to use useState and useEffect, just need to get the async
-      const [universities, setAllUniversities] = useState([])
-      useEffect(() => {
-        const fetchUniversities = async () => {
-          const allUnis = await getUniversities()
-          setAllUniversities(allUnis)
-        }
-        fetchUniversities()
-      }, [setAllUniversities])
-
-
-
-      let universityItems = universities.map( (uni) => {
-        return <Picker.Item key={uni.id} value={uni.id} label={uni.name} />
-      });
-
-      const [university, setUniversity] = useState(universityId)
-
-      const onUniversitySelected = (universityId) => {
-        // Reload the page for the selected universityId
-        setUniversity(universityId)
-        console.log("GOT HERE")
-        console.log(universityId)
+    // Don't need to use useState and useEffect, just need to get the async
+    const [universities, setAllUniversities] = useState([])
+    useEffect(() => {
+      const fetchUniversities = async () => {
+        const allUnis = await getUniversities()
+        setAllUniversities(allUnis)
       }
+      fetchUniversities()
+    }, [setAllUniversities])
 
-      return (<Picker
-        style={{flex:0, width: '100%'}}
+    const universityItems = universities.map((uni) => {
+      return <Picker.Item key={uni.id} value={uni.id} label={uni.name} />
+    })
+
+    const [university, setUniversity] = useState(universityId)
+
+    const onUniversitySelected = (universityId) => {
+      // Reload the page for the selected universityId
+      setUniversity(universityId)
+      console.log('GOT HERE')
+      console.log(universityId)
+    }
+
+    return (
+      <Picker
+        style={{ flex: 0, width: '100%' }}
         selectedValue={university}
-        onValueChange={universityId => onUniversitySelected(universityId)}>
-          { universityItems }
-      </Picker>)
+        onValueChange={(universityId) => onUniversitySelected(universityId)}
+      >
+        {universityItems}
+      </Picker>
+    )
   }
 
   /**
