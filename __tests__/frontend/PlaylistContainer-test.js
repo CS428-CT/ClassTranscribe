@@ -91,8 +91,8 @@ describe('Check video navigation', () => {
 
     fireEvent.press(videos[0])
 
-    expect(mockNaivgator.push).toHaveBeenCalled()
-    expect(mockNaivgator.push).toHaveBeenCalledWith(STACK_SCREENS.VIDEO, {
+    expect(mockNavigator.push).toHaveBeenCalled()
+    expect(mockNavigator.push).toHaveBeenCalledWith(STACK_SCREENS.VIDEO, {
       videos: VIDEOS_BY_PLAYLIST_RESPONSE.medias,
       index: 0,
     })
