@@ -9,7 +9,7 @@ const sanityCheck = async (queryByText, queryAllByA11yRole, index) => {
   expect(title).not.toBe(null)
   const buttons = await waitFor(() => queryAllByA11yRole('button'))
   expect(buttons.length).not.toBe(0)
-  expect(buttons.length).toBe(10)
+  expect(buttons.length).toBe(3)
 }
 
 describe('Check rendering', () => {
