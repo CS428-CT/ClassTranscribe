@@ -27,6 +27,7 @@ const replaceAll = (string, search, replace) => {
  * @returns
  */
 export const truncateString = (str, maxLength) => {
+  if (!str) return ''
   if (str.length <= maxLength) return str
 
   const truncated = `${str.substring(0, maxLength)}...`

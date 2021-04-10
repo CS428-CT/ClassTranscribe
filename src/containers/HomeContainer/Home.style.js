@@ -1,19 +1,12 @@
 import { StyleSheet } from 'react-native'
 
 const HomeStyle = StyleSheet.create({
-  container: {
-    display: 'flex',
-    flexDirection: 'row',
-    marginTop: 10,
-    marginBottom: 10,
-    flexWrap: 'wrap',
-    width: '100%',
-  },
   cardContainer: {
-    width: '50%',
-  },
-  recContainer: {
-    width: '50%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    width: '98%',
   },
 
   viewStyle: {

@@ -6,6 +6,7 @@ import { getCurrentAuthenticatedUser, isUserAuthenticated } from './auth'
 
 export const ENDPOINTS = {
   OFFERING: `${API_BASE_URL}Offerings/{0}`,
+  OFFERINGBYSTUDENT: `${API_BASE_URL}Offerings/ByStudent`,
 }
 
 /**
@@ -28,6 +29,51 @@ export const getOfferingData = async (offeringId) => {
 
   return null
 }
+
+/// ////////////////       STUDENT OFFERING FUNCTIONS       ////////////////////
+
+/**
+ * Gets the data for an offering from the CT API if the student is authenticated
+ * @returns The offering data
+ */
+export const getOfferingsByStudent = async () => {
+  if (!isUserAuthenticated()) return null
+
+  const url = ENDPOINTS.OFFERINGBYSTUDENT
+
+  try {
+    const resp = await axios.get(url)
+    if (resp?.status !== HTTP_STATUS_CODES.OK) {
+      return null
+    }
+    return resp.data
+  } catch (error) {
+    console.error(error)
+  }
+
+  return null
+}
+
+/**
+ * Returns an array of all the offering data for the current user.
+ * If no user is signed in, null is returned.
+ * @returns Array of offerings data
+ */
+export const getOfferingsData = async () => {
+  const offerings = []
+
+  const studentOfferings = await getOfferingsByStudent()
+  if (studentOfferings == null) return null
+
+  for (const entry of studentOfferings) {
+    const offeringData = await getOfferingData(entry.offering.id)
+    if (offeringData != null) offerings.push(offeringData)
+  }
+
+  return offerings
+}
+
+/// ////////////////       STARRED OFFERING CALLS       //////////////////////
 
 /**
  * Returns an array of all the starred offering data for the current user.

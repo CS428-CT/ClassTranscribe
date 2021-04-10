@@ -45,9 +45,24 @@ export const getUserMetadata = async () => {
   }
 }
 
+/**
+ * Set the authorization token for the current authenticated user
+ * @param authToken Pass in the auth token so user can watch CT videos
+ */
 export const setAuthToken = (token) => {
   if (!currentAuthenticatedUser) currentAuthenticatedUser = {}
   currentAuthenticatedUser.authToken = token
+}
+
+/**
+ * Initialize user's data using the metadata that is passed in during authorization
+ * @param userData Pass in userData to obtain each user's information
+ */
+export const setUserData = (userData) => {
+  if (!currentAuthenticatedUser) currentAuthenticatedUser = {}
+  currentAuthenticatedUser.userId = userData?.userId
+  currentAuthenticatedUser.universityId = userData?.universityId
+  currentAuthenticatedUser.emailId = userData?.emailId
 }
 
 /**

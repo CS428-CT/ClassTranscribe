@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import WebView from 'react-native-webview'
-import { getUserMetadata, isUserAuthenticated, setAuthToken } from '../../api/auth'
+import { getUserMetadata, isUserAuthenticated, setAuthToken, setUserData } from '../../api/auth'
 import { FILE_SERVER_BASE_URL } from '../../constants'
 
 /**
@@ -35,6 +35,7 @@ const LoginContainer = ({ onAuthLevelChange }) => {
       }
 
       window.ReactNativeWebView.postMessage(localStorage["authToken"])
+      window.ReactNativeWebView.postMessage(userInfoString)
     }
 
     getToken();
@@ -48,9 +49,16 @@ const LoginContainer = ({ onAuthLevelChange }) => {
   const onBrowserMessage = async (event) => {
     if (!event?.nativeEvent?.data) return
 
-    setAuthToken(event.nativeEvent.data)
-    await getUserMetadata()
-    onAuthLevelChange(isUserAuthenticated())
+    const data = event.nativeEvent.data
+
+    try {
+      const userData = JSON.parse(data)
+      setUserData(userData)
+    } catch (e) {
+      setAuthToken(data)
+      await getUserMetadata()
+      onAuthLevelChange(isUserAuthenticated())
+    }
   }
 
   return (
