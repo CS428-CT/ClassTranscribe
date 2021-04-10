@@ -26,7 +26,7 @@ const VideoContainer = ({ videos, index }) => {
       authorization: `Bearer ${getCurrentAuthenticatedUser()?.authToken}`,
     },
   }
-
+  const [ready, setReady] = React.useState(false)
   const [status, setStatus] = React.useState({
     isMuted: false,
     isPlaying: false,
@@ -40,11 +40,16 @@ const VideoContainer = ({ videos, index }) => {
       rate: 1.0,
     })
     videoRef.current.unloadAsync().then(() => {
-      videoRef.current.loadAsync(
-        videoSource,
-        { positionMillis: (videos[vidIndex].watchHistory?.json?.timestamp || 0) * 1000 },
-        true
-      )
+      setReady(false)
+      videoRef.current
+        .loadAsync(
+          videoSource,
+          { positionMillis: (videos[vidIndex].watchHistory?.json?.timestamp || 0) * 1000 },
+          true
+        )
+        .then(() => {
+          setReady(true)
+        })
     })
   }, [vidIndex])
 
@@ -78,16 +83,19 @@ const VideoContainer = ({ videos, index }) => {
       <View style={styles.input}>
         <Text label="Video URI" value={url} />
       </View>
-      <Video
-        ref={videoRef}
-        style={styles.video}
-        source={videoSource}
-        useNativeControls
-        resizeMode="contain"
-        isLooping
-        onPlaybackStatusUpdate={(status) => setStatus(() => status)}
-      />
-      <Text>{videos[vidIndex].jsonMetadata.title}</Text>
+      <View style={ready ? {} : { display: 'none' }}>
+        <Video
+          ref={videoRef}
+          style={styles.video}
+          source={videoSource}
+          useNativeControls
+          resizeMode="contain"
+          isLooping
+          onPlaybackStatusUpdate={(status) => setStatus(() => status)}
+        />
+      </View>
+      {ready === true ? <></> : <Text>Loading....</Text>}
+      <Text>{videos[vidIndex].name}</Text>
       <View style={styles.buttons}>
         <Button
           mode="contained"
@@ -153,9 +161,7 @@ VideoContainer.propTypes = {
       video: PropTypes.shape({
         video1Path: PropTypes.string.isRequired,
       }).isRequired,
-      jsonMetadata: PropTypes.shape({
-        title: PropTypes.string,
-      }),
+      name: PropTypes.string,
       watchHistory: PropTypes.shape({
         json: PropTypes.shape({
           timestamp: PropTypes.number,
