@@ -15,7 +15,7 @@ import styles from './Home.style'
  */
 const Home = ({ navigation }) => {
   const currentUser = getCurrentAuthenticatedUser()
-  var universityId = currentUser.universityId
+  let universityId = currentUser.universityId
 
   /**
    * Helper function to filter courses by university id
@@ -88,7 +88,7 @@ const Home = ({ navigation }) => {
     }, [setAllUniversities])
 
     const universityItems = universities.map((uni) => {
-      return <Picker.Item accessibilityRole="button" key={uni.id} value={uni.id} label={uni.name} />
+      return <Picker.Item key={uni.id} value={uni.id} label={uni.name} />
     })
 
     const [university, setUniversity] = useState(universityId)
@@ -108,6 +108,7 @@ const Home = ({ navigation }) => {
 
     return (
       <Picker
+        testID="picker"
         style={{ flex: 0, width: '100%' }}
         selectedValue={university}
         onValueChange={(newUniversityId) => onUniversitySelected(newUniversityId)}
@@ -125,6 +126,7 @@ const Home = ({ navigation }) => {
 
     return (
       <FlatList
+        testID="courseList"
         keyExtractor={(idxCourses, index) => index.toString()}
         data={courses}
         renderItem={renderCourseItem}
