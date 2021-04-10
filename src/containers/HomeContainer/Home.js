@@ -60,7 +60,7 @@ const Home = ({ navigation }) => {
     const courseId = item.offering.id
 
     return (
-      <View style={styles.container} key={courseId}>
+      <View key={courseId}>
         <TouchableNativeFeedback onPress={() => onCourseSelected(courseId)}>
           <View style={styles.cardContainer}>
             <CourseCard
@@ -71,9 +71,6 @@ const Home = ({ navigation }) => {
             />
           </View>
         </TouchableNativeFeedback>
-        <View key={courseName} style={styles.recContainer}>
-          <Recommend key={courseId} navigation={navigation} courseId={courseId} mode={mode} />
-        </View>
       </View>
     )
   }
@@ -138,25 +135,9 @@ const Home = ({ navigation }) => {
     )
   }
 
-  const [mode, setMode] = useState(false)
-  const renderSwitch = () => {
-    return (
-      <View style={styles.Container}>
-        <Text>Latest Video Mode: {mode.toString()}</Text>
-        <Switch
-          trackColor={{ false: 'black', true: 'grey' }}
-          thumbColor={mode ? 'purple' : 'black'}
-          onValueChange={() => setMode(!mode)}
-          value={mode}
-        />
-      </View>
-    )
-  }
-
   return (
     <View style={styles.viewStyle}>
       {renderUniversityDropDown()}
-      {renderSwitch()}
       {renderStarredCourses()}
     </View>
   )
