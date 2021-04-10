@@ -75,7 +75,7 @@
     "build-ios": "expo build:ios",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject --non-interactive --eject-method bare",
+    "eject": "expo eject --non-interactive --ject-method bare",
     "lint": "eslint ."
   },
   "private": true

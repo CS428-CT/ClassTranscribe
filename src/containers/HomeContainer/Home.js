@@ -6,7 +6,7 @@ import { getOfferingsData } from '../../api/offerings'
 import { getUniversities } from '../../api/universities'
 import { getCurrentAuthenticatedUser } from '../../api/auth'
 import CourseCard from '../../components/Cards/CourseCard'
-// import Recommend from '../../components/Recommend/Recommend'
+import Recommend from '../../components/Recommend/Recommend'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
 import styles from './Home.style'
 
@@ -18,6 +18,10 @@ const Home = ({ navigation }) => {
   const currentUser = getCurrentAuthenticatedUser()
   const universityId = currentUser.universityId
 
+  /**
+   * Helper function to filter courses by university id
+   * @param offerings Pass in all offerings that student is allowed to access only
+   */
   const filterCourses = (offerings) => {
     const newOfferings = []
     for (const i in offerings) {
@@ -67,15 +71,15 @@ const Home = ({ navigation }) => {
             />
           </View>
         </TouchableNativeFeedback>
-        {/* <View key={courseName} style={styles.recContainer}>
+        <View key={courseName} style={styles.recContainer}>
           <Recommend key={courseId} navigation={navigation} courseId={courseId} mode={mode} />
-        </View> */}
+        </View>
       </View>
     )
   }
 
   /**
-   * Render universities
+   * Render universities' course offerings in a dropdown picker based on university id.
    */
   const renderUniversityDropDown = () => {
     const [universities, setAllUniversities] = useState([])
@@ -96,6 +100,7 @@ const Home = ({ navigation }) => {
     const onUniversitySelected = async (newUniversityId) => {
       // Reload the page for the selected universityId
       setUniversity(newUniversityId)
+
       const newUnicourses = await getOfferingsData()
       const newCourses = filterCourses(newUnicourses)
 
