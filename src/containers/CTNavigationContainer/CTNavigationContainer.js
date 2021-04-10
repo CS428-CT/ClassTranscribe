@@ -8,10 +8,7 @@ import { STACK_SCREENS } from './index'
 import Home from '../HomeContainer/Home'
 import CoursePlaylistsContainer from '../CoursePlaylistsContainer/CoursePlaylistsContainer'
 import VideoContainer from '../VideoContainer/VideoContainer'
-import UniversityListContainer from '../UniversityListContainer/UniversityListContainer'
 import PlaylistContainer from '../PlaylistContainer/PlaylistContainer'
-import DepartmentListContainer from '../DepartmentListContainer/DepartmentListContainer'
-import CourseListContainer from '../CourseListContainer/CourseListContainer'
 
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
@@ -21,7 +18,7 @@ const Stack = createStackNavigator()
  */
 const HomeNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName={STACK_SCREENS.HOME} >
+    <Stack.Navigator initialRouteName={STACK_SCREENS.HOME}>
       <Stack.Screen name={STACK_SCREENS.HOME} component={HomeView} />
       <Stack.Screen name={STACK_SCREENS.COURSE_PLAYLISTS} component={CoursePlaylistsView} />
       <Stack.Screen name={STACK_SCREENS.PLAYLIST} component={PlaylistView} />
@@ -30,40 +27,12 @@ const HomeNavigator = () => {
   )
 }
 
+/**
+ * Wraps the Home container so that it can
+ * receive the proper props
+ */
 const HomeView = ({ navigation }) => {
   return <Home navigation={navigation} />
-}
-
-/**
- * Wraps the UniversityListContainer so that it can
- * receive the proper props
- */
-const UniversityListView = ({ navigation }) => {
-  return <UniversityListContainer navigation={navigation} />
-}
-
-/**
- * Wraps the DepartmentListContainer so that it can
- * receive the proper props
- */
-const DepartmentListView = ({ navigation, route }) => {
-  return (
-    <DepartmentListContainer universityId={route.params.universityId} navigation={navigation} />
-  )
-}
-
-/**
- * Wraps the CourseListContainer so that it can
- * receive the proper props
- */
-const CourseListView = ({ navigation, route }) => {
-  return (
-    <CourseListContainer
-      departmentId={route.params.departmentId}
-      acronym={route.params.acronym}
-      navigation={navigation}
-    />
-  )
 }
 
 /**
@@ -95,7 +64,7 @@ const VideoView = ({ route }) => {
  */
 const CourseNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName={STACK_SCREENS.HOME} >
+    <Stack.Navigator initialRouteName={STACK_SCREENS.HOME}>
       <Stack.Screen name={STACK_SCREENS.HOME} component={HomeView} />
       <Stack.Screen name={STACK_SCREENS.COURSE_PLAYLISTS} component={CoursePlaylistsView} />
       <Stack.Screen name={STACK_SCREENS.PLAYLIST} component={PlaylistView} />

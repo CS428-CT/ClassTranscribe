@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { TouchableNativeFeedback, Switch, FlatList, View, Text } from 'react-native'
 import { Picker } from '@react-native-community/picker'
 import PropTypes from 'prop-types'
-import { getStarredOfferingsData, getOfferingsData } from '../../api/offerings'
+import { getOfferingsData } from '../../api/offerings'
 import { getUniversities } from '../../api/universities'
 import { getCurrentAuthenticatedUser } from '../../api/auth'
 import CourseCard from '../../components/Cards/CourseCard'
-import Recommend from '../../components/Recommend/Recommend'
+// import Recommend from '../../components/Recommend/Recommend'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
 import styles from './Home.style'
 
@@ -16,16 +16,16 @@ import styles from './Home.style'
  */
 const Home = ({ navigation }) => {
   const currentUser = getCurrentAuthenticatedUser()
-  var universityId = currentUser.universityId
+  const universityId = currentUser.universityId
 
-  const filterCourses = (offerings, universityId) => {
-    var newOfferings = []
+  const filterCourses = (offerings) => {
+    const newOfferings = []
     for (const i in offerings) {
-      if (offerings[i].term.universityId == universityId) {
+      if (offerings[i].term.universityId === universityId) {
         newOfferings.push(offerings[i])
       }
     }
-    
+
     return newOfferings
   }
 
@@ -33,7 +33,7 @@ const Home = ({ navigation }) => {
   useEffect(() => {
     const fetchCourseInfo = async () => {
       const offerings = await getOfferingsData()
-      const studentCourses = filterCourses(offerings, universityId)      
+      const studentCourses = filterCourses(offerings)
       setCourses(studentCourses)
     }
     fetchCourseInfo()
@@ -88,19 +88,17 @@ const Home = ({ navigation }) => {
     }, [setAllUniversities])
 
     const universityItems = universities.map((uni) => {
-      return <Picker.Item accessibilityRole='button' 
-                          key={uni.id} 
-                          value={uni.id} 
-                          label={uni.name} />
+      return <Picker.Item accessibilityRole="button" key={uni.id} value={uni.id} label={uni.name} />
     })
 
     const [university, setUniversity] = useState(universityId)
 
-    const onUniversitySelected = async (universityId) => {
+    const onUniversitySelected = async (newUniversityId) => {
       // Reload the page for the selected universityId
-      setUniversity(universityId)
+      setUniversity(newUniversityId)
       const newUnicourses = await getOfferingsData()
-      const newCourses = filterCourses(newUnicourses, universityId)
+      const newCourses = filterCourses(newUnicourses)
+
       try {
         setCourses(newCourses)
         renderCourseItem()
@@ -113,7 +111,7 @@ const Home = ({ navigation }) => {
       <Picker
         style={{ flex: 0, width: '100%' }}
         selectedValue={university}
-        onValueChange={(universityId) => onUniversitySelected(universityId)}
+        onValueChange={(newUniversityId) => onUniversitySelected(newUniversityId)}
       >
         {universityItems}
       </Picker>
@@ -126,9 +124,13 @@ const Home = ({ navigation }) => {
   const renderStarredCourses = () => {
     if (courses == null) return null
 
-    return <FlatList keyExtractor={(courses, index) => index.toString()} 
-                     data={courses} 
-                     renderItem={renderCourseItem} />
+    return (
+      <FlatList
+        keyExtractor={(idxCourses, index) => index.toString()}
+        data={courses}
+        renderItem={renderCourseItem}
+      />
+    )
   }
 
   const [mode, setMode] = useState(false)
