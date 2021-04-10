@@ -6,6 +6,8 @@ import { Icon, Image, ListItem } from 'react-native-elements'
 import * as VideoThumbnails from 'expo-video-thumbnails'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
 
+const videoSuffix = '.mp4' // Currently, classtrascribe only uses mp4 as their video format
+
 /**
  * Contains the home screen of the application. Lists starred courses and gives the user the ability
  * to search for courses. Clicking on a course shows the playlists for it.
@@ -15,7 +17,7 @@ const DownloadContainer = ({ navigation }) => {
 
   const getFileSize = async (fileUri) => {
     const fileInfo = await FileSystem.getInfoAsync(fileUri)
-    return (fileInfo.size / (1024 * 1024)).toFixed(2)
+    return (fileInfo.size / (1024 * 1024)).toFixed(2) // transform from bytes to MBs
   }
 
   const generateThumbnail = async (videoPath) => {
@@ -27,20 +29,22 @@ const DownloadContainer = ({ navigation }) => {
     } catch (e) {
       // eslint-disable-next-line no-console
       console.warn(e)
-      return ''
+      return null
     }
   }
 
   const fetchLocalFiles = async () => {
     let files = await FileSystem.readDirectoryAsync(FileSystem.documentDirectory)
-    files = files.filter((fileName) => fileName.endsWith('.mp4'))
+    files = files.filter((fileName) => fileName.endsWith(videoSuffix))
     const videoItems = await Promise.all(
       files.map(async (fileName) => {
         const localUri = FileSystem.documentDirectory + fileName
         const thumbnail = await generateThumbnail(localUri)
         const filesize = await getFileSize(localUri)
+        const videoName = fileName.slice(0, -videoSuffix.length) // filename without suffix
         return {
-          name: fileName.slice(0, -4),
+          key: videoName,
+          name: videoName,
           thumbnailImg: thumbnail,
           filesize,
           video: {
@@ -59,8 +63,6 @@ const DownloadContainer = ({ navigation }) => {
     }, 5000)
     return () => {
       clearInterval(interval)
-      // eslint-disable-next-line no-console
-      console.log('clear downloads interval')
     }
   }, [])
 
@@ -86,14 +88,17 @@ const DownloadContainer = ({ navigation }) => {
     return (
       <ListItem key={item.video.name} bottomDivider>
         <Icon name="play-circle-outline" size={36} onPress={() => watchVideo(item)} />
-
         <ListItem.Content>
           <ListItem.Title accessibilityRole="button">{item.name}</ListItem.Title>
           <ListItem.Subtitle>{`${item.filesize} MBs`}</ListItem.Subtitle>
-          <Image
-            source={{ uri: item.thumbnailImg }}
-            style={{ marginTop: 10, height: 200 * 0.5625, width: 200 }}
-          />
+          {item.thumbnailImg !== null ? (
+            <Image
+              source={{ uri: item.thumbnailImg }}
+              style={{ marginTop: 10, height: 200 * 0.5625, width: 200 }}
+            />
+          ) : (
+            <></>
+          )}
         </ListItem.Content>
         <Icon name="delete" size={36} onPress={() => deleteVideo(item)} />
       </ListItem>

@@ -97,7 +97,7 @@ const VideoContainer = ({ videos, index, downloaded }) => {
     if (downloadProgress > 0 && downloadProgress < 1) {
       return (
         <View style={styles.buttons}>
-          <Button icon="cloud-download" mode="contained">
+          <Button icon="cloud-download" loading mode="contained">
             Downloading ({Math.floor(downloadProgress * 100)}%)
           </Button>
         </View>
