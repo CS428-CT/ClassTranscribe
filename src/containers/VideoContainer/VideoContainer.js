@@ -1,10 +1,12 @@
 /* eslint no-shadow: ["error", { "allow": ["status"] }] */
 /* eslint-env es6 */
-import React, { useState, useEffect } from 'react'
-import { View } from 'react-native'
-import { Button, Text } from 'react-native-paper'
+import React, { useEffect, useState } from 'react'
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native'
+import { Icon } from 'react-native-elements'
+import { Button, Title } from 'react-native-paper'
 import { Video } from 'expo-av'
 import PropTypes from 'prop-types'
+import RNPickerSelect from 'react-native-picker-select'
 import { FILE_SERVER_BASE_URL } from '../../constants'
 import styles from './VideoContainer.style'
 import { getCurrentAuthenticatedUser } from '../../api/auth'
@@ -52,11 +54,14 @@ const VideoContainer = ({ videos, index }) => {
         })
     })
   }, [vidIndex])
+  const togglePlayPause = () =>
+    status.isPlaying ? videoRef.current.pauseAsync() : videoRef.current.playAsync()
 
   const renderLinkVideo = () => {
     return (
       <View style={styles.buttons}>
         <Button
+          icon="skip-previous"
           mode="contained"
           disabled={vidIndex === 0}
           onPress={() => {
@@ -66,6 +71,7 @@ const VideoContainer = ({ videos, index }) => {
           Previous Video
         </Button>
         <Button
+          icon="skip-next"
           mode="contained"
           disabled={vidIndex + 1 >= videos.length}
           onPress={() => {
@@ -77,12 +83,10 @@ const VideoContainer = ({ videos, index }) => {
       </View>
     )
   }
-  // positionMillis={(videos[vidIndex].watchHistory?.json?.timestamp || 0) * 1000}
+
   return (
     <View style={styles.container}>
-      <View style={styles.input}>
-        <Text label="Video URI" value={url} />
-      </View>
+      <Title style={styles.title}>{videos[vidIndex].name}</Title>
       <View style={ready ? {} : { display: 'none' }}>
         <Video
           ref={videoRef}
@@ -93,57 +97,83 @@ const VideoContainer = ({ videos, index }) => {
           isLooping
           onPlaybackStatusUpdate={(status) => setStatus(() => status)}
         />
+
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity onPress={() => videoRef.current.playFromPositionAsync(0)}>
+            <Icon name="replay" color="white" size={35} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => videoRef.current.setPositionAsync(status.positionMillis - 10 * 1000)}
+          >
+            <Icon name="replay-10" color="white" size={35} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={togglePlayPause}>
+            {status.isPlaying ? (
+              <Icon name="pause" color="white" size={35} />
+            ) : (
+              <Icon name="play-arrow" color="white" size={35} />
+            )}
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => videoRef.current.setPositionAsync(status.positionMillis + 10 * 1000)}
+          >
+            <Icon name="forward-10" color="white" size={35} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => videoRef.current.setIsMutedAsync(!status.isMuted)}>
+            {status.isMuted ? (
+              <Icon name="volume-up" color="white" size={35} />
+            ) : (
+              <Icon name="volume-off" color="white" size={35} />
+            )}
+          </TouchableOpacity>
+          <RNPickerSelect
+            style={{
+              height: '100%',
+              inputIOS: {
+                height: '100%',
+                padding: 0,
+                margin: 0,
+                borderWidth: 1,
+                color: 'white',
+                alignSelf: 'center',
+                alignContent: 'center',
+                alignItems: 'center',
+              },
+              inputAndroid: {
+                height: '100%',
+                color: 'white',
+              },
+            }}
+            placeholder={{}} // disable empty selector
+            value={status.rate}
+            onValueChange={(value) => videoRef.current.setRateAsync(value)}
+            items={[
+              { label: '0.5 x', value: 0.5 },
+              { label: '0.75 x', value: 0.75 },
+              { label: '1.0 x', value: 1.0 },
+              { label: '1.25 x', value: 1.25 },
+              { label: '1.5 x', value: 1.5 },
+            ]}
+          >
+            <Text
+              style={{
+                color: 'white',
+                alignSelf: 'center',
+                textAlign: 'center',
+                fontSize: 20,
+              }}
+            >
+              {status.rate ? `${status.rate} x` : '1 x'}
+            </Text>
+          </RNPickerSelect>
+        </View>
       </View>
-      {ready === true ? <></> : <Text>Loading....</Text>}
-      <Text>{videos[vidIndex].name}</Text>
+
+      {ready === true ? <></> : <ActivityIndicator style={styles.videoLoading} size="large" />}
+
       <View style={styles.buttons}>
         <Button
-          mode="contained"
-          onPress={() =>
-            status.isPlaying ? videoRef.current.pauseAsync() : videoRef.current.playAsync()
-          }
-        >
-          {status.isPlaying ? 'Pause' : 'Play'}
-        </Button>
-        <Button mode="contained" onPress={() => videoRef.current.setIsMutedAsync(!status.isMuted)}>
-          {status.isMuted ? 'Unmute' : 'Mute'}
-        </Button>
-      </View>
-
-      <View style={styles.input}>
-        <Button
-          mode="contained"
-          onPress={() => videoRef.current.setRateAsync(status.rate - 0.1, true)}
-        >
-          Decrease Rate
-        </Button>
-        <Text>Play Rate: {status.rate}</Text>
-        <Button
-          mode="contained"
-          onPress={() => videoRef.current.setRateAsync(status.rate + 0.1, true)}
-        >
-          Increase Rate
-        </Button>
-      </View>
-
-      <View style={styles.buttons}>
-        <Button
-          mode="contained"
-          onPress={() => videoRef.current.setPositionAsync(status.positionMillis - 5 * 1000)}
-        >
-          - 5s
-        </Button>
-        <Button
-          mode="contained"
-          onPress={() => videoRef.current.setPositionAsync(status.positionMillis + 5 * 1000)}
-        >
-          + 5s
-        </Button>
-        <Button mode="contained" onPress={() => videoRef.current.playFromPositionAsync(0)}>
-          Replay
-        </Button>
-
-        <Button
+          icon="cloud-download"
           mode="contained"
           onPress={() => videoRef.current.loadAsync('/storage/emulated/0/Download')}
         >

@@ -1,29 +1,35 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Dimensions } from 'react-native'
 
 const VideoStyle = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
   },
   title: {
-    fontSize: 20,
-    textAlign: 'center',
-    marginTop: '30%',
+    paddingLeft: 10,
+    textAlign: 'left',
+    alignSelf: 'stretch',
+  },
+  videoLoading: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('screen').width * 0.5625,
+    backgroundColor: 'black',
   },
   video: {
-    alignSelf: 'center',
-    width: 320,
-    height: 200,
-    margin: 30,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('screen').width * 0.5625,
   },
   input: {
     width: 320,
   },
+  buttonContainer: {
+    backgroundColor: 'black',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
   buttons: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
     margin: 10,
   },
