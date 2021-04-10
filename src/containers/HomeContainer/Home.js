@@ -33,10 +33,7 @@ const Home = ({ navigation }) => {
   useEffect(() => {
     const fetchCourseInfo = async () => {
       const offerings = await getOfferingsData()
-      const studentCourses = filterCourses(offerings, universityId)
-      
-      console.log(studentCourses)
-      
+      const studentCourses = filterCourses(offerings, universityId)      
       setCourses(studentCourses)
     }
     fetchCourseInfo()
@@ -70,9 +67,9 @@ const Home = ({ navigation }) => {
             />
           </View>
         </TouchableNativeFeedback>
-        <View style={styles.recContainer}>
-          <Recommend navigation={navigation} courseId={courseId} mode={mode} />
-        </View>
+        {/* <View key={courseName} style={styles.recContainer}>
+          <Recommend key={courseId} navigation={navigation} courseId={courseId} mode={mode} />
+        </View> */}
       </View>
     )
   }
@@ -81,7 +78,6 @@ const Home = ({ navigation }) => {
    * Render universities
    */
   const renderUniversityDropDown = () => {
-    // Don't need to use useState and useEffect, just need to get the async
     const [universities, setAllUniversities] = useState([])
     useEffect(() => {
       const fetchUniversities = async () => {
@@ -92,7 +88,10 @@ const Home = ({ navigation }) => {
     }, [setAllUniversities])
 
     const universityItems = universities.map((uni) => {
-      return <Picker.Item accessibilityRole='button' key={uni.id} value={uni.id} label={uni.name} />
+      return <Picker.Item accessibilityRole='button' 
+                          key={uni.id} 
+                          value={uni.id} 
+                          label={uni.name} />
     })
 
     const [university, setUniversity] = useState(universityId)
@@ -100,20 +99,14 @@ const Home = ({ navigation }) => {
     const onUniversitySelected = async (universityId) => {
       // Reload the page for the selected universityId
       setUniversity(universityId)
-      console.log('GOT HERE')
-      // console.log(universityId)
       const newUnicourses = await getOfferingsData()
       const newCourses = filterCourses(newUnicourses, universityId)
-      console.log(universityId)
-      // console.log(newCourses)
       try {
         setCourses(newCourses)
+        renderCourseItem()
       } catch (error) {
         console.error(error)
       }
-      
-      renderCourseItem()
-      // window.location.reload()
     }
 
     return (
@@ -133,7 +126,9 @@ const Home = ({ navigation }) => {
   const renderStarredCourses = () => {
     if (courses == null) return null
 
-    return <FlatList data={courses} renderItem={renderCourseItem} />
+    return <FlatList keyExtractor={(courses, index) => index.toString()} 
+                     data={courses} 
+                     renderItem={renderCourseItem} />
   }
 
   const [mode, setMode] = useState(false)
