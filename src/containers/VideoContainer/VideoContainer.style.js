@@ -14,6 +14,7 @@ const VideoStyle = StyleSheet.create({
     width: Dimensions.get('window').width,
     height: Dimensions.get('screen').width * 0.5625,
     backgroundColor: 'black',
+    color: 'white',
   },
   video: {
     width: Dimensions.get('window').width,
@@ -32,6 +33,22 @@ const VideoStyle = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     margin: 10,
+  },
+  modalTitle: {
+    fontSize: 20,
+    marginBottom: 16,
+    fontWeight: 'bold',
+  },
+  modalSubTitle: {
+    color: '#333',
+    fontSize: 13,
+    marginBottom: 16,
+  },
+  modalHint: {
+    color: '#333',
+    fontSize: 13,
+    marginBottom: 8,
+    textAlign: 'center',
   },
 })
 

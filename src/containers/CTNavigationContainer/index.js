@@ -6,4 +6,5 @@ export const STACK_SCREENS = {
   COURSE_PLAYLISTS: 'Course Playlists',
   PLAYLIST: 'Playlist',
   VIDEO: 'Video',
+  DOWNLOAD: 'Download',
 }

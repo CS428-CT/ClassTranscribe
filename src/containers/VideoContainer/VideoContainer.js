@@ -7,6 +7,7 @@ import { Button, Title } from 'react-native-paper'
 import { Video } from 'expo-av'
 import PropTypes from 'prop-types'
 import RNPickerSelect from 'react-native-picker-select'
+import * as FileSystem from 'expo-file-system'
 import { FILE_SERVER_BASE_URL } from '../../constants'
 import styles from './VideoContainer.style'
 import { getCurrentAuthenticatedUser } from '../../api/auth'
@@ -15,25 +16,101 @@ import { getCurrentAuthenticatedUser } from '../../api/auth'
 // just hardcode a valid referer and the API accepts it.
 const REFERER = 'https://classtranscribe.illinois.edu/video?id=5ce157b0-713a-4182-94e9-065f68f9abf6'
 
-const VideoContainer = ({ videos, index }) => {
+const VideoContainer = ({ videos, index, downloaded }) => {
   // Passing a list of videos would not be a bad approach because react pass object as reference
   const [vidIndex, setVidIndex] = useState(index)
   const url = videos[vidIndex]?.video?.video1Path
-  const videoRef = React.useRef(null)
 
-  const videoSource = {
-    uri: FILE_SERVER_BASE_URL + url,
-    headers: {
-      referer: REFERER,
-      authorization: `Bearer ${getCurrentAuthenticatedUser()?.authToken}`,
-    },
+  let videoSource
+  if (!downloaded) {
+    videoSource = {
+      uri: FILE_SERVER_BASE_URL + url,
+      headers: {
+        referer: REFERER,
+        authorization: `Bearer ${getCurrentAuthenticatedUser()?.authToken}`,
+      },
+    }
+  } else {
+    videoSource = {
+      uri: FileSystem.documentDirectory + url,
+    }
   }
-  const [ready, setReady] = React.useState(false)
+
+  const videoRef = React.useRef(null)
   const [status, setStatus] = React.useState({
     isMuted: false,
     isPlaying: false,
     rate: 1.0,
+    positionMillis: 0,
   })
+  const [ready, setReady] = React.useState(false)
+
+  const [downloadProgress, setDownloadProgress] = useState(0)
+
+  const downloadVideo = async (downloadSource, localFileName) => {
+    const localUri = FileSystem.documentDirectory + localFileName
+
+    const callback = (currDownloadProgress) => {
+      const progress =
+        currDownloadProgress.totalBytesWritten / currDownloadProgress.totalBytesExpectedToWrite
+      setDownloadProgress(progress)
+    }
+
+    const downloadResumable = FileSystem.createDownloadResumable(
+      downloadSource,
+      localUri,
+      {
+        headers: {
+          referer: REFERER,
+          authorization: `Bearer ${getCurrentAuthenticatedUser()?.authToken}`,
+        },
+      },
+      callback
+    )
+
+    try {
+      const { uri } = await downloadResumable.downloadAsync()
+      // eslint-disable-next-line no-console
+      console.log('Finished downloading to ', uri)
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  const downloadButton = () => {
+    if (downloaded) {
+      return <View />
+    }
+    if (downloadProgress === 0) {
+      return (
+        <View style={styles.buttons}>
+          <Button
+            icon="cloud-download"
+            mode="contained"
+            onPress={() => downloadVideo(videoSource.uri, `${videos[vidIndex].name}.mp4`)}
+          >
+            Download
+          </Button>
+        </View>
+      )
+    }
+    if (downloadProgress > 0 && downloadProgress < 1) {
+      return (
+        <View style={styles.buttons}>
+          <Button icon="cloud-download" mode="contained">
+            Downloading ({Math.floor(downloadProgress * 100)}%)
+          </Button>
+        </View>
+      )
+    }
+    return (
+      <View style={styles.buttons}>
+        <Button icon="cloud-download" mode="contained">
+          Downloaded
+        </Button>
+      </View>
+    )
+  }
 
   useEffect(() => {
     setStatus({
@@ -54,6 +131,7 @@ const VideoContainer = ({ videos, index }) => {
         })
     })
   }, [vidIndex])
+
   const togglePlayPause = () =>
     status.isPlaying ? videoRef.current.pauseAsync() : videoRef.current.playAsync()
 
@@ -87,6 +165,7 @@ const VideoContainer = ({ videos, index }) => {
   return (
     <View style={styles.container}>
       <Title style={styles.title}>{videos[vidIndex].name}</Title>
+
       <View style={ready ? {} : { display: 'none' }}>
         <Video
           ref={videoRef}
@@ -121,9 +200,9 @@ const VideoContainer = ({ videos, index }) => {
           </TouchableOpacity>
           <TouchableOpacity onPress={() => videoRef.current.setIsMutedAsync(!status.isMuted)}>
             {status.isMuted ? (
-              <Icon name="volume-up" color="white" size={35} />
-            ) : (
               <Icon name="volume-off" color="white" size={35} />
+            ) : (
+              <Icon name="volume-up" color="white" size={35} />
             )}
           </TouchableOpacity>
           <RNPickerSelect
@@ -146,13 +225,16 @@ const VideoContainer = ({ videos, index }) => {
             }}
             placeholder={{}} // disable empty selector
             value={status.rate}
-            onValueChange={(value) => videoRef.current.setRateAsync(value)}
+            onValueChange={(value) => {
+              videoRef.current.setRateAsync(value, true)
+            }}
             items={[
               { label: '0.5 x', value: 0.5 },
               { label: '0.75 x', value: 0.75 },
               { label: '1.0 x', value: 1.0 },
               { label: '1.25 x', value: 1.25 },
               { label: '1.5 x', value: 1.5 },
+              { label: '2.0 x', value: 2.0 },
             ]}
           >
             <Text
@@ -171,15 +253,8 @@ const VideoContainer = ({ videos, index }) => {
 
       {ready === true ? <></> : <ActivityIndicator style={styles.videoLoading} size="large" />}
 
-      <View style={styles.buttons}>
-        <Button
-          icon="cloud-download"
-          mode="contained"
-          onPress={() => videoRef.current.loadAsync('/storage/emulated/0/Download')}
-        >
-          Download
-        </Button>
-      </View>
+      <View style={styles.buttons}>{downloadButton()}</View>
+
       {renderLinkVideo()}
     </View>
   )
@@ -200,6 +275,7 @@ VideoContainer.propTypes = {
     }).isRequired
   ).isRequired,
   index: PropTypes.number.isRequired,
+  downloaded: PropTypes.bool,
 }
 
 export default VideoContainer

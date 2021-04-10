@@ -9,6 +9,7 @@ import Home from '../HomeContainer/Home'
 import CoursePlaylistsContainer from '../CoursePlaylistsContainer/CoursePlaylistsContainer'
 import VideoContainer from '../VideoContainer/VideoContainer'
 import PlaylistContainer from '../PlaylistContainer/PlaylistContainer'
+import DownloadContainer from '../DownloadContainer/DownloadContainer'
 
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
@@ -23,6 +24,7 @@ const HomeNavigator = () => {
       <Stack.Screen name={STACK_SCREENS.COURSE_PLAYLISTS} component={CoursePlaylistsView} />
       <Stack.Screen name={STACK_SCREENS.PLAYLIST} component={PlaylistView} />
       <Stack.Screen name={STACK_SCREENS.VIDEO} component={VideoView} />
+      <Stack.Screen name={STACK_SCREENS.DOWNLOAD} component={DownloadView} />
     </Stack.Navigator>
   )
 }
@@ -52,11 +54,34 @@ const PlaylistView = ({ navigation, route }) => {
 }
 
 /**
+ * Wraps the DownloadContainer so that it can
+ * receive the proper props
+ */
+const DownloadView = ({ navigation }) => {
+  return <DownloadContainer navigation={navigation} />
+}
+
+const DownloadNavigator = () => {
+  return (
+    <Stack.Navigator initialRouteName={STACK_SCREENS.DOWNLOAD}>
+      <Stack.Screen name={STACK_SCREENS.DOWNLOAD} component={DownloadView} />
+      <Stack.Screen name={STACK_SCREENS.VIDEO} component={VideoView} />
+    </Stack.Navigator>
+  )
+}
+
+/**
  * Wraps the VideoContainer so that it can
  * receive the proper props
  */
 const VideoView = ({ route }) => {
-  return <VideoContainer videos={route.params.videos} index={route.params.index} />
+  return (
+    <VideoContainer
+      videos={route.params.videos}
+      index={route.params.index}
+      downloaded={route.params.downloaded}
+    />
+  )
 }
 
 /**
@@ -103,12 +128,12 @@ const CTNavigationContainer = () => {
           }}
         />
         <Tab.Screen
-          name="Video"
-          component={VideoView}
+          name="Download"
+          component={DownloadNavigator}
           options={{
-            tabBarLabel: 'Video',
+            tabBarLabel: 'Download',
             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="video" color={color} size={size} />
+              <MaterialCommunityIcons name="download" color={color} size={size} />
             ),
           }}
         />
