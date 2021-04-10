@@ -6,6 +6,7 @@ import { getCurrentAuthenticatedUser, isUserAuthenticated } from './auth'
 
 export const ENDPOINTS = {
   OFFERING: `${API_BASE_URL}Offerings/{0}`,
+  OFFERINGBYSTUDENT: `${API_BASE_URL}Offerings/ByStudent`
 }
 
 /**
@@ -38,7 +39,7 @@ export const getOfferingData = async (offeringId) => {
 export const getOfferingsByStudent = async () => {
   if (!isUserAuthenticated()) return null
 
-  const url = format(ENDPOINTS.OFFERING, 'ByStudent')
+  const url = ENDPOINTS.OFFERINGBYSTUDENT
 
   try {
     const resp = await axios.get(url)
