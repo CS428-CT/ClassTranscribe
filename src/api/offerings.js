@@ -18,7 +18,7 @@ export const getOfferingData = async (offeringId) => {
   return apiCall(url)
 }
 
-///////////////////       STUDENT OFFERING FUNCTIONS       ////////////////////
+/// ////////////////       STUDENT OFFERING FUNCTIONS       ////////////////////
 
 /**
  * Gets the data for an offering from the CT API if the student is authenticated
