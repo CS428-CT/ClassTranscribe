@@ -1,7 +1,6 @@
-import axios from 'axios'
-import { HTTP_STATUS_CODES } from '.'
 import { API_BASE_URL } from '../constants'
 import { format } from '../utils/string'
+import { apiCall } from './api-requests'
 
 export const ENDPOINTS = {
   UNIVERSITIES: `${API_BASE_URL}Universities/`,
@@ -15,18 +14,7 @@ export const ENDPOINTS = {
  */
 export const getUniversities = async () => {
   const url = ENDPOINTS.UNIVERSITIES
-
-  try {
-    const resp = await axios.get(url)
-    if (resp?.status !== HTTP_STATUS_CODES.OK) {
-      return null
-    }
-    return resp.data
-  } catch (error) {
-    console.error(error)
-  }
-
-  return null
+  return apiCall(url)
 }
 
 /**
@@ -36,18 +24,7 @@ export const getUniversities = async () => {
  */
 export const getUniversityDepartments = async (universityId) => {
   const url = format(ENDPOINTS.DEPARTMENTS, universityId)
-
-  try {
-    const resp = await axios.get(url)
-    if (resp?.status !== HTTP_STATUS_CODES.OK) {
-      return null
-    }
-    return resp.data
-  } catch (error) {
-    console.error(error)
-  }
-
-  return null
+  return apiCall(url)
 }
 
 /**
@@ -57,16 +34,5 @@ export const getUniversityDepartments = async (universityId) => {
  */
 export const getDepartmentCourses = async (departmentId) => {
   const url = format(ENDPOINTS.COURSES, departmentId)
-
-  try {
-    const resp = await axios.get(url)
-    if (resp?.status !== HTTP_STATUS_CODES.OK) {
-      return null
-    }
-    return resp.data
-  } catch (error) {
-    console.error(error)
-  }
-
-  return null
+  return apiCall(url)
 }

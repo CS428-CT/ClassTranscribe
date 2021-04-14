@@ -1,8 +1,7 @@
-import axios from 'axios'
-import { HTTP_STATUS_CODES } from '.'
 import { API_BASE_URL } from '../constants'
 import { format } from '../utils/string'
 import { getCurrentAuthenticatedUser, isUserAuthenticated } from './auth'
+import { apiCall } from './api-requests'
 
 export const ENDPOINTS = {
   OFFERING: `${API_BASE_URL}Offerings/{0}`,
@@ -16,18 +15,7 @@ export const ENDPOINTS = {
  */
 export const getOfferingData = async (offeringId) => {
   const url = format(ENDPOINTS.OFFERING, offeringId)
-
-  try {
-    const resp = await axios.get(url)
-    if (resp?.status !== HTTP_STATUS_CODES.OK) {
-      return null
-    }
-    return resp.data
-  } catch (error) {
-    console.error(error)
-  }
-
-  return null
+  return apiCall(url)
 }
 
 /// ////////////////       STUDENT OFFERING FUNCTIONS       ////////////////////
@@ -40,18 +28,7 @@ export const getOfferingsByStudent = async () => {
   if (!isUserAuthenticated()) return null
 
   const url = ENDPOINTS.OFFERINGBYSTUDENT
-
-  try {
-    const resp = await axios.get(url)
-    if (resp?.status !== HTTP_STATUS_CODES.OK) {
-      return null
-    }
-    return resp.data
-  } catch (error) {
-    console.error(error)
-  }
-
-  return null
+  return apiCall(url)
 }
 
 /**
