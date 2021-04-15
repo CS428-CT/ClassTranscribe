@@ -25,6 +25,7 @@ const UniversityListContainer = ({ navigation }) => {
     }
 
     fetchUniversityInfo()
+    return () => setLoading(false)
   }, [setUniversities])
 
   const onUniversitySelected = (university) => {

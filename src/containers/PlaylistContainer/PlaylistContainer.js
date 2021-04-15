@@ -29,6 +29,7 @@ const PlaylistContainer = ({ navigation, playlistId }) => {
     }
 
     fetchVideos()
+    return () => setLoading(false)
   }, [playlistId, setVideos])
 
   const onVideoSelected = (videoData) => {

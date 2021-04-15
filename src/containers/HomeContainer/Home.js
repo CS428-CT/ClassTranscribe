@@ -43,7 +43,9 @@ const Home = ({ navigation }) => {
       setCourses(studentCourses)
       setLoading(false)
     }
+
     fetchCourseInfo()
+    return () => setLoading(false)
   }, [setCourses])
 
   const onCourseSelected = (courseId) => {

@@ -25,6 +25,7 @@ const DepartmentListContainer = ({ universityId, navigation }) => {
     }
 
     fetchDepartmentInfo()
+    return () => setLoading(false)
   }, [setDepartments])
 
   const onDepartmentSelected = (departmentId, departmentAcronym) => {

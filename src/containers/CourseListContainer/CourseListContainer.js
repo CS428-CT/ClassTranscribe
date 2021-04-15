@@ -25,6 +25,7 @@ const CourseListContainer = ({ departmentId, acronym, navigation }) => {
     }
 
     fetchCourseInfo()
+    return () => setLoading(false)
   }, [setCourses])
 
   const onCourseSelected = (/* courseId */) => {
