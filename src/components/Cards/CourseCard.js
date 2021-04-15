@@ -16,9 +16,8 @@ const MAX_DESCRIPTION_LENGTH = 100
  * @returns
  */
 
-const CourseCard = ({ departmentAcronym, courseNumber, courseName, courseDescription = '' }) => {
-  // TODO: Set initial state
-  const [isStarred, setIsStarred] = useState(false);
+const CourseCard = ({ departmentAcronym, courseNumber, courseName, courseDescription = '', isCourseStarred }) => {
+  const [isStarred, setIsStarred] = useState(isCourseStarred);
 
   const getCourseTitle = () => {
     return `${departmentAcronym} ${courseNumber}`
@@ -28,10 +27,15 @@ const CourseCard = ({ departmentAcronym, courseNumber, courseName, courseDescrip
     return `${courseName}`
   }
 
+  const onCourseStarred = () => {
+    // TODO: Check if successful first
+    setIsStarred(!isStarred)
+  }
+
   const getFavoriteButton = () => {
     if (isStarred)
-      return <MaterialCommunityIcons name="star" size={30} />
-    return <MaterialCommunityIcons name="star-outline" size={30} />
+      return <MaterialCommunityIcons name="star" size={30} onPress={onCourseStarred} />
+    return <MaterialCommunityIcons name="star-outline" size={30} onPress={onCourseStarred} />
   }
 
   return (
@@ -53,6 +57,7 @@ CourseCard.propTypes = {
   departmentAcronym: PropTypes.string.isRequired,
   courseNumber: PropTypes.string.isRequired,
   courseName: PropTypes.string.isRequired,
+  isCourseStarred: PropTypes.bool.isRequired,
   courseDescription: PropTypes.string,
 }
 
