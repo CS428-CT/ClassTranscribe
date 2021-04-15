@@ -1,24 +1,22 @@
 import axios from 'axios'
 import React from 'react'
 import MockAdapter from 'axios-mock-adapter'
-import { render } from '@testing-library/react-native'
 import { setUserData } from '../../src/api/auth'
 import { ENDPOINTS as UNI_ENDPOINTS } from '../../src/api/universities'
 import { ENDPOINTS as OFFER_ENDPOINTS } from '../../src/api/offerings'
 import { format } from '../../src/utils/string'
-
+import { sleepMs, withDelay } from './shared'
 import { HTTP_STATUS_CODES } from '../../src/api'
+import { render, waitFor } from '@testing-library/react-native'
 import { UNIVERSITY_RESPONSE } from '../mock_responses/mock-university-response'
 import Home from '../../src/containers/HomeContainer/Home'
 import { OFFERINGS_RESPONSE_1 } from '../mock_responses/mock-offerings-response'
-
-// const assertNoButtonsRendered = async () => {
-//   const { queryAllByA11yRole } = render(<UniversityListContainer />)
-//   const universityList = await waitFor(() => queryAllByA11yRole('button'))
-//   expect(universityList.length).toBe(0)
-// }
+import { TEST_IDs } from '../../src/constants'
+import { useLoadingIndicator } from '../../src/hooks/useLoadingIndicator'
 
 const mock = new MockAdapter(axios)
+jest.mock('../../src/hooks/useLoadingIndicator')
+
 describe('Check universities rendering', () => {
   const USER_DATA = {
     authToken: 'A',
@@ -53,5 +51,24 @@ describe('Check universities rendering', () => {
 
     const courseList = await getByTestId('courseList')
     expect(courseList).not.toBe(null)
+  })
+
+  test('Check that loading indicator renders', async () => {
+    const mockHook = jest.fn()
+    useLoadingIndicator.mockReturnValue(mockHook)
+
+    mock.onGet(`${UNI_ENDPOINTS.UNIVERSITIES}`).reply(HTTP_STATUS_CODES.OK, UNIVERSITY_RESPONSE)
+    mock
+      .onGet(`${OFFER_ENDPOINTS.OFFERINGBYSTUDENT}`)
+      .reply(HTTP_STATUS_CODES.OK, OFFERINGS_RESPONSE_1)
+    mock
+      .onGet(`${format(OFFER_ENDPOINTS.OFFERING, offeringId)}`)
+      .reply(HTTP_STATUS_CODES.OK, OFFERINGS_RESPONSE_1)
+
+    setUserData(USER_DATA);
+    render(<Home />)
+
+    sleepMs(1500)
+    expect(mockHook).toHaveBeenCalled();
   })
 })
