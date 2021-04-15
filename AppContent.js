@@ -7,7 +7,7 @@ import { View, StyleSheet } from 'react-native'
 
 export default function AppContent() {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false)
-  const [state, dispatch] = useContext(Context);
+  const state = useContext(Context)[0];
 
   const onAuthLevelChange = (isAuthenticated) => {
     setIsUserAuthenticated(isAuthenticated)

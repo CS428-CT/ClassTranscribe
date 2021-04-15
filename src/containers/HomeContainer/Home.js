@@ -8,6 +8,7 @@ import { getCurrentAuthenticatedUser } from '../../api/auth'
 import CourseCard from '../../components/Cards/CourseCard'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
 import styles from './Home.style'
+import { useLoadingIndicator } from '../../hooks/useLoadingIndicator'
 
 /**
  * Contains the home screen of the application. Lists courses and gives the user the ability
@@ -15,6 +16,7 @@ import styles from './Home.style'
  */
 const Home = ({ navigation }) => {
   const currentUser = getCurrentAuthenticatedUser()
+  const setLoading = useLoadingIndicator();
   let universityId = currentUser.universityId
 
   /**
@@ -35,9 +37,11 @@ const Home = ({ navigation }) => {
   const [courses, setCourses] = useState([])
   useEffect(() => {
     const fetchCourseInfo = async () => {
+      setLoading(true)
       const offerings = await getOfferingsData()
       const studentCourses = filterCourses(offerings)
       setCourses(studentCourses)
+      setLoading(false);
     }
     fetchCourseInfo()
   }, [setCourses])
