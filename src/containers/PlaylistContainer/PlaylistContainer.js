@@ -5,20 +5,28 @@ import { ListItem } from 'react-native-elements'
 import { TouchableNativeFeedback } from 'react-native-gesture-handler'
 import { getVideosByPlaylist } from '../../api/playlists'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
+import { useLoadingIndicator } from '../../hooks/useLoadingIndicator'
 
 const PlaylistContainer = ({ navigation, playlistId }) => {
   const [videos, setVideos] = useState([])
+  const setLoading = useLoadingIndicator();
 
   useEffect(() => {
     const fetchVideos = async () => {
+      setLoading(true);
+
       const response = await getVideosByPlaylist(playlistId)
-      if (!response) return
-      const sortedVideos = response.medias.sort((a, b) => a.index - b.index)
-      // Get rid of undefined indices
-      for (let i = 0; i < sortedVideos.length; i += 1) {
-        sortedVideos[i].index = i
+      if (response) {
+        const sortedVideos = response.medias.sort((a, b) => a.index - b.index)
+
+        // Get rid of undefined indices
+        for (let i = 0; i < sortedVideos.length; i += 1)
+          sortedVideos[i].index = i
+
+        setVideos(sortedVideos)
       }
-      setVideos(sortedVideos)
+
+      setLoading(false);
     }
 
     fetchVideos()

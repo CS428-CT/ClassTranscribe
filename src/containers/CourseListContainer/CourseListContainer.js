@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { ListItem } from 'react-native-elements'
 import { getDepartmentCourses } from '../../api/universities'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
+import { useLoadingIndicator } from '../../hooks/useLoadingIndicator'
 
 /**
  * Contains the course screen of the application. Lists all courses
@@ -13,11 +14,14 @@ import { STACK_SCREENS } from '../CTNavigationContainer/index'
  */
 const CourseListContainer = ({ departmentId, acronym, navigation }) => {
   const [courses, setCourses] = useState([])
+  const setLoading = useLoadingIndicator();
 
   useEffect(() => {
     const fetchCourseInfo = async () => {
+      setLoading(true);
       const deptCourses = await getDepartmentCourses(departmentId)
       setCourses(deptCourses)
+      setLoading(false);
     }
 
     fetchCourseInfo()
