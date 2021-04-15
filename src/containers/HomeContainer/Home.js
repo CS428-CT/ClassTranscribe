@@ -37,6 +37,7 @@ const Home = ({ navigation }) => {
   const [courses, setCourses] = useState([])
   useEffect(() => {
     const fetchCourseInfo = async () => {
+      console.log("Fetching")
       setLoading(true)
       const offerings = await getOfferingsData()
       const studentCourses = filterCourses(offerings)
