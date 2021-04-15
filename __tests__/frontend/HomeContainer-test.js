@@ -11,7 +11,6 @@ import { UNIVERSITY_RESPONSE } from '../mock_responses/mock-university-response'
 import Home from '../../src/containers/HomeContainer/Home'
 import { OFFERINGS_RESPONSE_1 } from '../mock_responses/mock-offerings-response'
 import { useLoadingIndicator } from '../../src/hooks/useLoadingIndicator'
-import Store from '../../src/store/Store'
 
 jest.mock('../../src/hooks/useLoadingIndicator')
 const mock = new MockAdapter(axios)
@@ -55,9 +54,6 @@ describe('Check universities rendering', () => {
   })
 
   test('Check that loading indicator renders', async () => {
-    const mockHook = jest.fn()
-    useLoadingIndicator.mockReturnValue(mockHook)
-
     setUserData(USER_DATA);
     render(<Home navigation={mockNavigator} />)
 

@@ -9,7 +9,6 @@ import { COURSES_RESPONSE } from '../mock_responses/mock-course-response'
 import CourseListContainer from '../../src/containers/CourseListContainer/CourseListContainer'
 import { STACK_SCREENS } from '../../src/containers/CTNavigationContainer'
 import { useLoadingIndicator } from '../../src/hooks/useLoadingIndicator'
-import Store from '../../src/store/Store'
 
 const departmentId = '2001'
 const departmentAcronym = 'CS'

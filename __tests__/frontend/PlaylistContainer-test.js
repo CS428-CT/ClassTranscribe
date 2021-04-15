@@ -8,8 +8,14 @@ import { VIDEOS_BY_PLAYLIST_RESPONSE } from '../mock_responses/mock-playlists-re
 import { format } from '../../src/utils/string'
 import PlaylistContainer from '../../src/containers/PlaylistContainer/PlaylistContainer'
 import { STACK_SCREENS } from '../../src/containers/CTNavigationContainer'
+import { useLoadingIndicator } from '../../src/hooks/useLoadingIndicator'
 
 const mock = new MockAdapter(axios)
+
+jest.mock('../../src/hooks/useLoadingIndicator')
+const mockHook = jest.fn()
+useLoadingIndicator.mockReturnValue(mockHook)
+
 describe('Check videos rendering', () => {
   const playlistId = '51519746-aa6c-485c-9894-549959c457b5'
   const displayedKeys = ['name']
@@ -96,5 +102,17 @@ describe('Check video navigation', () => {
       videos: VIDEOS_BY_PLAYLIST_RESPONSE.medias,
       index: 0,
     })
+  })
+
+  test('Check that loading indicator renders', async () => {
+    mock
+      .onGet(`${format(ENDPOINTS.VIDEOS_BY_PLAYLIST, playlistId)}`)
+      .reply(HTTP_STATUS_CODES.OK, VIDEOS_BY_PLAYLIST_RESPONSE)
+
+    render(
+      <PlaylistContainer playlistId={playlistId} />
+    )
+
+    await waitFor( () => expect(mockHook).toHaveBeenCalled() );
   })
 })
