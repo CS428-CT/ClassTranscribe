@@ -16,7 +16,7 @@ import { useLoadingIndicator } from '../../hooks/useLoadingIndicator'
  */
 const Home = ({ navigation }) => {
   const currentUser = getCurrentAuthenticatedUser()
-  const setLoading = useLoadingIndicator();
+  const setLoading = useLoadingIndicator()
   let universityId = currentUser.universityId
 
   /**
@@ -37,11 +37,11 @@ const Home = ({ navigation }) => {
   const [courses, setCourses] = useState([])
   useEffect(() => {
     const fetchCourseInfo = async () => {
-      setLoading(true);
+      setLoading(true)
       const offerings = await getOfferingsData()
       const studentCourses = filterCourses(offerings)
       setCourses(studentCourses)
-      setLoading(false);
+      setLoading(false)
     }
     fetchCourseInfo()
   }, [setCourses])

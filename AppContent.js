@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react'
+import { ActivityIndicator } from 'react-native-paper'
+import { View, StyleSheet } from 'react-native'
 import LoginContainer from './src/containers/LoginContainer/LoginContainer'
 import CTNavigationContainer from './src/containers/CTNavigationContainer/CTNavigationContainer'
 import { Context } from './src/store/Store'
-import { ActivityIndicator } from 'react-native-paper'
-import { View, StyleSheet } from 'react-native'
 
 export default function AppContent() {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false)
-  const state = useContext(Context)[0];
+  const state = useContext(Context)[0]
 
   const onAuthLevelChange = (isAuthenticated) => {
     setIsUserAuthenticated(isAuthenticated)
@@ -20,14 +20,13 @@ export default function AppContent() {
   }
 
   const renderLoadingIndicator = () => {
-    if (!state.isLoading)
-      return null;
+    if (!state.isLoading) return null
 
     return (
       <View style={style.loading}>
-        <ActivityIndicator size='large' />
+        <ActivityIndicator size="large" />
       </View>
-    );
+    )
   }
 
   return (
@@ -35,13 +34,13 @@ export default function AppContent() {
       {renderApplication()}
       {renderLoadingIndicator()}
     </View>
-  );
+  )
 }
 
 const style = StyleSheet.create({
   container: {
     width: '100%',
-    height: '100%'
+    height: '100%',
   },
   loading: {
     position: 'absolute',
@@ -50,6 +49,6 @@ const style = StyleSheet.create({
     top: 0,
     bottom: 0,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
 })

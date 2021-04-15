@@ -75,6 +75,6 @@ describe('Check university navigation', () => {
 
     render(<UniversityListContainer navigation={mockNavigator} />)
 
-    await waitFor( () => expect(mockHook).toHaveBeenCalled() );
+    await waitFor(() => expect(mockHook).toHaveBeenCalled())
   })
 })

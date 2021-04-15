@@ -15,7 +15,6 @@ export const ENDPOINTS = {
  */
 export const getOfferingData = async (offeringId) => {
   const url = format(ENDPOINTS.OFFERING, offeringId)
-  console.log("REQUESTING " + url)
   return apiCall(url)
 }
 
@@ -39,24 +38,23 @@ export const getOfferingsByStudent = async () => {
  */
 export const getOfferingsData = async () => {
   const offerings = []
-  const requests = [];
+  const requests = []
 
   const studentOfferings = await getOfferingsByStudent()
   if (studentOfferings == null) return null
 
   for (const entry of studentOfferings) {
     requests.push(
-      new Promise((resolve, reject) => {
-          getOfferingData(entry.offering.id).then((offeringData) => {
-            if (offeringData != null) offerings.push(offeringData)
-            resolve()
-          })
-        }
-      )
+      new Promise((resolve) => {
+        getOfferingData(entry.offering.id).then((offeringData) => {
+          if (offeringData != null) offerings.push(offeringData)
+          resolve()
+        })
+      })
     )
   }
 
-  await Promise.all(requests).catch((e) => console.error(e));
+  await Promise.all(requests).catch((e) => console.error(e))
 
   return offerings
 }

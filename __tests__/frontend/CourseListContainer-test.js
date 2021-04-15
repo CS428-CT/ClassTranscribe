@@ -70,11 +70,11 @@ describe('Check course navigation', () => {
       .reply(HTTP_STATUS_CODES.OK, [COURSES_RESPONSE[0]])
 
     const { queryAllByA11yRole } = render(
-        <CourseListContainer
-          departmentId={departmentId}
-          acronym={departmentAcronym}
-          navigation={mockNavigator}
-        />
+      <CourseListContainer
+        departmentId={departmentId}
+        acronym={departmentAcronym}
+        navigation={mockNavigator}
+      />
     )
 
     const courses = await waitFor(() => queryAllByA11yRole('button'))
@@ -93,13 +93,8 @@ describe('Check loading indicator', async () => {
       .onGet(`${format(ENDPOINTS.COURSES, departmentId)}`)
       .reply(HTTP_STATUS_CODES.OK, [COURSES_RESPONSE[0]])
 
-    render(
-        <CourseListContainer
-          departmentId={departmentId}
-          acronym={departmentAcronym}
-        />
-    )
+    render(<CourseListContainer departmentId={departmentId} acronym={departmentAcronym} />)
 
-    await waitFor( () => expect(mockHook).toHaveBeenCalled() );
+    await waitFor(() => expect(mockHook).toHaveBeenCalled())
   })
 })

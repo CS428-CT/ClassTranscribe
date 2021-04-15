@@ -109,10 +109,8 @@ describe('Check video navigation', () => {
       .onGet(`${format(ENDPOINTS.VIDEOS_BY_PLAYLIST, playlistId)}`)
       .reply(HTTP_STATUS_CODES.OK, VIDEOS_BY_PLAYLIST_RESPONSE)
 
-    render(
-      <PlaylistContainer playlistId={playlistId} />
-    )
+    render(<PlaylistContainer playlistId={playlistId} />)
 
-    await waitFor( () => expect(mockHook).toHaveBeenCalled() );
+    await waitFor(() => expect(mockHook).toHaveBeenCalled())
   })
 })

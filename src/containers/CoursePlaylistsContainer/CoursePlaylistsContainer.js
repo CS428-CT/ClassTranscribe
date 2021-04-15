@@ -9,18 +9,18 @@ import { useLoadingIndicator } from '../../hooks/useLoadingIndicator'
 
 const CoursePlaylistsContainer = ({ courseId, navigation }) => {
   const [playlists, setPlaylists] = useState([])
-  const setLoading = useLoadingIndicator();
+  const setLoading = useLoadingIndicator()
 
   useEffect(() => {
     const fetchPlaylists = async () => {
-      setLoading(true);
+      setLoading(true)
       let response = await getPlaylistsByOffering(courseId)
       if (response) {
         response = response.sort((a, b) => a.index - b.index)
         setPlaylists(response)
       }
 
-      setLoading(false);
+      setLoading(false)
     }
 
     fetchPlaylists()

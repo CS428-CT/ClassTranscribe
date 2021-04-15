@@ -9,24 +9,23 @@ import { useLoadingIndicator } from '../../hooks/useLoadingIndicator'
 
 const PlaylistContainer = ({ navigation, playlistId }) => {
   const [videos, setVideos] = useState([])
-  const setLoading = useLoadingIndicator();
+  const setLoading = useLoadingIndicator()
 
   useEffect(() => {
     const fetchVideos = async () => {
-      setLoading(true);
+      setLoading(true)
 
       const response = await getVideosByPlaylist(playlistId)
       if (response) {
         const sortedVideos = response.medias.sort((a, b) => a.index - b.index)
 
         // Get rid of undefined indices
-        for (let i = 0; i < sortedVideos.length; i += 1)
-          sortedVideos[i].index = i
+        for (let i = 0; i < sortedVideos.length; i += 1) sortedVideos[i].index = i
 
         setVideos(sortedVideos)
       }
 
-      setLoading(false);
+      setLoading(false)
     }
 
     fetchVideos()

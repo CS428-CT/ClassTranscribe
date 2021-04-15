@@ -89,10 +89,8 @@ describe('Check department navigation', () => {
       .onGet(`${format(ENDPOINTS.DEPARTMENTS, universityId)}`)
       .reply(HTTP_STATUS_CODES.OK, [DEPARTMENTS_RESPONSE[0]])
 
-    render(
-      <DepartmentListContainer universityId={universityId} />
-    )
+    render(<DepartmentListContainer universityId={universityId} />)
 
-    await waitFor( () => expect(mockHook).toHaveBeenCalled() );
+    await waitFor(() => expect(mockHook).toHaveBeenCalled())
   })
 })

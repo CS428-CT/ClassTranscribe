@@ -107,10 +107,8 @@ describe('Check playlists navigation', () => {
       .onGet(`${format(ENDPOINTS.PLAYLISTS_BY_OFFERING, offeringId)}`)
       .reply(HTTP_STATUS_CODES.OK, [PLAYLISTS_BY_OFFERING_RESPONSE[0]])
 
-    render(
-      <CoursePlaylistsContainer courseId={offeringId}/>
-    )
+    render(<CoursePlaylistsContainer courseId={offeringId} />)
 
-    await waitFor( () => expect(mockHook).toHaveBeenCalled() );
+    await waitFor(() => expect(mockHook).toHaveBeenCalled())
   })
 })

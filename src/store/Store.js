@@ -1,25 +1,21 @@
-import React, { createContext, useReducer } from 'react';
-import PropTypes from 'prop-types';
+import React, { createContext, useReducer } from 'react'
+import PropTypes from 'prop-types'
 
-import Reducer from './Reducer';
+import Reducer from './Reducer'
 
 const initialState = {
-    isLoading: false
-};
+  isLoading: false,
+}
 
 const Store = ({ children }) => {
-    const [state, dispatch] = useReducer(Reducer, initialState);
-    return (
-        <Context.Provider value={[state, dispatch]}>
-            {children}
-        </Context.Provider>
-    );
-};
+  const [state, dispatch] = useReducer(Reducer, initialState)
+  return <Context.Provider value={[state, dispatch]}>{children}</Context.Provider>
+}
 
-export const Context = createContext(initialState);
+export const Context = createContext(initialState)
 
 Store.propTypes = {
-    children: PropTypes.element,
-};
+  children: PropTypes.element,
+}
 
-export default Store;
+export default Store

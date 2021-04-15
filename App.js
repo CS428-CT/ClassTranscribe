@@ -7,8 +7,8 @@ import AppContent from './AppContent'
  */
 export default function App() {
   return (
-      <Store>
-        <AppContent />
-      </Store>
-    )
+    <Store>
+      <AppContent />
+    </Store>
+  )
 }

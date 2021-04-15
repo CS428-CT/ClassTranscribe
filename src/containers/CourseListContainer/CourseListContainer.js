@@ -14,14 +14,14 @@ import { useLoadingIndicator } from '../../hooks/useLoadingIndicator'
  */
 const CourseListContainer = ({ departmentId, acronym, navigation }) => {
   const [courses, setCourses] = useState([])
-  const setLoading = useLoadingIndicator();
+  const setLoading = useLoadingIndicator()
 
   useEffect(() => {
     const fetchCourseInfo = async () => {
-      setLoading(true);
+      setLoading(true)
       const deptCourses = await getDepartmentCourses(departmentId)
       setCourses(deptCourses)
-      setLoading(false);
+      setLoading(false)
     }
 
     fetchCourseInfo()

@@ -1,12 +1,12 @@
 import axios from 'axios'
 import React from 'react'
 import MockAdapter from 'axios-mock-adapter'
+import { render, waitFor } from '@testing-library/react-native'
 import { setUserData } from '../../src/api/auth'
 import { ENDPOINTS as UNI_ENDPOINTS } from '../../src/api/universities'
 import { ENDPOINTS as OFFER_ENDPOINTS } from '../../src/api/offerings'
 import { format } from '../../src/utils/string'
 import { HTTP_STATUS_CODES } from '../../src/api'
-import { render, waitFor } from '@testing-library/react-native'
 import { UNIVERSITY_RESPONSE } from '../mock_responses/mock-university-response'
 import Home from '../../src/containers/HomeContainer/Home'
 import { OFFERINGS_RESPONSE_1 } from '../mock_responses/mock-offerings-response'
@@ -29,12 +29,13 @@ describe('Check universities rendering', () => {
   const mockNavigator = { push: jest.fn() }
 
   beforeEach(() => {
-    mock.onGet(`${UNI_ENDPOINTS.UNIVERSITIES}`).reply(HTTP_STATUS_CODES.OK, UNIVERSITY_RESPONSE)
+    mock
+      .onGet(`${UNI_ENDPOINTS.UNIVERSITIES}`)
+      .reply(HTTP_STATUS_CODES.OK, UNIVERSITY_RESPONSE)
       .onGet(`${OFFER_ENDPOINTS.OFFERINGBYSTUDENT}`)
       .reply(HTTP_STATUS_CODES.OK, OFFERINGS_RESPONSE_1)
       .onGet(`${format(OFFER_ENDPOINTS.OFFERING, offeringId)}`)
       .reply(HTTP_STATUS_CODES.OK, OFFERINGS_RESPONSE_1)
-
   })
 
   afterEach(() => {
@@ -54,9 +55,9 @@ describe('Check universities rendering', () => {
   })
 
   test('Check that loading indicator renders', async () => {
-    setUserData(USER_DATA);
+    setUserData(USER_DATA)
     render(<Home navigation={mockNavigator} />)
 
-    await waitFor( () => expect(mockHook).toHaveBeenCalled() );
+    await waitFor(() => expect(mockHook).toHaveBeenCalled())
   })
 })

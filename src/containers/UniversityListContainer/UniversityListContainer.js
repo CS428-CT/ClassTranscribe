@@ -14,14 +14,14 @@ import { useLoadingIndicator } from '../../hooks/useLoadingIndicator'
  */
 const UniversityListContainer = ({ navigation }) => {
   const [universities, setUniversities] = useState([])
-  const setLoading = useLoadingIndicator();
+  const setLoading = useLoadingIndicator()
 
   useEffect(() => {
     const fetchUniversityInfo = async () => {
-      setLoading(true);
+      setLoading(true)
       const allUniversities = await getUniversities()
       setUniversities(allUniversities)
-      setLoading(false);
+      setLoading(false)
     }
 
     fetchUniversityInfo()
