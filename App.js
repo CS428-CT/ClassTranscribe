@@ -1,18 +1,14 @@
-import React, { useState } from 'react'
-import LoginContainer from './src/containers/LoginContainer/LoginContainer'
-import CTNavigationContainer from './src/containers/CTNavigationContainer/CTNavigationContainer'
+import React from 'react'
+import Store from './src/store/Store'
+import AppContent from './AppContent'
 
+/**
+ * Wrapper for application that provides global access to the store.
+ */
 export default function App() {
-  const [isUserAuthenticated, setIsUserAuthenticated] = useState(false)
-
-  const onAuthLevelChange = (isAuthenticated) => {
-    setIsUserAuthenticated(isAuthenticated)
-  }
-
-  const renderApplication = () => {
-    if (isUserAuthenticated) return <CTNavigationContainer />
-
-    return <LoginContainer onAuthLevelChange={onAuthLevelChange} />
-  }
-  return renderApplication()
+  return (
+      <Store>
+        <AppContent />
+      </Store>
+    )
 }
