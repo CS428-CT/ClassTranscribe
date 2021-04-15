@@ -38,13 +38,9 @@ const Home = ({ navigation }) => {
   useEffect(() => {
     const fetchCourseInfo = async () => {
       setLoading(true);
-      console.log("GETTING OFFERINGS")
       const offerings = await getOfferingsData()
-      console.log("GOT OFFERINGS")
       const studentCourses = filterCourses(offerings)
-      console.log("GOT COURSES")
       setCourses(studentCourses)
-      console.log("SET COURSES")
       setLoading(false);
     }
     fetchCourseInfo()

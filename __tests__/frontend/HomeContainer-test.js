@@ -68,7 +68,6 @@ describe('Check universities rendering', () => {
     setUserData(USER_DATA);
     render(<Home />)
 
-    sleepMs(1500)
-    expect(mockHook).toHaveBeenCalled();
+    await waitFor( () => expect(mockHook).toHaveBeenCalled() );
   })
 })
