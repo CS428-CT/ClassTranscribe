@@ -2,10 +2,12 @@ import { API_BASE_URL } from '../constants'
 import { format } from '../utils/string'
 import { getCurrentAuthenticatedUser, isUserAuthenticated } from './auth'
 import { apiCall } from './api-requests'
+import axios from 'axios'
 
 export const ENDPOINTS = {
   OFFERING: `${API_BASE_URL}Offerings/{0}`,
   OFFERINGBYSTUDENT: `${API_BASE_URL}Offerings/ByStudent`,
+  POST_USER_METADATA: `${API_BASE_URL}Account/PostUserMetadata/PostUserMetadata`
 }
 
 /**
@@ -83,4 +85,17 @@ export const getStarredOfferings = () => {
   if (user?.metadata?.starredOfferings == null) return null
 
   return JSON.parse(user.metadata.starredOfferings)
+}
+
+/**
+ * Adds the given starred offering the users list of starred offerings
+ * @param {String} offeringID The offering ID to add
+ */
+export const addStarredOferring = async (offeringID) => {
+  if (!isUserAuthenticated()) return null;
+
+  const payload = { [offeringID]: "starred" }
+  const request = { starredOfferings: JSON.stringify(payload) }
+  const res = await axios.post(ENDPOINTS.POST_USER_METADATA, request);
+  console.log(res)
 }

@@ -18,8 +18,15 @@ const CourseCardStyle = StyleSheet.create({
     elevation: 5,
   },
 
+  cardHeader: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+
   courseTitle: {
     color: 'teal',
+    flex: 1,
     fontWeight: 'bold',
     fontSize: 20,
     backgroundColor: 'white',

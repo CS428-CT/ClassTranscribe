@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Text, View } from 'react-native'
 import PropTypes from 'prop-types'
 import { truncateString } from '../../utils/string'
 import styles from './CourseCard.style'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 const MAX_DESCRIPTION_LENGTH = 100
 
@@ -16,6 +17,9 @@ const MAX_DESCRIPTION_LENGTH = 100
  */
 
 const CourseCard = ({ departmentAcronym, courseNumber, courseName, courseDescription = '' }) => {
+  // TODO: Set initial state
+  const [isStarred, setIsStarred] = useState(false);
+
   const getCourseTitle = () => {
     return `${departmentAcronym} ${courseNumber}`
   }
@@ -24,9 +28,19 @@ const CourseCard = ({ departmentAcronym, courseNumber, courseName, courseDescrip
     return `${courseName}`
   }
 
+  const getFavoriteButton = () => {
+    if (isStarred)
+      return <MaterialCommunityIcons name="star" size={30} />
+    return <MaterialCommunityIcons name="star-outline" size={30} />
+  }
+
   return (
     <View style={styles.card}>
-      <Text style={styles.courseTitle}>{getCourseTitle()}</Text>
+      <View style={styles.cardHeader}>
+        <Text style={styles.courseTitle}>{getCourseTitle()}</Text>
+        { getFavoriteButton() }
+      </View>
+
       <Text style={styles.courseName}>{getCourseName()}</Text>
       <Text style={styles.courseContent}>
         {truncateString(courseDescription, MAX_DESCRIPTION_LENGTH)}
