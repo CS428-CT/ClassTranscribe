@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { truncateString } from '../../utils/string'
 import styles from './CourseCard.style'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { addStarredOferring } from '../../api/offerings'
+import { addStarredOferring, removeStarredOffering } from '../../api/offerings'
 
 const MAX_DESCRIPTION_LENGTH = 100
 
@@ -30,11 +30,21 @@ const CourseCard = ({ departmentAcronym, offeringId, courseNumber, courseName, c
     return `${courseName}`
   }
 
+  /**
+   * Called when the user wants to star an offering.
+   * Usually, the request will succeed, so we will immediately update the star icon to make
+   * the app feel fast. If it does fail (which is very rare), we will unstar it after the failure
+   */
   const onCourseStarred = async () => {
-    const wasSuccessful = await addStarredOferring(offeringId)
-
-    if (wasSuccessful)
-      setIsStarred(!isStarred)
+    if (!isStarred) {
+      setIsStarred(true)
+      const wasSuccessful = await addStarredOferring(offeringId)
+      setIsStarred(wasSuccessful)
+    } else {
+      setIsStarred(false)
+      const wasSuccessful = await removeStarredOffering(offeringId)
+      setIsStarred(!wasSuccessful)
+    }
   }
 
   const getFavoriteButton = () => {

@@ -113,5 +113,16 @@ export const addStarredOferring = async (offeringID) => {
  * @param {String} offeringID The offering ID to remove
  */
 export const removeStarredOffering = async (offeringID) => {
+  if (!isUserAuthenticated()) return false;
 
+  const offerings = getStarredOfferings();
+  delete offerings[offeringID]
+
+  const user = getCurrentAuthenticatedUser();
+  user.metadata.starredOfferings = JSON.stringify(offerings);
+
+  const request = { starredOfferings: user.metadata.starredOfferings }
+  const resp = await axios.post(ENDPOINTS.POST_USER_METADATA, request);
+  if (resp?.status !== HTTP_STATUS_CODES.OK) return false;
+  return true;
 }
