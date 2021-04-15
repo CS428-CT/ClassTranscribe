@@ -10,6 +10,7 @@ import CoursePlaylistsContainer from '../CoursePlaylistsContainer/CoursePlaylist
 import VideoContainer from '../VideoContainer/VideoContainer'
 import PlaylistContainer from '../PlaylistContainer/PlaylistContainer'
 import DownloadContainer from '../DownloadContainer/DownloadContainer'
+import SearchContainer from '../SearchContainer/SearchContainer'
 
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
@@ -85,20 +86,6 @@ const VideoView = ({ route }) => {
 }
 
 /**
- * The navigator of the Course tab. Contains a stack navigator.
- */
-const CourseNavigator = () => {
-  return (
-    <Stack.Navigator initialRouteName={STACK_SCREENS.HOME}>
-      <Stack.Screen name={STACK_SCREENS.HOME} component={HomeView} />
-      <Stack.Screen name={STACK_SCREENS.COURSE_PLAYLISTS} component={CoursePlaylistsView} />
-      <Stack.Screen name={STACK_SCREENS.PLAYLIST} component={PlaylistView} />
-      <Stack.Screen name={STACK_SCREENS.VIDEO} component={VideoView} />
-    </Stack.Navigator>
-  )
-}
-
-/**
  * This is the root navigator for the entire application.
  * Contains a home tab and a video tab. Within each tab, there may be additional navigators
  * such as a stack navigator.
@@ -109,7 +96,7 @@ const CTNavigationContainer = () => {
       <Tab.Navigator>
         <Tab.Screen
           name="Search"
-          component={CourseNavigator}
+          component={SearchContainer}
           options={{
             tabBarLabel: 'Search',
             tabBarIcon: ({ color, size }) => (
