@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { truncateString } from '../../utils/string'
 import styles from './CourseCard.style'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { addStarredOferring } from '../../api/offerings'
 
 const MAX_DESCRIPTION_LENGTH = 100
 
@@ -13,10 +14,12 @@ const MAX_DESCRIPTION_LENGTH = 100
  * @param {String} courseNumber Example: "400" or "429"
  * @param {String} courseName The name of the course to be displayed
  * @param {String} courseDescription The full description of the course. Long course names will be truncated.
+ * @param {Boolean} isCourseStarred Indicates whether the user has starred the course
+ * @param {String} offeringId The unique ID for this offering
  * @returns
  */
 
-const CourseCard = ({ departmentAcronym, courseNumber, courseName, courseDescription = '', isCourseStarred }) => {
+const CourseCard = ({ departmentAcronym, offeringId, courseNumber, courseName, courseDescription = '', isCourseStarred }) => {
   const [isStarred, setIsStarred] = useState(isCourseStarred);
 
   const getCourseTitle = () => {
@@ -27,9 +30,11 @@ const CourseCard = ({ departmentAcronym, courseNumber, courseName, courseDescrip
     return `${courseName}`
   }
 
-  const onCourseStarred = () => {
-    // TODO: Check if successful first
-    setIsStarred(!isStarred)
+  const onCourseStarred = async () => {
+    const wasSuccessful = await addStarredOferring(offeringId)
+
+    if (wasSuccessful)
+      setIsStarred(!isStarred)
   }
 
   const getFavoriteButton = () => {
@@ -58,6 +63,7 @@ CourseCard.propTypes = {
   courseNumber: PropTypes.string.isRequired,
   courseName: PropTypes.string.isRequired,
   isCourseStarred: PropTypes.bool.isRequired,
+  offeringId: PropTypes.string.isRequired,
   courseDescription: PropTypes.string,
 }
 

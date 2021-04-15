@@ -3,6 +3,7 @@ import { format } from '../utils/string'
 import { getCurrentAuthenticatedUser, isUserAuthenticated } from './auth'
 import { apiCall } from './api-requests'
 import axios from 'axios'
+import { HTTP_STATUS_CODES } from '.'
 
 export const ENDPOINTS = {
   OFFERING: `${API_BASE_URL}Offerings/{0}`,
@@ -88,14 +89,29 @@ export const getStarredOfferings = () => {
 }
 
 /**
- * Adds the given starred offering the users list of starred offerings
+ * Adds the given starred offering to the users list of starred offerings
  * @param {String} offeringID The offering ID to add
+ * @returns true if the post was successful
  */
 export const addStarredOferring = async (offeringID) => {
-  if (!isUserAuthenticated()) return null;
+  if (!isUserAuthenticated()) return false;
 
-  const payload = { [offeringID]: "starred" }
-  const request = { starredOfferings: JSON.stringify(payload) }
-  const res = await axios.post(ENDPOINTS.POST_USER_METADATA, request);
-  console.log(res)
+  const offerings = getStarredOfferings();
+  offerings[offeringID] = "starred";
+
+  const user = getCurrentAuthenticatedUser();
+  user.metadata.starredOfferings = JSON.stringify(offerings);
+
+  const request = { starredOfferings: user.metadata.starredOfferings }
+  const resp = await axios.post(ENDPOINTS.POST_USER_METADATA, request);
+  if (resp?.status !== HTTP_STATUS_CODES.OK) return false;
+  return true;
+}
+
+/**
+ * Removes the given starred offering from the users list of starred offerings
+ * @param {String} offeringID The offering ID to remove
+ */
+export const removeStarredOffering = async (offeringID) => {
+
 }

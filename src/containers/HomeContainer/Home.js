@@ -64,6 +64,7 @@ const Home = ({ navigation }) => {
         <TouchableNativeFeedback onPress={() => onCourseSelected(courseId)}>
           <View style={styles.cardContainer}>
             <CourseCard
+              offeringId={courseId}
               departmentAcronym={course.departmentAcronym}
               courseNumber={course.courseNumber}
               courseName={courseName}
