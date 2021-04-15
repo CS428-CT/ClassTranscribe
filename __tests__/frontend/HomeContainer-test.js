@@ -26,30 +26,30 @@ describe('Check universities rendering', () => {
   }
 
   const offeringId = 'ac5b1727-629c-443b-8c1a-cc1bd541af6a'
+  const mockNavigator = { push: jest.fn() }
+
+  beforeEach(() => {
+    mock.onGet(`${UNI_ENDPOINTS.UNIVERSITIES}`).reply(HTTP_STATUS_CODES.OK, UNIVERSITY_RESPONSE)
+      .onGet(`${OFFER_ENDPOINTS.OFFERINGBYSTUDENT}`)
+      .reply(HTTP_STATUS_CODES.OK, OFFERINGS_RESPONSE_1)
+      .onGet(`${format(OFFER_ENDPOINTS.OFFERING, offeringId)}`)
+      .reply(HTTP_STATUS_CODES.OK, OFFERINGS_RESPONSE_1)
+
+  })
 
   afterEach(() => {
     mock.reset()
   })
 
   test('Check that components render', async () => {
-    const mockNavigator = { push: jest.fn() }
-
-    mock.onGet(`${UNI_ENDPOINTS.UNIVERSITIES}`).reply(HTTP_STATUS_CODES.OK, UNIVERSITY_RESPONSE)
-    mock
-      .onGet(`${OFFER_ENDPOINTS.OFFERINGBYSTUDENT}`)
-      .reply(HTTP_STATUS_CODES.OK, OFFERINGS_RESPONSE_1)
-    mock
-      .onGet(`${format(OFFER_ENDPOINTS.OFFERING, offeringId)}`)
-      .reply(HTTP_STATUS_CODES.OK, OFFERINGS_RESPONSE_1)
-
     setUserData(USER_DATA)
 
     const { getByTestId } = render(<Home navigation={mockNavigator} />)
 
-    const picker = await getByTestId('picker')
+    const picker = getByTestId('picker')
     expect(picker).not.toBe(null)
 
-    const courseList = await getByTestId('courseList')
+    const courseList = getByTestId('courseList')
     expect(courseList).not.toBe(null)
   })
 
@@ -57,16 +57,8 @@ describe('Check universities rendering', () => {
     const mockHook = jest.fn()
     useLoadingIndicator.mockReturnValue(mockHook)
 
-    mock.onGet(`${UNI_ENDPOINTS.UNIVERSITIES}`).reply(HTTP_STATUS_CODES.OK, UNIVERSITY_RESPONSE)
-    mock
-      .onGet(`${OFFER_ENDPOINTS.OFFERINGBYSTUDENT}`)
-      .reply(HTTP_STATUS_CODES.OK, OFFERINGS_RESPONSE_1)
-    mock
-      .onGet(`${format(OFFER_ENDPOINTS.OFFERING, offeringId)}`)
-      .reply(HTTP_STATUS_CODES.OK, OFFERINGS_RESPONSE_1)
-
     setUserData(USER_DATA);
-    render(<Home />)
+    render(<Home navigation={mockNavigator} />)
 
     await waitFor( () => expect(mockHook).toHaveBeenCalled() );
   })
