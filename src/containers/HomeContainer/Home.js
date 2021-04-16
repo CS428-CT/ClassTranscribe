@@ -3,7 +3,7 @@ import { TouchableNativeFeedback, FlatList, View, Text } from 'react-native'
 import { Picker } from '@react-native-community/picker'
 import PropTypes from 'prop-types'
 import { getOfferingsData, getStarredOfferingsData } from '../../api/offerings'
-import { getUniversities } from '../../api/universities'
+import { getUniversities, getUniversityDepartments } from '../../api/universities'
 import { getCurrentAuthenticatedUser } from '../../api/auth'
 import CourseCard from '../../components/Cards/CourseCard'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
@@ -19,6 +19,7 @@ const Home = ({ starred, navigation }) => {
   const currentUser = getCurrentAuthenticatedUser()
   const loadingWrap = useLoadingWrap()
   let universityId = currentUser.universityId
+  let departmentId = 'all'
 
   /**
    * Helper function to filter courses by university id
@@ -28,7 +29,9 @@ const Home = ({ starred, navigation }) => {
     const newOfferings = []
     for (const i in offerings) {
       if (offerings[i].term.universityId === universityId) {
-        newOfferings.push(offerings[i])
+        if (departmentId === 'all' || offerings[i].courses[0].departmentId === departmentId) {
+          newOfferings.push(offerings[i])
+        }
       }
     }
 
@@ -105,8 +108,8 @@ const Home = ({ starred, navigation }) => {
       setUniversity(newUniversityId)
       universityId = newUniversityId
 
-      const newUnicourses = await getOfferingsData()
-      const newCourses = filterCourses(newUnicourses)
+      const allCourses = await getOfferingsData()
+      const newCourses = filterCourses(allCourses)
 
       try {
         setCourses(newCourses)
@@ -123,6 +126,52 @@ const Home = ({ starred, navigation }) => {
           onValueChange={(newUniversityId) => onUniversitySelected(newUniversityId)}
         >
           {universityItems}
+        </Picker>
+      </View>
+    )
+  }
+
+  /**
+   * Render department's course offerings in a dropdown picker based on department id.
+   */
+  const renderDepartmentsDropDown = () => {
+    const [departments, setAllDepartments] = useState([])
+    useEffect(() => {
+      const fetchDepartments = async () => {
+        const allDept = await getUniversityDepartments(universityId)
+        setAllDepartments(allDept)
+      }
+      fetchDepartments()
+    }, [setAllDepartments])
+
+    const departmentItems = departments.map((dept) => {
+      return <Picker.Item key={dept.id} value={dept.id} label={dept.name} />
+    })
+
+    const [department, setDepartment] = useState(departmentId)
+    const onDepartmentSelected = async (newDepartmentId) => {
+      setDepartment(newDepartmentId)
+      departmentId = newDepartmentId
+
+      const allCourses = await getOfferingsData()
+      const newCourses = filterCourses(allCourses)
+
+      try {
+        setCourses(newCourses)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    return (
+      <View style={styles.dropdown}>
+        <Picker
+          testID="picker"
+          selectedValue={department}
+          onValueChange={(newDepartmentId) => onDepartmentSelected(newDepartmentId)}
+        >
+          <Picker.Item key="all" value="all" label="All Departments" />
+          {departmentItems}
         </Picker>
       </View>
     )
@@ -160,6 +209,7 @@ const Home = ({ starred, navigation }) => {
   return (
     <View style={styles.viewStyle}>
       {renderUniversityDropDown()}
+      {renderDepartmentsDropDown()}
       {renderCourses()}
     </View>
   )
