@@ -31,6 +31,13 @@ const VideoStyle = StyleSheet.create({
     alignItems: 'center',
     margin: 10,
   },
+  rateButton: {
+    alignSelf: 'center',
+  },
+  rateButtonText: {
+    color: 'white',
+    fontSize: 20,
+  },
 })
 
 export default VideoStyle

@@ -6,7 +6,6 @@ import { Icon } from 'react-native-elements'
 import { Button, Title } from 'react-native-paper'
 import { Video } from 'expo-av'
 import PropTypes from 'prop-types'
-import RNPickerSelect from 'react-native-picker-select'
 import * as FileSystem from 'expo-file-system'
 import { FILE_SERVER_BASE_URL } from '../../constants'
 import styles from './VideoContainer.style'
@@ -205,49 +204,20 @@ const VideoContainer = ({ videos, index, downloaded }) => {
               <Icon name="volume-up" color="white" size={35} />
             )}
           </TouchableOpacity>
-          <RNPickerSelect
-            style={{
-              height: '100%',
-              inputIOS: {
-                height: '100%',
-                padding: 0,
-                margin: 0,
-                borderWidth: 1,
-                color: 'white',
-                alignSelf: 'center',
-                alignContent: 'center',
-                alignItems: 'center',
-              },
-              inputAndroid: {
-                height: '100%',
-                color: 'white',
-              },
+          <TouchableOpacity
+            style={styles.rateButton}
+            onPress={() => {
+              let newRate = status.rate + 0.25
+              if (newRate > 2.0) {
+                newRate = 0.5
+              }
+              videoRef.current.setRateAsync(newRate, true)
             }}
-            placeholder={{}} // disable empty selector
-            value={status.rate}
-            onValueChange={(value) => {
-              videoRef.current.setRateAsync(value, true)
-            }}
-            items={[
-              { label: '0.5 x', value: 0.5 },
-              { label: '0.75 x', value: 0.75 },
-              { label: '1.0 x', value: 1.0 },
-              { label: '1.25 x', value: 1.25 },
-              { label: '1.5 x', value: 1.5 },
-              { label: '2.0 x', value: 2.0 },
-            ]}
           >
-            <Text
-              style={{
-                color: 'white',
-                alignSelf: 'center',
-                textAlign: 'center',
-                fontSize: 20,
-              }}
-            >
-              {status.rate ? `${status.rate} x` : '1 x'}
+            <Text style={styles.rateButtonText}>
+              {status.rate ? `${status.rate.toFixed(2)} x` : '1 x'}
             </Text>
-          </RNPickerSelect>
+          </TouchableOpacity>
         </View>
       </View>
 
