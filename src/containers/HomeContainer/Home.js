@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from 'react'
-import { TouchableNativeFeedback, FlatList, View } from 'react-native'
+import { TouchableNativeFeedback, FlatList, View, Text } from 'react-native'
 import { Picker } from '@react-native-community/picker'
 import PropTypes from 'prop-types'
-import { getOfferingsData } from '../../api/offerings'
+import { getOfferingsData, getStarredOfferingsData } from '../../api/offerings'
 import { getUniversities } from '../../api/universities'
 import { getCurrentAuthenticatedUser } from '../../api/auth'
 import CourseCard from '../../components/Cards/CourseCard'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
 import styles from './Home.style'
 import { useLoadingWrap } from '../../hooks/useLoadingWrap'
+import { NO_COURSES, NO_STARRED_COURSES } from '../../constants'
 
 /**
  * Contains the home screen of the application. Lists courses and gives the user the ability
  * to search for courses. Clicking on a course shows the playlists for it.
  */
-const Home = ({ navigation }) => {
+const Home = ({ starred, navigation }) => {
   const currentUser = getCurrentAuthenticatedUser()
   const loadingWrap = useLoadingWrap()
   let universityId = currentUser.universityId
@@ -37,7 +38,12 @@ const Home = ({ navigation }) => {
   const [courses, setCourses] = useState([])
   useEffect(() => {
     const fetchCourseInfo = async () => {
-      const offerings = await getOfferingsData()
+      let offerings
+      if (starred) {
+        offerings = await getStarredOfferingsData()
+      } else {
+        offerings = await getOfferingsData()
+      }
       const studentCourses = filterCourses(offerings)
       setCourses(studentCourses)
     }
@@ -110,22 +116,36 @@ const Home = ({ navigation }) => {
     }
 
     return (
-      <Picker
-        testID="picker"
-        style={{ flex: 0, width: '100%' }}
-        selectedValue={university}
-        onValueChange={(newUniversityId) => onUniversitySelected(newUniversityId)}
-      >
-        {universityItems}
-      </Picker>
+      <View style={styles.dropdown}>
+        <Picker
+          testID="picker"
+          selectedValue={university}
+          onValueChange={(newUniversityId) => onUniversitySelected(newUniversityId)}
+        >
+          {universityItems}
+        </Picker>
+      </View>
     )
   }
 
   /**
    * Renders all of the users' courses into a FlatList
    */
-  const renderStarredCourses = () => {
-    if (courses == null) return null
+  const renderCourses = () => {
+    if (courses.length === 0) {
+      if (starred) {
+        return (
+          <Text testID="courseList" style={styles.noCourses}>
+            {NO_STARRED_COURSES}
+          </Text>
+        )
+      }
+      return (
+        <Text testID="courseList" style={styles.noCourses}>
+          {NO_COURSES}
+        </Text>
+      )
+    }
 
     return (
       <FlatList
@@ -140,7 +160,7 @@ const Home = ({ navigation }) => {
   return (
     <View style={styles.viewStyle}>
       {renderUniversityDropDown()}
-      {renderStarredCourses()}
+      {renderCourses()}
     </View>
   )
 }
@@ -149,6 +169,7 @@ Home.propTypes = {
   navigation: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  starred: PropTypes.bool.isRequired,
 }
 
 export default Home

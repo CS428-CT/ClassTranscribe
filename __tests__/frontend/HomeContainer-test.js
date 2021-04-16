@@ -45,7 +45,7 @@ describe('Check universities rendering', () => {
   test('Check that components render', async () => {
     setUserData(USER_DATA)
 
-    const { getByTestId } = render(<Home navigation={mockNavigator} />)
+    const { getByTestId } = render(<Home starred={false} navigation={mockNavigator} />)
 
     const picker = getByTestId('picker')
     expect(picker).not.toBe(null)
