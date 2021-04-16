@@ -12,12 +12,6 @@ import { UNIVERSITY_RESPONSE } from '../mock_responses/mock-university-response'
 import Home from '../../src/containers/HomeContainer/Home'
 import { OFFERINGS_RESPONSE_1 } from '../mock_responses/mock-offerings-response'
 
-// const assertNoButtonsRendered = async () => {
-//   const { queryAllByA11yRole } = render(<UniversityListContainer />)
-//   const universityList = await waitFor(() => queryAllByA11yRole('button'))
-//   expect(universityList.length).toBe(0)
-// }
-
 const mock = new MockAdapter(axios)
 describe('Check universities rendering', () => {
   const USER_DATA = {
@@ -46,12 +40,12 @@ describe('Check universities rendering', () => {
 
     setUserData(USER_DATA)
 
-    const { getByTestId } = render(<Home navigation={mockNavigator} />)
+    const { getByTestId } = render(<Home starred={false} navigation={mockNavigator} />)
 
-    const picker = await getByTestId('picker')
+    const picker = getByTestId('picker')
     expect(picker).not.toBe(null)
 
-    const courseList = await getByTestId('courseList')
+    const courseList = getByTestId('courseList')
     expect(courseList).not.toBe(null)
   })
 })
