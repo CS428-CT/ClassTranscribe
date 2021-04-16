@@ -18,14 +18,14 @@ const LoginContainer = ({ onAuthLevelChange }) => {
    * the token. @onBrowerMessage handles the rest.
    */
   const injectedJavascript = `
-    const getToken = () => {
+    function getToken() {
       const userInfoString = localStorage["userInfo"];
       if (!userInfoString) {
         return setTimeout(getToken, 500);
       }
 
       const userInfo = JSON.parse(userInfoString);
-      if (!userInfo?.exp) {
+      if (!userInfo || !userInfo.exp) {
         return setTimeout(getToken, 500);
       }
 
@@ -40,6 +40,7 @@ const LoginContainer = ({ onAuthLevelChange }) => {
 
     getToken();
   `
+//  const injectedJavascript = `window.ReactNativeWebView.postMessage("TEST")`
 
   /**
    * Listener for the injected javascript message. When the message is received, we
@@ -47,6 +48,7 @@ const LoginContainer = ({ onAuthLevelChange }) => {
    * @param {Object} event The event object representing the message
    */
   const onBrowserMessage = async (event) => {
+    console.log("TRIGGERED")
     if (!event?.nativeEvent?.data) return
 
     const data = event.nativeEvent.data
