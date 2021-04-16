@@ -19,7 +19,7 @@ const Stack = createStackNavigator()
  * receive the proper props
  */
 const HomeView = ({ navigation, route }) => {
-  return <Home navigation={navigation} starred={route.params.starred} />
+  return <Home starred={route.params.starred} navigation={navigation} />
 }
 
 /**

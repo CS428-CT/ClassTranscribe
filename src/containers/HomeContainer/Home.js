@@ -128,12 +128,12 @@ const Home = ({ starred, navigation }) => {
   /**
    * Renders all of the users' courses into a FlatList
    */
-  const renderStarredCourses = () => {
+  const renderCourses = () => {
     if (courses.length === 0) {
       if (starred) {
-        return <Text style={styles.noCourses}>{NO_STARRED_COURSES}</Text>
+        return <Text testID="courseList" style={styles.noCourses}>{NO_STARRED_COURSES}</Text>
       }
-      return <Text style={styles.noCourses}>{NO_COURSES}</Text>
+      return <Text testID="courseList" style={styles.noCourses}>{NO_COURSES}</Text>
     }
 
     return (
@@ -149,7 +149,7 @@ const Home = ({ starred, navigation }) => {
   return (
     <View style={styles.viewStyle}>
       {renderUniversityDropDown()}
-      {renderStarredCourses()}
+      {renderCourses()}
     </View>
   )
 }
