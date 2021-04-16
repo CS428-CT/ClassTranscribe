@@ -7,6 +7,13 @@ import { HTTP_STATUS_CODES } from '../../src/api'
 import { UNIVERSITY_RESPONSE } from '../mock_responses/mock-university-response'
 import UniversityListContainer from '../../src/containers/UniversityListContainer/UniversityListContainer'
 import { STACK_SCREENS } from '../../src/containers/CTNavigationContainer'
+import { useLoadingIndicator } from '../../src/hooks/useLoadingIndicator'
+
+const mock = new MockAdapter(axios)
+
+jest.mock('../../src/hooks/useLoadingIndicator')
+const mockHook = jest.fn()
+useLoadingIndicator.mockReturnValue(mockHook)
 
 const assertNoButtonsRendered = async () => {
   const { queryAllByA11yRole } = render(<UniversityListContainer />)
@@ -14,7 +21,6 @@ const assertNoButtonsRendered = async () => {
   expect(universityList.length).toBe(0)
 }
 
-const mock = new MockAdapter(axios)
 describe('Check universities rendering', () => {
   afterEach(() => {
     mock.reset()
@@ -62,5 +68,13 @@ describe('Check university navigation', () => {
     expect(mockNavigator.push).toHaveBeenCalledWith(STACK_SCREENS.DEPT_LIST, {
       universityId: expectedUniversityId,
     })
+  })
+
+  test('Check that loading indicator renders', async () => {
+    mock.onGet(`${ENDPOINTS.UNIVERSITIES}`).reply(HTTP_STATUS_CODES.OK, [UNIVERSITY_RESPONSE[0]])
+
+    render(<UniversityListContainer navigation={mockNavigator} />)
+
+    await waitFor(() => expect(mockHook).toHaveBeenCalled())
   })
 })

@@ -5,6 +5,7 @@ import * as FileSystem from 'expo-file-system'
 import { Icon, Image, ListItem } from 'react-native-elements'
 import * as VideoThumbnails from 'expo-video-thumbnails'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
+import { useLoadingIndicator } from '../../hooks/useLoadingIndicator'
 
 const videoSuffix = '.mp4' // Currently, classtrascribe only uses mp4 as their video format
 
@@ -14,6 +15,7 @@ const videoSuffix = '.mp4' // Currently, classtrascribe only uses mp4 as their v
  */
 const DownloadContainer = ({ navigation }) => {
   const [localVideos, setLocalVideos] = useState([]) // an array of local video names
+  const setLoading = useLoadingIndicator();
 
   const getFileSize = async (fileUri) => {
     const fileInfo = await FileSystem.getInfoAsync(fileUri)

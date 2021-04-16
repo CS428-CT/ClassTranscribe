@@ -61,7 +61,8 @@
       "node_modules/(?!(jest-)?react-native|@react-native-community|@react-native-picker|expo-av|@react-native-community|@unimodules|unimodules-permissions-interface|expo-asset|expo-constants|)"
     ],
     "testPathIgnorePatterns": [
-      "mock_response/*"
+      "mock_response/*",
+      "shared.js"
     ],
     "preset": "jest-expo",
     "setupFilesAfterEnv": [

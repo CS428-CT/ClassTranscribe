@@ -8,6 +8,7 @@ import { getCurrentAuthenticatedUser } from '../../api/auth'
 import CourseCard from '../../components/Cards/CourseCard'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
 import styles from './Home.style'
+import { useLoadingWrap } from '../../hooks/useLoadingWrap'
 import { NO_COURSES, NO_STARRED_COURSES } from '../../constants'
 
 /**
@@ -16,6 +17,7 @@ import { NO_COURSES, NO_STARRED_COURSES } from '../../constants'
  */
 const Home = ({ starred, navigation }) => {
   const currentUser = getCurrentAuthenticatedUser()
+  const loadingWrap = useLoadingWrap()
   let universityId = currentUser.universityId
 
   /**
@@ -45,7 +47,8 @@ const Home = ({ starred, navigation }) => {
       const studentCourses = filterCourses(offerings)
       setCourses(studentCourses)
     }
-    fetchCourseInfo()
+
+    return loadingWrap(fetchCourseInfo)
   }, [setCourses])
 
   const onCourseSelected = (courseId) => {

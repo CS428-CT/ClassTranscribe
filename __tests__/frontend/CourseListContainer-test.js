@@ -8,10 +8,16 @@ import { HTTP_STATUS_CODES } from '../../src/api'
 import { COURSES_RESPONSE } from '../mock_responses/mock-course-response'
 import CourseListContainer from '../../src/containers/CourseListContainer/CourseListContainer'
 import { STACK_SCREENS } from '../../src/containers/CTNavigationContainer'
+import { useLoadingIndicator } from '../../src/hooks/useLoadingIndicator'
 
 const departmentId = '2001'
 const departmentAcronym = 'CS'
 const mock = new MockAdapter(axios)
+
+jest.mock('../../src/hooks/useLoadingIndicator')
+const mockHook = jest.fn()
+useLoadingIndicator.mockReturnValue(mockHook)
+
 const assertNoButtonsRendered = async () => {
   const { queryAllByA11yRole } = render(
     <CourseListContainer departmentId={departmentId} acronym={departmentAcronym} />
@@ -78,5 +84,17 @@ describe('Check course navigation', () => {
 
     expect(mockNavigator.push).toHaveBeenCalled()
     expect(mockNavigator.push).toHaveBeenCalledWith(STACK_SCREENS.HOME, {})
+  })
+})
+
+describe('Check loading indicator', async () => {
+  test('loading indicator called', async () => {
+    mock
+      .onGet(`${format(ENDPOINTS.COURSES, departmentId)}`)
+      .reply(HTTP_STATUS_CODES.OK, [COURSES_RESPONSE[0]])
+
+    render(<CourseListContainer departmentId={departmentId} acronym={departmentAcronym} />)
+
+    await waitFor(() => expect(mockHook).toHaveBeenCalled())
   })
 })
