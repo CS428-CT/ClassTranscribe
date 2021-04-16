@@ -166,7 +166,7 @@ const Home = ({ starred, navigation }) => {
     return (
       <View style={styles.dropdown}>
         <Picker
-          testID="picker"
+          testID="deptPicker"
           selectedValue={department}
           onValueChange={(newDepartmentId) => onDepartmentSelected(newDepartmentId)}
         >
