@@ -1,11 +1,5 @@
-import { API_BASE_URL } from '../constants'
 import { format } from '../utils/string'
-import { apiCall } from './api-requests'
-
-export const ENDPOINTS = {
-  TRANSCRIPT: `${API_BASE_URL}Captions/ByTranscription/{0}`,
-  MEDIA: `${API_BASE_URL}Media/{0}`,
-}
+import { apiCall, ENDPOINTS } from './api-requests'
 
 export const getVideoTranscription = async (transcriptionId) => {
   const url = format(ENDPOINTS.TRANSCRIPT, transcriptionId)
