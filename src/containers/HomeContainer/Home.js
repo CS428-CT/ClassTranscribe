@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { TouchableNativeFeedback, FlatList, View } from 'react-native'
 import { Picker } from '@react-native-community/picker'
 import PropTypes from 'prop-types'
-import { getOfferingsData } from '../../api/offerings'
+import { getOfferingsData, getStarredOfferingsData } from '../../api/offerings'
 import { getUniversities } from '../../api/universities'
 import { getCurrentAuthenticatedUser } from '../../api/auth'
 import CourseCard from '../../components/Cards/CourseCard'
@@ -13,7 +13,7 @@ import styles from './Home.style'
  * Contains the home screen of the application. Lists courses and gives the user the ability
  * to search for courses. Clicking on a course shows the playlists for it.
  */
-const Home = ({ navigation }) => {
+const Home = ({ starred, navigation }) => {
   const currentUser = getCurrentAuthenticatedUser()
   let universityId = currentUser.universityId
 
@@ -35,7 +35,12 @@ const Home = ({ navigation }) => {
   const [courses, setCourses] = useState([])
   useEffect(() => {
     const fetchCourseInfo = async () => {
-      const offerings = await getOfferingsData()
+      var offerings
+      if (starred) {
+        offerings = await getStarredOfferingsData()
+      } else {
+        offerings = await getOfferingsData()
+      }
       const studentCourses = filterCourses(offerings)
       setCourses(studentCourses)
     }
