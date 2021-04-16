@@ -40,7 +40,6 @@ const LoginContainer = ({ onAuthLevelChange }) => {
 
     getToken();
   `
-  //  const injectedJavascript = `window.ReactNativeWebView.postMessage("TEST")`
 
   /**
    * Listener for the injected javascript message. When the message is received, we
