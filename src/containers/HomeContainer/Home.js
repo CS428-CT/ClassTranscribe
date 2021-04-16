@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { TouchableNativeFeedback, FlatList, View } from 'react-native'
+import { TouchableNativeFeedback, FlatList, View, Text } from 'react-native'
 import { Picker } from '@react-native-community/picker'
 import PropTypes from 'prop-types'
 import { getOfferingsData, getStarredOfferingsData } from '../../api/offerings'
@@ -8,6 +8,7 @@ import { getCurrentAuthenticatedUser } from '../../api/auth'
 import CourseCard from '../../components/Cards/CourseCard'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
 import styles from './Home.style'
+import { NO_COURSES, NO_STARRED_COURSES } from '../../constants'
 
 /**
  * Contains the home screen of the application. Lists courses and gives the user the ability
@@ -127,7 +128,13 @@ const Home = ({ starred, navigation }) => {
    * Renders all of the users' courses into a FlatList
    */
   const renderStarredCourses = () => {
-    if (courses == null) return null
+    if (courses.length == 0) { 
+      if (starred) {
+        return (<Text style={styles.noCourses}>{ NO_STARRED_COURSES }</Text>) 
+      } else {
+        return (<Text style={styles.noCourses}>{ NO_COURSES }</Text>) 
+      }
+    }
 
     return (
       <FlatList
