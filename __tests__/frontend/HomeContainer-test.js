@@ -12,7 +12,6 @@ import { UNIVERSITY_RESPONSE } from '../mock_responses/mock-university-response'
 import Home from '../../src/containers/HomeContainer/Home'
 import { OFFERINGS_RESPONSE_1 } from '../mock_responses/mock-offerings-response'
 
-
 const mock = new MockAdapter(axios)
 describe('Check universities rendering', () => {
   const USER_DATA = {

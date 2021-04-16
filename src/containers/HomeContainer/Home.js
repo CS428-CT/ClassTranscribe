@@ -131,9 +131,17 @@ const Home = ({ starred, navigation }) => {
   const renderCourses = () => {
     if (courses.length === 0) {
       if (starred) {
-        return <Text testID="courseList" style={styles.noCourses}>{NO_STARRED_COURSES}</Text>
+        return (
+          <Text testID="courseList" style={styles.noCourses}>
+            {NO_STARRED_COURSES}
+          </Text>
+        )
       }
-      return <Text testID="courseList" style={styles.noCourses}>{NO_COURSES}</Text>
+      return (
+        <Text testID="courseList" style={styles.noCourses}>
+          {NO_COURSES}
+        </Text>
+      )
     }
 
     return (
