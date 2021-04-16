@@ -158,7 +158,7 @@ Home.propTypes = {
   navigation: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
-  starred: PropTypes.string.isRequired,
+  starred: PropTypes.bool.isRequired,
 }
 
 export default Home
