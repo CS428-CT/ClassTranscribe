@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { ListItem } from 'react-native-elements'
 import { getUniversityDepartments } from '../../api/universities'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
-import { useLoadingIndicator } from '../../hooks/useLoadingIndicator'
+import { useLoadingWrap } from '../../hooks/useLoadingWrap'
 
 /**
  * Contains the department list screen. Lists all departments that
@@ -14,18 +14,15 @@ import { useLoadingIndicator } from '../../hooks/useLoadingIndicator'
  */
 const DepartmentListContainer = ({ universityId, navigation }) => {
   const [departments, setDepartments] = useState([])
-  const setLoading = useLoadingIndicator()
+  const loadingWrap = useLoadingWrap();
 
   useEffect(() => {
     const fetchDepartmentInfo = async () => {
-      setLoading(true)
       const uniDepartments = await getUniversityDepartments(universityId)
       setDepartments(uniDepartments)
-      setLoading(false)
     }
 
-    fetchDepartmentInfo()
-    return () => setLoading(false)
+    return loadingWrap(fetchDepartmentInfo);
   }, [setDepartments])
 
   const onDepartmentSelected = (departmentId, departmentAcronym) => {

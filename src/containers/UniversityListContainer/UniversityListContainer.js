@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { ListItem } from 'react-native-elements'
 import { getUniversities } from '../../api/universities'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
-import { useLoadingIndicator } from '../../hooks/useLoadingIndicator'
+import { useLoadingWrap } from '../../hooks/useLoadingWrap'
 
 /**
  * Contains the university screen of the application. Lists all universities
@@ -14,18 +14,15 @@ import { useLoadingIndicator } from '../../hooks/useLoadingIndicator'
  */
 const UniversityListContainer = ({ navigation }) => {
   const [universities, setUniversities] = useState([])
-  const setLoading = useLoadingIndicator()
+  const loadingWrap = useLoadingWrap();
 
   useEffect(() => {
     const fetchUniversityInfo = async () => {
-      setLoading(true)
       const allUniversities = await getUniversities()
       setUniversities(allUniversities)
-      setLoading(false)
     }
 
-    fetchUniversityInfo()
-    return () => setLoading(false)
+    return loadingWrap(fetchUniversityInfo)
   }, [setUniversities])
 
   const onUniversitySelected = (university) => {
