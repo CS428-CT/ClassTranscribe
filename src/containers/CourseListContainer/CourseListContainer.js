@@ -14,7 +14,7 @@ import { useLoadingWrap } from '../../hooks/useLoadingWrap'
  */
 const CourseListContainer = ({ departmentId, acronym, navigation }) => {
   const [courses, setCourses] = useState([])
-  const loadingWrap = useLoadingWrap();
+  const loadingWrap = useLoadingWrap()
 
   useEffect(() => {
     const fetchCourseInfo = async () => {
@@ -22,7 +22,7 @@ const CourseListContainer = ({ departmentId, acronym, navigation }) => {
       setCourses(deptCourses)
     }
 
-    return loadingWrap(fetchCourseInfo);
+    return loadingWrap(fetchCourseInfo)
   }, [setCourses])
 
   const onCourseSelected = (/* courseId */) => {

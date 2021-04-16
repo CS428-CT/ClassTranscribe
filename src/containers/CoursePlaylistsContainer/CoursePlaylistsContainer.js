@@ -9,7 +9,7 @@ import { useLoadingWrap } from '../../hooks/useLoadingWrap'
 
 const CoursePlaylistsContainer = ({ courseId, navigation }) => {
   const [playlists, setPlaylists] = useState([])
-  const loadingWrap = useLoadingWrap();
+  const loadingWrap = useLoadingWrap()
 
   useEffect(() => {
     const fetchPlaylists = async () => {
@@ -20,7 +20,7 @@ const CoursePlaylistsContainer = ({ courseId, navigation }) => {
       }
     }
 
-    return loadingWrap(fetchPlaylists);
+    return loadingWrap(fetchPlaylists)
   }, [courseId, setPlaylists])
 
   const onPlaylistSelected = (playlistId) => {

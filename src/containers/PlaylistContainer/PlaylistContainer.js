@@ -5,12 +5,11 @@ import { ListItem } from 'react-native-elements'
 import { TouchableNativeFeedback } from 'react-native-gesture-handler'
 import { getVideosByPlaylist } from '../../api/playlists'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
-import { useLoadingIndicator } from '../../hooks/useLoadingIndicator'
 import { useLoadingWrap } from '../../hooks/useLoadingWrap'
 
 const PlaylistContainer = ({ navigation, playlistId }) => {
   const [videos, setVideos] = useState([])
-  const loadingWrap = useLoadingWrap();
+  const loadingWrap = useLoadingWrap()
 
   useEffect(() => {
     const fetchVideos = async () => {

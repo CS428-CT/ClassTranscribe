@@ -16,7 +16,7 @@ import { useLoadingWrap } from '../../hooks/useLoadingWrap'
  */
 const Home = ({ navigation }) => {
   const currentUser = getCurrentAuthenticatedUser()
-  const loadingWrap = useLoadingWrap();
+  const loadingWrap = useLoadingWrap()
   let universityId = currentUser.universityId
 
   /**

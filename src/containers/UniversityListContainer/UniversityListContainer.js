@@ -14,7 +14,7 @@ import { useLoadingWrap } from '../../hooks/useLoadingWrap'
  */
 const UniversityListContainer = ({ navigation }) => {
   const [universities, setUniversities] = useState([])
-  const loadingWrap = useLoadingWrap();
+  const loadingWrap = useLoadingWrap()
 
   useEffect(() => {
     const fetchUniversityInfo = async () => {
