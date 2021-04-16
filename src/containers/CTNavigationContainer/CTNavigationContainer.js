@@ -116,22 +116,22 @@ const CTNavigationContainer = () => {
     <NavigationContainer>
       <Tab.Navigator>
         <Tab.Screen
-          name="Home"
-          component={HomeNavigator}
+          name="Course"
+          component={CourseNavigator}
           options={{
-            tabBarLabel: 'Home',
+            tabBarLabel: 'Courses',
             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="home" color={color} size={size} />
+              <MaterialCommunityIcons name="school" color={color} size={size} />
             ),
           }}
         />
         <Tab.Screen
-          name="Course"
-          component={CourseNavigator}
+          name="Home"
+          component={HomeNavigator}
           options={{
-            tabBarLabel: 'Course',
+            tabBarLabel: 'Starred courses',
             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="school" color={color} size={size} />
+              <MaterialCommunityIcons name="star" color={color} size={size} />
             ),
           }}
         />
