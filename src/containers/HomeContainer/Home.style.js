@@ -18,19 +18,14 @@ const HomeStyle = StyleSheet.create({
 
   dropdown: {
     flex: 0, 
-    width: '95%',
+    width: '98%',
     backgroundColor: '#FFF',
     borderRadius: 5,
     borderColor: '#333',
-    borderWidth: 0.5,
+    borderWidth: 0.2,
     overflow: 'hidden',
   },
 
-  // dropdown: {
-  //   flex: 0, 
-  //   width: '100%',
-  //   zIndex: 2,
-  // },
 
   noCourses: {
     flex: 1,
