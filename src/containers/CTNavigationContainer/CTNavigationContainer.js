@@ -14,7 +14,6 @@ import DownloadContainer from '../DownloadContainer/DownloadContainer'
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
 
-
 /**
  * Wraps the Home container so that it can
  * receive the proper props
@@ -43,7 +42,7 @@ const PlaylistView = ({ navigation, route }) => {
  * Wraps the VideoContainer so that it can
  * receive the proper props
  */
- const VideoView = ({ route }) => {
+const VideoView = ({ route }) => {
   return (
     <VideoContainer
       videos={route.params.videos}
@@ -61,14 +60,17 @@ const DownloadView = ({ navigation }) => {
   return <DownloadContainer navigation={navigation} />
 }
 
-
 /**
  * The navigator of the home tab. Contains a stack navigator.
  */
- const HomeNavigator = () => {
+const HomeNavigator = () => {
   return (
     <Stack.Navigator initialRouteName={STACK_SCREENS.HOME}>
-      <Stack.Screen name={STACK_SCREENS.HOME} component={HomeView} initialParams={{'starred': true}} />
+      <Stack.Screen
+        name={STACK_SCREENS.HOME}
+        component={HomeView}
+        initialParams={{ starred: true }}
+      />
       <Stack.Screen name={STACK_SCREENS.COURSE_PLAYLISTS} component={CoursePlaylistsView} />
       <Stack.Screen name={STACK_SCREENS.PLAYLIST} component={PlaylistView} />
       <Stack.Screen name={STACK_SCREENS.VIDEO} component={VideoView} />
@@ -77,14 +79,17 @@ const DownloadView = ({ navigation }) => {
   )
 }
 
-
 /**
  * The navigator of the course tab. Contains a stack navigator.
  */
 const CourseNavigator = () => {
   return (
     <Stack.Navigator initialRouteName={STACK_SCREENS.HOME}>
-      <Stack.Screen name={STACK_SCREENS.HOME} component={HomeView} initialParams={{'starred': false}} />
+      <Stack.Screen
+        name={STACK_SCREENS.HOME}
+        component={HomeView}
+        initialParams={{ starred: false }}
+      />
       <Stack.Screen name={STACK_SCREENS.COURSE_PLAYLISTS} component={CoursePlaylistsView} />
       <Stack.Screen name={STACK_SCREENS.PLAYLIST} component={PlaylistView} />
       <Stack.Screen name={STACK_SCREENS.VIDEO} component={VideoView} />
@@ -104,7 +109,6 @@ const DownloadNavigator = () => {
     </Stack.Navigator>
   )
 }
-
 
 /**
  * This is the root navigator for the entire application.

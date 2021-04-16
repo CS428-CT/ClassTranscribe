@@ -36,7 +36,7 @@ const Home = ({ starred, navigation }) => {
   const [courses, setCourses] = useState([])
   useEffect(() => {
     const fetchCourseInfo = async () => {
-      var offerings
+      let offerings
       if (starred) {
         offerings = await getStarredOfferingsData()
       } else {
@@ -129,12 +129,11 @@ const Home = ({ starred, navigation }) => {
    * Renders all of the users' courses into a FlatList
    */
   const renderStarredCourses = () => {
-    if (courses.length == 0) { 
+    if (courses.length === 0) {
       if (starred) {
-        return (<Text style={styles.noCourses}>{ NO_STARRED_COURSES }</Text>) 
-      } else {
-        return (<Text style={styles.noCourses}>{ NO_COURSES }</Text>) 
+        return <Text style={styles.noCourses}>{NO_STARRED_COURSES}</Text>
       }
+      return <Text style={styles.noCourses}>{NO_COURSES}</Text>
     }
 
     return (
@@ -159,6 +158,7 @@ Home.propTypes = {
   navigation: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  starred: PropTypes.string.isRequired,
 }
 
 export default Home

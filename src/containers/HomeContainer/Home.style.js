@@ -17,7 +17,7 @@ const HomeStyle = StyleSheet.create({
   },
 
   dropdown: {
-    flex: 0, 
+    flex: 0,
     width: '98%',
     backgroundColor: '#FFF',
     borderRadius: 5,
@@ -26,13 +26,12 @@ const HomeStyle = StyleSheet.create({
     overflow: 'hidden',
   },
 
-
   noCourses: {
     flex: 1,
     justifyContent: 'center',
     textAlignVertical: 'center',
     fontSize: 20,
-  }
+  },
 })
 
 export default HomeStyle
