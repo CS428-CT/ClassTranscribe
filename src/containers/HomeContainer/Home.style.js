@@ -16,6 +16,22 @@ const HomeStyle = StyleSheet.create({
     marginTop: '3%',
   },
 
+  dropdown: {
+    flex: 0, 
+    width: '95%',
+    backgroundColor: '#FFF',
+    borderRadius: 5,
+    borderColor: '#333',
+    borderWidth: 0.5,
+    overflow: 'hidden',
+  },
+
+  // dropdown: {
+  //   flex: 0, 
+  //   width: '100%',
+  //   zIndex: 2,
+  // },
+
   noCourses: {
     flex: 1,
     justifyContent: 'center',

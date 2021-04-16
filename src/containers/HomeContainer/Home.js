@@ -113,14 +113,15 @@ const Home = ({ starred, navigation }) => {
     }
 
     return (
-      <Picker
-        testID="picker"
-        style={{ flex: 0, width: '100%' }}
-        selectedValue={university}
-        onValueChange={(newUniversityId) => onUniversitySelected(newUniversityId)}
-      >
-        {universityItems}
-      </Picker>
+      <View style={styles.dropdown}>
+        <Picker
+          testID="picker"
+          selectedValue={university}
+          onValueChange={(newUniversityId) => onUniversitySelected(newUniversityId)}
+        >
+          {universityItems}
+        </Picker>
+      </View>
     )
   }
 
