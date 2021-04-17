@@ -4,21 +4,24 @@ const HomeStyle = StyleSheet.create({
   cardContainer: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
     flexDirection: 'row',
     width: '98%',
   },
 
   viewStyle: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
     marginTop: '3%',
   },
 
-  input: {
-      height: 40,
-      margin: 12,
+  search: {
+      width: '92%',
+      marginTop: '2%',
+      marginBottom: '2%',
+      justifyContent: 'space-between',
+      paddingVertical: 4,
+      paddingHorizontal: 4,
+      borderRadius: 5,
   }
 })
 

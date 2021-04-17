@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import { TouchableNativeFeedback, FlatList, View, TextInput, Text } from 'react-native'
+import { TouchableNativeFeedback, FlatList, View, Text } from 'react-native'
 import { getOfferingsData, getStarredOfferings } from '../../api/offerings'
-import { getCurrentAuthenticatedUser } from '../../api/auth'
 import CourseCard from '../../components/Cards/CourseCard'
 import styles from './SearchContainer.style'
+import { useLoadingWrap } from '../../hooks/useLoadingWrap'
+import { NO_COURSES } from '../../constants'
+import { TextInput } from 'react-native-paper'
 
 export default SearchContainer = () => {
-  const currentUser = getCurrentAuthenticatedUser()
   const [currentQuery, setCurrentQuery] = useState("")
+  const [filteredCourses, setFilteredCourses] = useState([]);
+  const [allCourses, setAllCourses] = useState([]);
+  const [isSearchDisabled, setSearchDisabled] = useState(true);
+  const loadingWrap = useLoadingWrap();
 
   /**
    * Helper function to filter courses by the current query
@@ -15,18 +20,41 @@ export default SearchContainer = () => {
    */
   const filterCourses = (offerings) => {
     const newOfferings = []
-    return offerings
+
+    offerings.forEach((offering) => {
+      const course = offering.courses[0] || {};
+      const departmentAcronym = course.departmentAcronym
+      const courseNumber = course?.courseNumber;
+      const courseName = offering?.offering?.courseName
+      const courseDescription = offering?.offering?.description
+      const searchString = `${departmentAcronym} ${courseNumber} ${courseName} ${courseDescription}`
+
+      console.log(searchString)
+      if (searchString.toUpperCase().includes(currentQuery.toUpperCase()))
+        newOfferings.push(offering)
+
+    })
+
+    return newOfferings
   }
 
-  const [courses, setCourses] = useState([])
   useEffect(() => {
     const fetchCourseInfo = async () => {
+      setAllCourses([])
+      setFilteredCourses([])
+      setSearchDisabled(true);
       const offerings = await getOfferingsData()
-      const studentCourses = filterCourses(offerings)
-      setCourses(studentCourses)
+      setAllCourses(offerings)
+      setFilteredCourses(offerings)
+      setSearchDisabled(false);
     }
-    fetchCourseInfo()
-  }, [setCourses])
+    return loadingWrap(fetchCourseInfo);
+  }, [setAllCourses])
+
+  const onQueryChange = (text) => {
+    setCurrentQuery(text);
+    setFilteredCourses(filterCourses(allCourses))
+  }
 
   /**
    * Renders a single course in the course list.
@@ -42,7 +70,7 @@ export default SearchContainer = () => {
     const isStarred = courseId in getStarredOfferings()
 
     return (
-      <View key={courseId}>
+      <View>
         <TouchableNativeFeedback onPress={() => onCourseSelected(courseId)}>
           <View style={styles.cardContainer}>
             <CourseCard
@@ -61,35 +89,34 @@ export default SearchContainer = () => {
 
   const renderSearchBar = () => {
     return (
-        <View>
-            <Text>Hello Test Test</Text>
-            <TextInput />
-        </View>
+      <TextInput style={styles.search} disabled={isSearchDisabled} onChangeText={onQueryChange} value={currentQuery} placeholder="Search for a Course" mode='outlined' />
     )
   }
 
-  /**
-   * Renders all of the users' courses into a FlatList
-   */
-  const renderStarredCourses = () => {
-    if (courses == null) return null
+  const renderCourses = () => {
+    if (filteredCourses.length === 0) {
+      return (
+        <Text testID="courseList" style={styles.noCourses}>
+          {NO_COURSES}
+        </Text>
+      )
+    }
 
     return (
       <FlatList
         testID="courseList"
-        keyExtractor={(idxCourses, index) => index.toString()}
-        data={courses}
+        keyExtractor={(course) => course.offering.id}
+        data={filteredCourses}
         renderItem={renderCourseItem}
       />
     )
   }
 
+
   return (
-    <View>
+    <View style={styles.viewStyle}>
         {renderSearchBar()}
-        <View style={styles.viewStyle}>
-            {renderStarredCourses()}
-        </View>
+        {renderCourses()}
     </View>
   )
 }
