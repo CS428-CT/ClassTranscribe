@@ -8,9 +8,15 @@ import { PLAYLISTS_BY_OFFERING_RESPONSE } from '../mock_responses/mock-playlists
 import { format } from '../../src/utils/string'
 import CoursePlaylistsContainer from '../../src/containers/CoursePlaylistsContainer/CoursePlaylistsContainer'
 import { STACK_SCREENS } from '../../src/containers/CTNavigationContainer'
+import { useLoadingIndicator } from '../../src/hooks/useLoadingIndicator'
 
-const mock = new MockAdapter(axios)
 const offeringId = 'ac5b1727-629c-443b-8c1a-cc1bd541af6a'
+const mock = new MockAdapter(axios)
+
+jest.mock('../../src/hooks/useLoadingIndicator')
+const mockHook = jest.fn()
+useLoadingIndicator.mockReturnValue(mockHook)
+
 const assertNoButtonsRendered = async () => {
   const { queryAllByA11yRole } = render(<CoursePlaylistsContainer courseId={offeringId} />)
   const playlists = await waitFor(() => queryAllByA11yRole('button'))
@@ -94,5 +100,15 @@ describe('Check playlists navigation', () => {
     expect(mockNavigator.push).toHaveBeenCalledWith(STACK_SCREENS.PLAYLIST, {
       playlistId: expectedPlaylistId,
     })
+  })
+
+  test('Check that loading indicator renders', async () => {
+    mock
+      .onGet(`${format(ENDPOINTS.PLAYLISTS_BY_OFFERING, offeringId)}`)
+      .reply(HTTP_STATUS_CODES.OK, [PLAYLISTS_BY_OFFERING_RESPONSE[0]])
+
+    render(<CoursePlaylistsContainer courseId={offeringId} />)
+
+    await waitFor(() => expect(mockHook).toHaveBeenCalled())
   })
 })

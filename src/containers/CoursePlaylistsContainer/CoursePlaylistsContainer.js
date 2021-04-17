@@ -5,19 +5,22 @@ import { ListItem } from 'react-native-elements'
 import { TouchableNativeFeedback } from 'react-native-gesture-handler'
 import { getPlaylistsByOffering } from '../../api/playlists'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
+import { useLoadingWrap } from '../../hooks/useLoadingWrap'
 
 const CoursePlaylistsContainer = ({ courseId, navigation }) => {
   const [playlists, setPlaylists] = useState([])
+  const loadingWrap = useLoadingWrap()
 
   useEffect(() => {
     const fetchPlaylists = async () => {
       let response = await getPlaylistsByOffering(courseId)
-      if (!response) return
-      response = response.sort((a, b) => a.index - b.index)
-      setPlaylists(response)
+      if (response) {
+        response = response.sort((a, b) => a.index - b.index)
+        setPlaylists(response)
+      }
     }
 
-    fetchPlaylists()
+    return loadingWrap(fetchPlaylists)
   }, [courseId, setPlaylists])
 
   const onPlaylistSelected = (playlistId) => {
