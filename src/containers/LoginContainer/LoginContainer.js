@@ -18,14 +18,14 @@ const LoginContainer = ({ onAuthLevelChange }) => {
    * the token. @onBrowerMessage handles the rest.
    */
   const injectedJavascript = `
-    const getToken = () => {
+    function getToken() {
       const userInfoString = localStorage["userInfo"];
       if (!userInfoString) {
         return setTimeout(getToken, 500);
       }
 
       const userInfo = JSON.parse(userInfoString);
-      if (!userInfo?.exp) {
+      if (!userInfo || !userInfo.exp) {
         return setTimeout(getToken, 500);
       }
 
