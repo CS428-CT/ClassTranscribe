@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Text, View } from 'react-native'
 import PropTypes from 'prop-types'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { truncateString } from '../../utils/string'
 import styles from './CourseCard.style'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { addStarredOferring, removeStarredOffering } from '../../api/offerings'
 
 const MAX_DESCRIPTION_LENGTH = 100
@@ -19,8 +19,15 @@ const MAX_DESCRIPTION_LENGTH = 100
  * @returns
  */
 
-const CourseCard = ({ departmentAcronym, offeringId, courseNumber, courseName, courseDescription = '', isCourseStarred }) => {
-  const [isStarred, setIsStarred] = useState(isCourseStarred);
+const CourseCard = ({
+  departmentAcronym,
+  offeringId,
+  courseNumber,
+  courseName,
+  courseDescription = '',
+  isCourseStarred,
+}) => {
+  const [isStarred, setIsStarred] = useState(isCourseStarred)
 
   const getCourseTitle = () => {
     return `${departmentAcronym} ${courseNumber}`
@@ -48,8 +55,7 @@ const CourseCard = ({ departmentAcronym, offeringId, courseNumber, courseName, c
   }
 
   const getFavoriteButton = () => {
-    if (isStarred)
-      return <MaterialCommunityIcons name="star" size={30} onPress={onCourseStarred} />
+    if (isStarred) return <MaterialCommunityIcons name="star" size={30} onPress={onCourseStarred} />
     return <MaterialCommunityIcons name="star-outline" size={30} onPress={onCourseStarred} />
   }
 
@@ -57,7 +63,7 @@ const CourseCard = ({ departmentAcronym, offeringId, courseNumber, courseName, c
     <View style={styles.card}>
       <View style={styles.cardHeader}>
         <Text style={styles.courseTitle}>{getCourseTitle()}</Text>
-        { getFavoriteButton() }
+        {getFavoriteButton()}
       </View>
 
       <Text style={styles.courseName}>{getCourseName()}</Text>

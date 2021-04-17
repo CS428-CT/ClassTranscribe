@@ -21,7 +21,7 @@ const CourseCardStyle = StyleSheet.create({
   cardHeader: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
 
   courseTitle: {

@@ -81,25 +81,6 @@ const HomeNavigator = () => {
 }
 
 /**
- * The navigator of the course tab. Contains a stack navigator.
- */
-const CourseNavigator = () => {
-  return (
-    <Stack.Navigator initialRouteName={STACK_SCREENS.HOME}>
-      <Stack.Screen
-        name={STACK_SCREENS.HOME}
-        component={HomeView}
-        initialParams={{ starred: false }}
-      />
-      <Stack.Screen name={STACK_SCREENS.COURSE_PLAYLISTS} component={CoursePlaylistsView} />
-      <Stack.Screen name={STACK_SCREENS.PLAYLIST} component={PlaylistView} />
-      <Stack.Screen name={STACK_SCREENS.VIDEO} component={VideoView} />
-      <Stack.Screen name={STACK_SCREENS.DOWNLOAD} component={DownloadView} />
-    </Stack.Navigator>
-  )
-}
-
-/**
  * The navigator for the download tab. Contains a stack navigator.
  */
 const DownloadNavigator = () => {

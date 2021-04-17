@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { TouchableNativeFeedback, FlatList, View, Text } from 'react-native'
+import { TextInput } from 'react-native-paper'
 import { getOfferingsData, getStarredOfferings } from '../../api/offerings'
 import CourseCard from '../../components/Cards/CourseCard'
 import styles from './SearchContainer.style'
 import { useLoadingWrap } from '../../hooks/useLoadingWrap'
 import { NO_COURSES } from '../../constants'
-import { TextInput } from 'react-native-paper'
 
-export default SearchContainer = () => {
-  const [currentQuery, setCurrentQuery] = useState("")
-  const [filteredCourses, setFilteredCourses] = useState([]);
-  const [allCourses, setAllCourses] = useState([]);
-  const [isSearchDisabled, setSearchDisabled] = useState(true);
-  const loadingWrap = useLoadingWrap();
+const SearchContainer = () => {
+  const [currentQuery, setCurrentQuery] = useState('')
+  const [filteredCourses, setFilteredCourses] = useState([])
+  const [allCourses, setAllCourses] = useState([])
+  const [isSearchDisabled, setSearchDisabled] = useState(true)
+  const loadingWrap = useLoadingWrap()
 
   /**
    * Helper function to filter courses by the current query
@@ -22,17 +22,15 @@ export default SearchContainer = () => {
     const newOfferings = []
 
     offerings.forEach((offering) => {
-      const course = offering.courses[0] || {};
+      const course = offering.courses[0] || {}
       const departmentAcronym = course.departmentAcronym
-      const courseNumber = course?.courseNumber;
+      const courseNumber = course?.courseNumber
       const courseName = offering?.offering?.courseName
       const courseDescription = offering?.offering?.description
       const searchString = `${departmentAcronym} ${courseNumber} ${courseName} ${courseDescription}`
 
-      console.log(searchString)
       if (searchString.toUpperCase().includes(currentQuery.toUpperCase()))
         newOfferings.push(offering)
-
     })
 
     return newOfferings
@@ -42,17 +40,17 @@ export default SearchContainer = () => {
     const fetchCourseInfo = async () => {
       setAllCourses([])
       setFilteredCourses([])
-      setSearchDisabled(true);
+      setSearchDisabled(true)
       const offerings = await getOfferingsData()
       setAllCourses(offerings)
       setFilteredCourses(offerings)
-      setSearchDisabled(false);
+      setSearchDisabled(false)
     }
-    return loadingWrap(fetchCourseInfo);
+    return loadingWrap(fetchCourseInfo)
   }, [setAllCourses])
 
   const onQueryChange = (text) => {
-    setCurrentQuery(text);
+    setCurrentQuery(text)
     setFilteredCourses(filterCourses(allCourses))
   }
 
@@ -71,7 +69,7 @@ export default SearchContainer = () => {
 
     return (
       <View>
-        <TouchableNativeFeedback onPress={() => onCourseSelected(courseId)}>
+        <TouchableNativeFeedback>
           <View style={styles.cardContainer}>
             <CourseCard
               offeringId={courseId}
@@ -89,7 +87,14 @@ export default SearchContainer = () => {
 
   const renderSearchBar = () => {
     return (
-      <TextInput style={styles.search} disabled={isSearchDisabled} onChangeText={onQueryChange} value={currentQuery} placeholder="Search for a Course" mode='outlined' />
+      <TextInput
+        style={styles.search}
+        disabled={isSearchDisabled}
+        onChangeText={onQueryChange}
+        value={currentQuery}
+        placeholder="Search for a Course"
+        mode="outlined"
+      />
     )
   }
 
@@ -112,11 +117,12 @@ export default SearchContainer = () => {
     )
   }
 
-
   return (
     <View style={styles.viewStyle}>
-        {renderSearchBar()}
-        {renderCourses()}
+      {renderSearchBar()}
+      {renderCourses()}
     </View>
   )
 }
+
+export default SearchContainer
