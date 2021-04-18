@@ -7,6 +7,7 @@ import {
   getOfferingData,
   getStarredOfferings,
   getStarredOfferingsData,
+  removeStarredOffering,
 } from '../../src/api/offerings'
 import { HTTP_STATUS_CODES } from '../../src/api'
 import {
@@ -121,6 +122,8 @@ describe('Get starred offerings data', () => {
 describe('Modify starred offerings', () => {
   beforeEach(() => {
     mock.onGet(`${ENDPOINTS.USER_METADATA}`).reply(HTTP_STATUS_CODES.OK, METADATA_RESPONSE)
+    mock.onPost(`${ENDPOINTS.POST_USER_METADATA}`).reply(HTTP_STATUS_CODES.OK)
+    setAuthToken(MOCK_AUTH_TOKEN)
   })
 
   afterEach(async () => {
@@ -128,9 +131,6 @@ describe('Modify starred offerings', () => {
   })
 
   test('Add offering', async () => {
-    mock.onPost(`${ENDPOINTS.POST_USER_METADATA}`).reply(HTTP_STATUS_CODES.OK)
-    setAuthToken(MOCK_AUTH_TOKEN)
-
     const offeringToAdd = 'testOfferingId';
 
     await getUserMetadata()
@@ -139,6 +139,21 @@ describe('Modify starred offerings', () => {
     const updatedStarredOfferings = await getStarredOfferings()
 
     const expected = { [offeringToAdd]: 'starred', ...originalStarredOfferings}
+    expect(updatedStarredOfferings).toStrictEqual(expected)
+  })
+
+  test('Remove offering', async () => {
+    await getUserMetadata()
+    const originalStarredOfferings = await getStarredOfferings()
+
+    const toRemove = Object.keys(originalStarredOfferings)[0]
+
+    await removeStarredOffering(toRemove)
+    const updatedStarredOfferings = await getStarredOfferings()
+
+    const expected = originalStarredOfferings; 
+    delete expected[toRemove]
+
     expect(updatedStarredOfferings).toStrictEqual(expected)
   })
 })
