@@ -8,6 +8,7 @@ import {
 } from '../../src/api/auth'
 import { format } from '../../src/utils/string'
 import {
+  addStarredOferring,
   ENDPOINTS as OFFERING_ENDPOINTS,
   getOfferingData,
   getStarredOfferings,
@@ -118,5 +119,29 @@ describe('Get starred offerings data', () => {
 
     const starredOfferings = await getStarredOfferingsData()
     expect(starredOfferings).toStrictEqual([])
+  })
+})
+
+describe('Modify starred offerings', () => {
+  beforeEach(() => {
+    mock.onGet(`${AUTH_ENDPOINTS.USER_METADATA}`).reply(HTTP_STATUS_CODES.OK, METADATA_RESPONSE)
+  })
+
+  afterEach(async () => {
+    mock.reset()
+  })
+
+  test('Add offering', async () => {
+    // mock.onPost(`${AUTH}`)
+    setAuthToken(MOCK_AUTH_TOKEN)
+
+    const offeringToAdd = 'testOfferingId';
+
+    await getUserMetadata()
+    const originalStarredOfferings = await getStarredOfferings()
+    await addStarredOferring(offeringToAdd)
+    const updatedStarredOfferings = await getStarredOfferings()
+
+    expect(updatedStarredOfferings).toStrictEqual(originalStarredOfferings.concat(offeringToAdd))
   })
 })
