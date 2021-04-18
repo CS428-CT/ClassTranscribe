@@ -92,6 +92,7 @@ const SearchContainer = () => {
         disabled={isSearchDisabled}
         onChangeText={onQueryChange}
         value={currentQuery}
+        testID="searchBar"
         placeholder="Search for a Course"
         mode="outlined"
       />
