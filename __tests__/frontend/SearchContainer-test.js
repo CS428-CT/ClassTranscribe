@@ -8,7 +8,11 @@ import { format } from '../../src/utils/string'
 import { HTTP_STATUS_CODES } from '../../src/api'
 import { UNIVERSITY_RESPONSE } from '../mock_responses/mock-university-response'
 import Home from '../../src/containers/HomeContainer/Home'
-import { OFFERINGS_RESPONSE_1, OFFERINGS_RESPONSE_2, USER_OFFERINGS_RESPONSE } from '../mock_responses/mock-offerings-response'
+import {
+  OFFERINGS_RESPONSE_1,
+  OFFERINGS_RESPONSE_2,
+  USER_OFFERINGS_RESPONSE,
+} from '../mock_responses/mock-offerings-response'
 import { useLoadingIndicator } from '../../src/hooks/useLoadingIndicator'
 import SearchContainer from '../../src/containers/SearchContainer/SearchContainer'
 

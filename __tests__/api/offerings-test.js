@@ -131,14 +131,14 @@ describe('Modify starred offerings', () => {
   })
 
   test('Add offering', async () => {
-    const offeringToAdd = 'testOfferingId';
+    const offeringToAdd = 'testOfferingId'
 
     await getUserMetadata()
     const originalStarredOfferings = await getStarredOfferings()
     await addStarredOferring(offeringToAdd)
     const updatedStarredOfferings = await getStarredOfferings()
 
-    const expected = { [offeringToAdd]: 'starred', ...originalStarredOfferings}
+    const expected = { [offeringToAdd]: 'starred', ...originalStarredOfferings }
     expect(updatedStarredOfferings).toStrictEqual(expected)
   })
 
@@ -151,7 +151,7 @@ describe('Modify starred offerings', () => {
     await removeStarredOffering(toRemove)
     const updatedStarredOfferings = await getStarredOfferings()
 
-    const expected = originalStarredOfferings; 
+    const expected = originalStarredOfferings
     delete expected[toRemove]
 
     expect(updatedStarredOfferings).toStrictEqual(expected)
