@@ -138,6 +138,7 @@ describe('Modify starred offerings', () => {
     await addStarredOferring(offeringToAdd)
     const updatedStarredOfferings = await getStarredOfferings()
 
-    expect(updatedStarredOfferings).toStrictEqual(originalStarredOfferings.concat(offeringToAdd))
+    const expected = { [offeringToAdd]: 'starred', ...originalStarredOfferings}
+    expect(updatedStarredOfferings).toStrictEqual(expected)
   })
 })
