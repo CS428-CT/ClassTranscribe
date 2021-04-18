@@ -3,6 +3,229 @@ export const STARRED_OFFERINGS_RESPONSE = {
   '2c7a83cc-e2f3-493a-ae65-33f9c998e8ed': 'starred',
 }
 
+export const USER_OFFERINGS_RESPONSE = [
+    {
+      "offering": {
+        "sectionName": "AL1",
+        "termId": "0001",
+        "accessType": 1,
+        "logEventsFlag": true,
+        "courseName": "Choose This One",
+        "description": "This is the main testing course for ClassTranscribe dev server. \n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        "jsonMetadata": null,
+        "visibility": 0,
+        "publishStatus": 0,
+        "id": "ac5b1727-629c-443b-8c1a-cc1bd541af6a"
+      },
+      "courses": [
+        {
+          "courseId": "test_course",
+          "courseName": null,
+          "courseNumber": "000",
+          "description": null,
+          "departmentId": "2001",
+          "departmentAcronym": "CS"
+        }
+      ],
+      "instructorIds": [
+        {
+          "firstName": "Test",
+          "lastName": "User",
+          "university": null,
+          "status": 0,
+          "metadata": null,
+          "id": "9",
+          "userName": null,
+          "normalizedUserName": null,
+          "email": "testuser999@illinois.edu",
+          "normalizedEmail": null,
+          "emailConfirmed": false,
+          "passwordHash": null,
+          "securityStamp": "4b8bcd3b-7f5f-466e-b9d0-f391f9753377",
+          "concurrencyStamp": "803b8596-e313-464e-9ac4-979dceb672cf",
+          "phoneNumber": null,
+          "phoneNumberConfirmed": false,
+          "twoFactorEnabled": false,
+          "lockoutEnd": null,
+          "lockoutEnabled": false,
+          "accessFailedCount": 0
+        },
+        {
+          "firstName": null,
+          "lastName": null,
+          "university": null,
+          "status": 0,
+          "metadata": null,
+          "id": "d47920c0-75a9-4d4b-85f5-42d68117b627",
+          "userName": null,
+          "normalizedUserName": null,
+          "email": "alice2020@illinois.edu",
+          "normalizedEmail": null,
+          "emailConfirmed": false,
+          "passwordHash": null,
+          "securityStamp": "30a3f863-35fc-4b53-bf03-df908474acf6",
+          "concurrencyStamp": "bb66d53a-b1fe-4c9b-9194-c50dc34fbffa",
+          "phoneNumber": null,
+          "phoneNumberConfirmed": false,
+          "twoFactorEnabled": false,
+          "lockoutEnd": null,
+          "lockoutEnabled": false,
+          "accessFailedCount": 0
+        },
+        {
+          "firstName": "Test",
+          "lastName": "User",
+          "university": null,
+          "status": 0,
+          "metadata": null,
+          "id": "99",
+          "userName": null,
+          "normalizedUserName": null,
+          "email": "testuser999@classtranscribe.com",
+          "normalizedEmail": null,
+          "emailConfirmed": false,
+          "passwordHash": null,
+          "securityStamp": "d35401ff-a673-4767-822b-89b70f8d5b22",
+          "concurrencyStamp": "a9988fef-287c-4daa-b12e-343053143e34",
+          "phoneNumber": null,
+          "phoneNumberConfirmed": false,
+          "twoFactorEnabled": false,
+          "lockoutEnd": null,
+          "lockoutEnabled": false,
+          "accessFailedCount": 0
+        },
+        {
+          "firstName": "Shawn",
+          "lastName": "Sui",
+          "university": null,
+          "status": 0,
+          "metadata": null,
+          "id": "a48a6727-c4fd-4c9c-b06a-721a19bb1e82",
+          "userName": null,
+          "normalizedUserName": null,
+          "email": "shawnsui1997@gmail.com",
+          "normalizedEmail": null,
+          "emailConfirmed": false,
+          "passwordHash": null,
+          "securityStamp": "a6b04fc0-aab7-489e-8516-5e2f6b37f844",
+          "concurrencyStamp": "d1ca67df-5492-46a1-84e5-d791aca531e4",
+          "phoneNumber": null,
+          "phoneNumberConfirmed": false,
+          "twoFactorEnabled": false,
+          "lockoutEnd": null,
+          "lockoutEnabled": false,
+          "accessFailedCount": 0
+        },
+        {
+          "firstName": null,
+          "lastName": null,
+          "university": null,
+          "status": 0,
+          "metadata": null,
+          "id": "d75e419e-7adc-49b0-8157-1a2893996a45",
+          "userName": null,
+          "normalizedUserName": null,
+          "email": "qwertyuio@123.com",
+          "normalizedEmail": null,
+          "emailConfirmed": false,
+          "passwordHash": null,
+          "securityStamp": "e6239e4c-5cac-431a-bef4-834191e66a6b",
+          "concurrencyStamp": "c52d3247-8e17-4ec0-8dcf-44ccf3d22c12",
+          "phoneNumber": null,
+          "phoneNumberConfirmed": false,
+          "twoFactorEnabled": false,
+          "lockoutEnd": null,
+          "lockoutEnabled": false,
+          "accessFailedCount": 0
+        }
+      ],
+      "term": {
+        "name": "Test Term",
+        "startDate": "2020-01-15T23:31:27.537323",
+        "endDate": "2020-04-15T23:31:27.537358",
+        "universityId": "1001",
+        "id": "0001"
+      }
+    },
+    {
+      "offering": {
+        "sectionName": "AL1",
+        "termId": "0001",
+        "accessType": 1,
+        "logEventsFlag": false,
+        "courseName": "System Programming",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut consequat tellus eget lectus gravida gravida a ut urna. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Duis accumsan malesuada nunc, ac dictum turpis pellentesque sit amet. Donec lobortis, enim quis bibendum feugiat, sapien augue consequat nunc, quis sollicitudin ante urna in tellus. Fusce elementum nibh porttitor est sollicitudin euismod. Vestibulum rutrum facilisis tellus et accumsan. Aenean vitae mollis tortor. Duis eu vestibulum erat. Phasellus feugiat feugiat risus quis porta.\n\nVestibulum quis pretium enim, eu ultricies arcu. Phasellus volutpat eget ante at efficitur. Praesent vitae dapibus quam. Cras id turpis eu ipsum laoreet pretium id vel tellus. Vivamus pellentesque lorem ligula, ut placerat leo eleifend id. Aliquam tempor velit in massa lobortis laoreet. Vivamus sodales hendrerit neque sed laoreet. Phasellus et quam sodales, pulvinar tellus sed, mollis nisl. Interdum et malesuada fames ac ante ipsum primis in faucibus.\n\nDuis bibendum pretium justo, at iaculis odio fringilla sed. Proin eget magna et odio dictum posuere sed nec nunc. Morbi scelerisque, ante sit amet mollis facilisis, ligula nibh mollis massa, a rutrum leo mi eu sem. Aenean luctus posuere ligula. Integer elementum blandit purus vitae commodo. Nullam ultricies congue ante, vel rutrum libero malesuada eget. Aliquam volutpat cursus tempus. Aliquam ut ligula a sem posuere laoreet ac sed sapien. Donec lobortis dolor id tristique varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque id eros vitae ipsum ultricies luctus. Phasellus vehicula justo lacus, vitae scelerisque nibh pharetra a. Nullam dapibus vel quam pulvinar semper. Mauris fermentum, felis in aliquet pellentesque, augue lacus ultrices nulla, vitae luctus tellus lorem ut sapien. Proin ante arcu, vulputate eget dictum non, vestibulum sed sapien.\n\nNunc euismod diam eget quam convallis, vel condimentum velit rutrum. Nullam convallis ultrices ligula vitae tincidunt. Suspendisse euismod, ante ac ultrices aliquam, erat ex egestas dui, ut gravida eros metus a augue. Vestibulum euismod luctus consequat. Duis hendrerit enim quis nulla aliquet pellentesque facilisis vel tortor. Praesent pulvinar ultricies risus, in fermentum mauris ornare nec. Etiam ut ultrices nunc, sit amet fringilla leo. Curabitur vulputate nec erat at placerat. Nullam nulla dui, ornare pretium mauris eget, finibus congue elit. Nulla ut nunc vitae mauris faucibus luctus. Ut at lorem eu mi bibendum luctus quis non justo. Nam cursus, ex eget lobortis ullamcorper, turpis purus accumsan metus, in finibus metus enim a ligula.\n\nDuis id egestas dolor, at bibendum tortor. Aenean non est imperdiet dolor consequat scelerisque. Integer in leo mollis, condimentum sem non, venenatis neque. Suspendisse vitae lectus at metus vulputate rutrum id in lorem. Vestibulum facilisis maximus felis, vel laoreet odio volutpat vel. Morbi vitae tincidunt dui. Phasellus nec ultrices nulla. Nam ultrices nulla ut lorem iaculis lacinia. Mauris in sem mi. Donec laoreet faucibus ligula non aliquam. Pellentesque et tempus magna. Duis ac rhoncus dui. In a maximus nisl, sit amet vulputate ligula. Pellentesque tempus blandit quam, sit amet vestibulum odio ornare in. Sed porta scelerisque mi, non sodales augue dapibus ut.",
+        "jsonMetadata": null,
+        "visibility": 0,
+        "publishStatus": 0,
+        "id": "2c7a83cc-e2f3-493a-ae65-33f9c998e8ed"
+      },
+      "courses": [
+        {
+          "courseId": "5c8f4dec-2eb7-41b7-84e9-14847fa6d8a1",
+          "courseName": null,
+          "courseNumber": "241",
+          "description": null,
+          "departmentId": "2001",
+          "departmentAcronym": "CS"
+        }
+      ],
+      "instructorIds": [
+        {
+          "firstName": "Test",
+          "lastName": "User",
+          "university": null,
+          "status": 0,
+          "metadata": null,
+          "id": "9",
+          "userName": null,
+          "normalizedUserName": null,
+          "email": "testuser999@illinois.edu",
+          "normalizedEmail": null,
+          "emailConfirmed": false,
+          "passwordHash": null,
+          "securityStamp": "31cc6045-1939-49e9-967c-7816fbec8029",
+          "concurrencyStamp": "464d85aa-adbc-4267-b378-960125751c05",
+          "phoneNumber": null,
+          "phoneNumberConfirmed": false,
+          "twoFactorEnabled": false,
+          "lockoutEnd": null,
+          "lockoutEnabled": false,
+          "accessFailedCount": 0
+        },
+        {
+          "firstName": "Test",
+          "lastName": "User",
+          "university": null,
+          "status": 0,
+          "metadata": null,
+          "id": "99",
+          "userName": null,
+          "normalizedUserName": null,
+          "email": "testuser999@classtranscribe.com",
+          "normalizedEmail": null,
+          "emailConfirmed": false,
+          "passwordHash": null,
+          "securityStamp": "7f55bc30-8091-4366-8390-d76c51c49302",
+          "concurrencyStamp": "448f6e1d-54a9-4a27-bef9-da3614cab1aa",
+          "phoneNumber": null,
+          "phoneNumberConfirmed": false,
+          "twoFactorEnabled": false,
+          "lockoutEnd": null,
+          "lockoutEnabled": false,
+          "accessFailedCount": 0
+        }
+      ],
+      "term": {
+        "name": "Test Term",
+        "startDate": "2020-01-15T23:31:27.537323",
+        "endDate": "2020-04-15T23:31:27.537358",
+        "universityId": "1001",
+        "id": "0001"
+      }
+    }
+  ]
+
 export const OFFERINGS_RESPONSE_1 = {
   offering: {
     sectionName: 'AL1',
@@ -160,7 +383,7 @@ export const OFFERINGS_RESPONSE_2 = {
     jsonMetadata: null,
     visibility: 0,
     publishStatus: 0,
-    id: 'ac5b1727-629c-443b-8c1a-cc1bd541af6a',
+    id: '2c7a83cc-e2f3-493a-ae65-33f9c998e8ed',
   },
   courses: [
     {

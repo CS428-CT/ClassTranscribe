@@ -78,6 +78,7 @@ const SearchContainer = () => {
               courseName={courseName}
               courseDescription={courseDescription}
               isCourseStarred={isStarred}
+              testID="card"
             />
           </View>
         </TouchableNativeFeedback>
