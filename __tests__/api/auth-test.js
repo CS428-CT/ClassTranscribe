@@ -2,12 +2,12 @@ import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import {
   getCurrentAuthenticatedUser,
-  ENDPOINTS,
   isUserAuthenticated,
   signOutUser,
   setAuthToken,
   getUserMetadata,
 } from '../../src/api/auth'
+import { ENDPOINTS } from '../../src/api/api-requests'
 import { HTTP_STATUS_CODES } from '../../src/api'
 import { METADATA_RESPONSE } from '../mock_responses/mock-auth-response'
 

@@ -1,12 +1,6 @@
-import { API_BASE_URL } from '../constants'
 import { format } from '../utils/string'
 import { getCurrentAuthenticatedUser, isUserAuthenticated } from './auth'
-import { apiCall } from './api-requests'
-
-export const ENDPOINTS = {
-  OFFERING: `${API_BASE_URL}Offerings/{0}`,
-  OFFERINGBYSTUDENT: `${API_BASE_URL}Offerings/ByStudent`,
-}
+import { apiCall, ENDPOINTS } from './api-requests'
 
 /**
  * Gets the data for an offering from the CT API

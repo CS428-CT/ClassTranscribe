@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { HTTP_STATUS_CODES } from '.'
-import { API_BASE_URL, REFERRER_URL } from '../constants'
+import { REFERRER_URL } from '../constants'
+import { ENDPOINTS } from './api-requests'
 
 /**
  * Interceptor signs every request with the token of the user.
@@ -27,10 +28,6 @@ axios.interceptors.request.use(
  *     - userId: ID of user
  */
 let currentAuthenticatedUser = null
-
-export const ENDPOINTS = {
-  USER_METADATA: `${API_BASE_URL}Account/GetUserMetadata/GetUserMetadata`,
-}
 
 export const getUserMetadata = async () => {
   if (!isUserAuthenticated()) return
