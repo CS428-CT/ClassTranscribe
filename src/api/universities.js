@@ -1,12 +1,5 @@
-import { API_BASE_URL } from '../constants'
 import { format } from '../utils/string'
-import { apiCall } from './api-requests'
-
-export const ENDPOINTS = {
-  UNIVERSITIES: `${API_BASE_URL}Universities/`,
-  DEPARTMENTS: `${API_BASE_URL}Departments/ByUniversity/{0}`,
-  COURSES: `${API_BASE_URL}Courses/ByDepartment/{0}`,
-}
+import { apiCall, ENDPOINTS } from './api-requests'
 
 /**
  * Gets the list of the available universities

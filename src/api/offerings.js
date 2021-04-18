@@ -1,15 +1,6 @@
-import axios from 'axios'
-import { API_BASE_URL } from '../constants'
 import { format } from '../utils/string'
 import { getCurrentAuthenticatedUser, isUserAuthenticated } from './auth'
-import { apiCall } from './api-requests'
-import { HTTP_STATUS_CODES } from '.'
-
-export const ENDPOINTS = {
-  OFFERING: `${API_BASE_URL}Offerings/{0}`,
-  OFFERINGBYSTUDENT: `${API_BASE_URL}Offerings/ByStudent`,
-  POST_USER_METADATA: `${API_BASE_URL}Account/PostUserMetadata/PostUserMetadata`,
-}
+import { apiCall, ENDPOINTS } from './api-requests'
 
 /**
  * Gets the data for an offering from the CT API

@@ -2,7 +2,7 @@ import axios from 'axios'
 import React from 'react'
 import MockAdapter from 'axios-mock-adapter'
 import { render, waitFor } from '@testing-library/react-native'
-import { ENDPOINTS } from '../../src/api/playlists'
+import { ENDPOINTS } from '../../src/api/api-requests'
 import { HTTP_STATUS_CODES } from '../../src/api'
 import {
   PLAYLISTS_BY_OFFERING_RESPONSE,

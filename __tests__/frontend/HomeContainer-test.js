@@ -3,8 +3,7 @@ import React from 'react'
 import MockAdapter from 'axios-mock-adapter'
 import { render, waitFor } from '@testing-library/react-native'
 import { setUserData } from '../../src/api/auth'
-import { ENDPOINTS as UNI_ENDPOINTS } from '../../src/api/universities'
-import { ENDPOINTS as OFFER_ENDPOINTS } from '../../src/api/offerings'
+import { ENDPOINTS } from '../../src/api/api-requests'
 import { format } from '../../src/utils/string'
 import { HTTP_STATUS_CODES } from '../../src/api'
 import { UNIVERSITY_RESPONSE } from '../mock_responses/mock-university-response'
@@ -30,11 +29,11 @@ describe('Check universities rendering', () => {
 
   beforeEach(() => {
     mock
-      .onGet(`${UNI_ENDPOINTS.UNIVERSITIES}`)
+      .onGet(`${ENDPOINTS.UNIVERSITIES}`)
       .reply(HTTP_STATUS_CODES.OK, UNIVERSITY_RESPONSE)
-      .onGet(`${OFFER_ENDPOINTS.OFFERINGBYSTUDENT}`)
+      .onGet(`${ENDPOINTS.OFFERINGBYSTUDENT}`)
       .reply(HTTP_STATUS_CODES.OK, OFFERINGS_RESPONSE_1)
-      .onGet(`${format(OFFER_ENDPOINTS.OFFERING, offeringId)}`)
+      .onGet(`${format(ENDPOINTS.OFFERING, offeringId)}`)
       .reply(HTTP_STATUS_CODES.OK, OFFERINGS_RESPONSE_1)
   })
 
