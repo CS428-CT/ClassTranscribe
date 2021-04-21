@@ -119,7 +119,7 @@ const Home = ({ starred, navigation }) => {
     }
 
     return (
-      <View style={styles.dropdown}>
+      <View style={styles.universityDropdown}>
         <Picker
           testID="picker"
           selectedValue={university}

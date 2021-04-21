@@ -13,18 +13,31 @@ const HomeStyle = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: '3%',
+    backgroundColor: '#fff',
   },
 
   dropdown: {
     flex: 0,
-    width: '98%',
+    width: '95%',
     backgroundColor: '#FFF',
-    borderRadius: 5,
-    borderColor: '#333',
-    borderWidth: 0.2,
+    borderBottomColor: '#333',
+    borderColor: 'transparent',
+    borderWidth: 0.5,
     overflow: 'hidden',
+    marginBottom: 10,
   },
+
+  universityDropdown: {
+    flex: 0,
+    width: '95%',
+    backgroundColor: '#FFF',
+    borderBottomColor: '#333',
+    borderColor: 'transparent',
+    borderWidth: 0.5,
+    overflow: 'hidden',
+    marginTop: 5,
+    marginBottom: 5,
+  },  
 
   noCourses: {
     flex: 1,
@@ -32,6 +45,7 @@ const HomeStyle = StyleSheet.create({
     textAlignVertical: 'center',
     fontSize: 20,
   },
+
 })
 
 export default HomeStyle
