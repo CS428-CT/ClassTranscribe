@@ -12,7 +12,7 @@ export const getOfferingData = async (offeringId) => {
   return apiCall(url)
 }
 
-/// ////////////////       STUDENT OFFERING FUNCTIONS       ////////////////////
+///////////////////       STUDENT OFFERING FUNCTIONS       ////////////////////
 
 /**
  * Gets the data for an offering from the CT API if the student is authenticated
@@ -31,7 +31,7 @@ export const getOfferingsByStudent = async () => {
  * @returns Array of offerings data
  */
 export const getOfferingsData = async () => {
-  const offerings = []
+  var offerings = []
   const requests = []
 
   const studentOfferings = await getOfferingsByStudent()
@@ -50,10 +50,18 @@ export const getOfferingsData = async () => {
 
   await Promise.all(requests).catch((e) => console.error(e))
 
+  offerings = offerings.sort(function(a, b) {
+    console.log(a.courses[0].departmentAcronym - b.courses[0].departmentAcronym)
+    courseA = a.courses[0].departmentAcronym
+    courseB = b.courses[0].departmentAcronym
+
+    return courseA > courseB ? 1 : courseA < courseB ? -1:0
+  })
+
   return offerings
 }
 
-/// ////////////////       STARRED OFFERING CALLS       //////////////////////
+///////////////////       STARRED OFFERING CALLS       //////////////////////
 
 /**
  * Returns an array of all the starred offering data for the current user.
@@ -61,7 +69,7 @@ export const getOfferingsData = async () => {
  * @returns Array of offerings data
  */
 export const getStarredOfferingsData = async () => {
-  const offerings = []
+  var offerings = []
 
   const starredOfferings = getStarredOfferings()
   if (starredOfferings == null) return null
@@ -70,6 +78,14 @@ export const getStarredOfferingsData = async () => {
     const offeringData = await getOfferingData(offeringId)
     if (offeringData != null) offerings.push(offeringData)
   }
+
+  offerings = offerings.sort(function(a, b) {
+    console.log(a.courses[0].departmentAcronym - b.courses[0].departmentAcronym)
+    courseA = a.courses[0].departmentAcronym
+    courseB = b.courses[0].departmentAcronym
+
+    return courseA > courseB ? 1 : courseA < courseB ? -1:0
+  })
 
   return offerings
 }
