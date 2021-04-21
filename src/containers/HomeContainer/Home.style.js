@@ -37,7 +37,7 @@ const HomeStyle = StyleSheet.create({
     overflow: 'hidden',
     marginTop: 5,
     marginBottom: 5,
-  },  
+  },
 
   noCourses: {
     flex: 1,
@@ -45,7 +45,6 @@ const HomeStyle = StyleSheet.create({
     textAlignVertical: 'center',
     fontSize: 20,
   },
-
 })
 
 export default HomeStyle
