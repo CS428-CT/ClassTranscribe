@@ -96,6 +96,7 @@ const Home = ({ starred, navigation }) => {
         const allUnis = await getUniversities()
         setAllUniversities(allUnis)
       }
+
       fetchUniversities()
     }, [setAllUniversities])
 
@@ -111,11 +112,7 @@ const Home = ({ starred, navigation }) => {
       const allCourses = await getOfferingsData()
       const newCourses = filterCourses(allCourses)
 
-      try {
-        setCourses(newCourses)
-      } catch (error) {
-        console.error(error)
-      }
+      setCourses(newCourses)
     }
 
     return (
@@ -141,6 +138,7 @@ const Home = ({ starred, navigation }) => {
         const allDept = await getUniversityDepartments(universityId)
         setAllDepartments(allDept)
       }
+
       fetchDepartments()
     }, [setAllDepartments])
 
@@ -156,11 +154,7 @@ const Home = ({ starred, navigation }) => {
       const allCourses = await getOfferingsData()
       const newCourses = filterCourses(allCourses)
 
-      try {
-        setCourses(newCourses)
-      } catch (error) {
-        console.error(error)
-      }
+      setCourses(newCourses)
     }
 
     return (
