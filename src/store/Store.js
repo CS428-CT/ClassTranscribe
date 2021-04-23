@@ -5,7 +5,7 @@ import Reducer from './Reducer'
 
 const initialState = {
   isLoading: false,
-  effectStatuses: {}
+  effectStatuses: {},
 }
 
 const Store = ({ children }) => {

@@ -1,4 +1,4 @@
-import { useContext, useCallback, useState, useEffect } from 'react'
+import { useContext, useCallback, useEffect } from 'react'
 import { REDUCER_ACTIONS } from '../constants'
 import { Context } from '../store/Store'
 
@@ -11,26 +11,24 @@ export const useLoadingIndicator = () => {
   const [state, dispatch] = useContext(Context)
 
   const areAllEffectsDoneLoading = () => {
-    console.log("condensed " + JSON.stringify(state.effectStatuses))
-    for (var i in state.effectStatuses) {
-        if (state.effectStatuses[i])
-          return false;
+    for (const i in state.effectStatuses) {
+      if (state.effectStatuses[i]) return false
     }
 
-    return true;
+    return true
   }
 
   useEffect(() => {
-    const isLoading = !areAllEffectsDoneLoading();
+    const isLoading = !areAllEffectsDoneLoading()
     dispatch({
       type: REDUCER_ACTIONS.SET_LOADING,
-      isLoading
+      isLoading,
     })
   }, [state.effectStatuses])
 
   const setLoading = useCallback(
     (isLoading, effectId) => {
-      const updatedEffectStatuses = {[effectId]: isLoading}
+      const updatedEffectStatuses = { [effectId]: isLoading }
       dispatch({
         type: REDUCER_ACTIONS.UPDATE_EFFECT_STAUSES,
         updatedEffectStatuses,

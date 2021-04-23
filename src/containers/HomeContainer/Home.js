@@ -55,7 +55,7 @@ const Home = ({ starred, navigation }) => {
       setCourses(studentCourses)
     }
 
-    return loadingWrap(fetchCourseInfo, "fetchCourses")
+    return loadingWrap(fetchCourseInfo, 'fetchCourses')
   }, [setCourses])
 
   const onCourseSelected = (courseId) => {
@@ -106,7 +106,7 @@ const Home = ({ starred, navigation }) => {
         const allUnis = await getUniversities()
         setAllUniversities(allUnis)
       }
-      loadingWrap(fetchUniversities, "fetchUniversities");
+      loadingWrap(fetchUniversities, 'fetchUniversities')
     }, [setAllUniversities])
 
     const universityItems = universities.map((uni) => {
@@ -126,7 +126,7 @@ const Home = ({ starred, navigation }) => {
         setCourses(newCourses)
       }
 
-      loadingWrap(updateDepartment, "updateDepartment")
+      loadingWrap(updateDepartment, 'updateDepartment')
     }
 
     return (
@@ -147,14 +147,18 @@ const Home = ({ starred, navigation }) => {
    */
   const renderDepartmentsDropDown = () => {
     const [departments, setAllDepartments] = useState([])
-    useEffect(() => {
-      const fetchDepartments = async () => {
-        const allDept = await getUniversityDepartments(universityId)
-        setAllDepartments(allDept)
-      }
+    useEffect(
+      () => {
+        const fetchDepartments = async () => {
+          const allDept = await getUniversityDepartments(universityId)
+          setAllDepartments(allDept)
+        }
 
-      fetchDepartments()
-    }, [setAllDepartments], universityId)
+        fetchDepartments()
+      },
+      [setAllDepartments],
+      universityId
+    )
 
     const departmentItems = departments.map((dept) => {
       return <Picker.Item key={dept.id} value={dept.id} label={dept.name} />
@@ -173,7 +177,7 @@ const Home = ({ starred, navigation }) => {
         setCourses(newCourses)
       }
 
-      loadingWrap(updateDepartment, "updateDepartment")
+      loadingWrap(updateDepartment, 'updateDepartment')
     }
 
     return (

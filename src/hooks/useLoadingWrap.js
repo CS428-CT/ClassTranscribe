@@ -9,14 +9,14 @@ import { useLoadingIndicator } from './useLoadingIndicator'
 export const useLoadingWrap = () => {
   const setLoading = useLoadingIndicator()
   const loadingWrap = useCallback((func, effectId) => {
-    ;(async (f, effectId) => {
-      setLoading(true, effectId)
+    ;(async (f, id) => {
+      setLoading(true, id)
       try {
         await f()
       } catch (error) {
         console.error(error)
       } finally {
-        setLoading(false, effectId)
+        setLoading(false, id)
       }
     })(func, effectId)
 
