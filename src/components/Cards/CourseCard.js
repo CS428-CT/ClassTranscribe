@@ -24,11 +24,12 @@ const CourseCard = ({
   offeringId,
   courseNumber,
   courseName,
+  courseSection,
+  courseTerm,
   courseDescription = '',
   isCourseStarred,
 }) => {
   const [isStarred, setIsStarred] = useState(isCourseStarred)
-
   const getCourseTitle = () => {
     return `${departmentAcronym} ${courseNumber}`
   }
@@ -59,15 +60,27 @@ const CourseCard = ({
     return <MaterialCommunityIcons name="star-outline" size={30} onPress={onCourseStarred} />
   }
 
+  const getCourseSectionTerm = () => {
+    return `${courseTerm} | ${courseSection}`
+  }
+
   return (
-    <View style={styles.card}>
+    <View accessibilityRole="button" style={styles.card}>
       <View style={styles.cardHeader}>
         <Text style={styles.courseTitle}>{getCourseTitle()}</Text>
         {getFavoriteButton()}
       </View>
-
-      <Text style={styles.courseName}>{getCourseName()}</Text>
-      <Text style={styles.courseContent}>
+      <Text accessibilityRole="button" style={styles.courseName}>
+        {getCourseName()}
+      </Text>
+      <Text
+        accessibilityRole="button"
+        testID={getCourseSectionTerm()}
+        style={styles.courseSectionTerm}
+      >
+        {getCourseSectionTerm()}
+      </Text>
+      <Text accessibilityRole="button" style={styles.courseContent}>
         {truncateString(courseDescription, MAX_DESCRIPTION_LENGTH)}
       </Text>
     </View>
@@ -80,6 +93,8 @@ CourseCard.propTypes = {
   courseName: PropTypes.string.isRequired,
   isCourseStarred: PropTypes.bool.isRequired,
   offeringId: PropTypes.string.isRequired,
+  courseSection: PropTypes.string.isRequired,
+  courseTerm: PropTypes.string.isRequired,
   courseDescription: PropTypes.string,
 }
 

@@ -39,6 +39,12 @@ const CourseCardStyle = StyleSheet.create({
     backgroundColor: 'white',
   },
 
+  couseSectionTerm: {
+    color: '#333',
+    fontSize: 10,
+    backgroundColor: 'white',
+  },
+
   courseContent: {
     paddingTop: 6,
     backgroundColor: 'white',
