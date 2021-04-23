@@ -78,6 +78,8 @@ const Home = ({ starred, navigation }) => {
               departmentAcronym={course.departmentAcronym}
               courseNumber={course.courseNumber}
               courseName={courseName}
+              courseSection={ item.offering.sectionName }
+              courseTerm={item.term.name}
               courseDescription={courseDescription}
             />
           </View>
@@ -140,8 +142,8 @@ const Home = ({ starred, navigation }) => {
         setAllDepartments(allDept)
       }
 
-      fetchDepartments()
-      // return loadingWrap(fetchDepartments)
+      // fetchDepartments()
+      return loadingWrap(fetchDepartments)
     }, [setAllDepartments])
 
     const departmentItems = departments.map((dept) => {

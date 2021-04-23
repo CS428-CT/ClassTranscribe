@@ -15,7 +15,7 @@ const MAX_DESCRIPTION_LENGTH = 100
  * @returns
  */
 
-const CourseCard = ({ departmentAcronym, courseNumber, courseName, courseDescription = '' }) => {
+const CourseCard = ({ departmentAcronym, courseNumber, courseName, courseSection='', courseTerm='', courseDescription = '' }) => {
   const getCourseTitle = () => {
     return `${departmentAcronym} ${courseNumber}`
   }
@@ -24,10 +24,15 @@ const CourseCard = ({ departmentAcronym, courseNumber, courseName, courseDescrip
     return `${courseName}`
   }
 
+  const getCourseSectionTerm = () => {
+    return `${courseTerm} | ${courseSection}`
+  }
+
   return (
     <View style={styles.card}>
       <Text style={styles.courseTitle}>{getCourseTitle()}</Text>
       <Text style={styles.courseName}>{getCourseName()}</Text>
+      <Text style={styles.courseSectionTerm}>{getCourseSectionTerm()}</Text>
       <Text style={styles.courseContent}>
         {truncateString(courseDescription, MAX_DESCRIPTION_LENGTH)}
       </Text>
@@ -39,6 +44,8 @@ CourseCard.propTypes = {
   departmentAcronym: PropTypes.string.isRequired,
   courseNumber: PropTypes.string.isRequired,
   courseName: PropTypes.string.isRequired,
+  courseSection: PropTypes.string.isRequired,
+  courseTerm: PropTypes.string.isRequired,
   courseDescription: PropTypes.string,
 }
 
