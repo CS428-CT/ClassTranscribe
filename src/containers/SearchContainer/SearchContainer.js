@@ -78,6 +78,8 @@ const SearchContainer = () => {
               courseName={courseName}
               courseDescription={courseDescription}
               isCourseStarred={isStarred}
+              courseTerm={item.term.name}
+              courseSection={item.offering.sectionName}
               testID="card"
             />
           </View>
