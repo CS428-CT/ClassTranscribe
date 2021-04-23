@@ -7,6 +7,16 @@ const Reducer = (state, action) => {
         ...state,
         isLoading: action.isLoading,
       }
+    case REDUCER_ACTIONS.UPDATE_EFFECT_STAUSES:
+      const updatedStatuses = {
+        ...state.effectStatuses,
+        ...action.updatedEffectStatuses,
+      }
+      const updatedState = {
+        ...state,
+        effectStatuses: updatedStatuses
+      }
+      return updatedState
     default:
       return state
   }

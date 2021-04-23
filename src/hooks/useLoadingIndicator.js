@@ -1,4 +1,4 @@
-import { useContext, useCallback } from 'react'
+import { useContext, useCallback, useState, useEffect } from 'react'
 import { REDUCER_ACTIONS } from '../constants'
 import { Context } from '../store/Store'
 
@@ -8,12 +8,32 @@ import { Context } from '../store/Store'
  *          the loading indicator is shown, else it is hidden.
  */
 export const useLoadingIndicator = () => {
-  const dispatch = useContext(Context)[1]
+  const [state, dispatch] = useContext(Context)
+
+  const areAllEffectsDoneLoading = () => {
+    console.log("condensed " + JSON.stringify(state.effectStatuses))
+    for (var i in state.effectStatuses) {
+        if (state.effectStatuses[i])
+          return false;
+    }
+
+    return true;
+  }
+
+  useEffect(() => {
+    const isLoading = !areAllEffectsDoneLoading();
+    dispatch({
+      type: REDUCER_ACTIONS.SET_LOADING,
+      isLoading
+    })
+  }, [state.effectStatuses])
+
   const setLoading = useCallback(
-    (isLoading) => {
+    (isLoading, effectId) => {
+      const updatedEffectStatuses = {[effectId]: isLoading}
       dispatch({
-        type: REDUCER_ACTIONS.SET_LOADING,
-        isLoading,
+        type: REDUCER_ACTIONS.UPDATE_EFFECT_STAUSES,
+        updatedEffectStatuses,
       })
     },
     [dispatch]
