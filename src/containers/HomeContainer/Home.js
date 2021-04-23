@@ -8,7 +8,7 @@ import { getCurrentAuthenticatedUser } from '../../api/auth'
 import CourseCard from '../../components/Cards/CourseCard'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
 import styles from './Home.style'
-import { useLoadingWrap } from '../../hooks/useLoadingWrap'
+import { useLoadingIndicator } from '../../hooks/useLoadingIndicator'
 import { NO_COURSES, NO_STARRED_COURSES } from '../../constants'
 
 /**
@@ -16,8 +16,10 @@ import { NO_COURSES, NO_STARRED_COURSES } from '../../constants'
  * to search for courses. Clicking on a course shows the playlists for it.
  */
 const Home = ({ starred, navigation }) => {
+  const [isLoadingCourses, setIsLoadingCourses] = useState(false);
+  const [isLoadingUniversities, setIsLoadingUniversities] = useState(false);
   const currentUser = getCurrentAuthenticatedUser()
-  const loadingWrap = useLoadingWrap()
+  const setLoading = useLoadingIndicator();
   let universityId = currentUser.universityId
   let departmentId = 'all'
 
@@ -41,6 +43,8 @@ const Home = ({ starred, navigation }) => {
   const [courses, setCourses] = useState([])
   useEffect(() => {
     const fetchCourseInfo = async () => {
+      setIsLoadingCourses(true);
+      setLoading(true);
       let offerings
       if (starred) {
         offerings = await getStarredOfferingsData()
@@ -49,9 +53,12 @@ const Home = ({ starred, navigation }) => {
       }
       const studentCourses = filterCourses(offerings)
       setCourses(studentCourses)
+      setIsLoadingCourses(false);
+      setLoading(!isLoaid);
     }
 
-    return loadingWrap(fetchCourseInfo)
+    fetchCourseInfo();
+    return (() => setLoading(false));
   }, [setCourses])
 
   const onCourseSelected = (courseId) => {
@@ -93,9 +100,12 @@ const Home = ({ starred, navigation }) => {
     const [universities, setAllUniversities] = useState([])
     useEffect(() => {
       const fetchUniversities = async () => {
+        setLoading(true);
         const allUnis = await getUniversities()
         setAllUniversities(allUnis)
+        setLoading(false):
       }
+
       fetchUniversities()
     }, [setAllUniversities])
 
