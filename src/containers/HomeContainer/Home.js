@@ -98,6 +98,7 @@ const Home = ({ starred, navigation }) => {
       }
 
       fetchUniversities()
+      // return loadingWrap(fetchUniversities)
     }, [setAllUniversities])
 
     const universityItems = universities.map((uni) => {
@@ -140,6 +141,7 @@ const Home = ({ starred, navigation }) => {
       }
 
       fetchDepartments()
+      // return loadingWrap(fetchDepartments)
     }, [setAllDepartments])
 
     const departmentItems = departments.map((dept) => {
