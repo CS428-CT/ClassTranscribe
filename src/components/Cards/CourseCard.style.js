@@ -31,7 +31,7 @@ const CourseCardStyle = StyleSheet.create({
     fontSize: 16,
     backgroundColor: 'white',
   },
-  
+
   couseSectionTerm: {
     color: '#333',
     fontSize: 10,
@@ -42,7 +42,6 @@ const CourseCardStyle = StyleSheet.create({
     paddingTop: 6,
     backgroundColor: 'white',
   },
-
 })
 
 export default CourseCardStyle

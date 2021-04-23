@@ -45,8 +45,9 @@ const Home = ({ starred, navigation }) => {
       if (starred) {
         offerings = await getStarredOfferingsData()
       } else {
-      }
         offerings = await getOfferingsData()
+      }
+
       const studentCourses = filterCourses(offerings)
       setCourses(studentCourses)
     }
@@ -78,7 +79,7 @@ const Home = ({ starred, navigation }) => {
               departmentAcronym={course.departmentAcronym}
               courseNumber={course.courseNumber}
               courseName={courseName}
-              courseSection={ item.offering.sectionName }
+              courseSection={item.offering.sectionName}
               courseTerm={item.term.name}
               courseDescription={courseDescription}
             />
@@ -100,7 +101,6 @@ const Home = ({ starred, navigation }) => {
       }
 
       fetchUniversities()
-      // return loadingWrap(fetchUniversities)
     }, [setAllUniversities])
 
     const universityItems = universities.map((uni) => {
@@ -115,7 +115,7 @@ const Home = ({ starred, navigation }) => {
       const allCourses = await getOfferingsData()
       const newCourses = filterCourses(allCourses)
 
-      return loadingWrap((newCourses) => setCourses(newCourses))
+      setCourses(newCourses)
     }
 
     return (
@@ -131,7 +131,6 @@ const Home = ({ starred, navigation }) => {
     )
   }
 
-
   /**
    * Render department's course offerings in a dropdown picker based on department id.
    */
@@ -144,7 +143,6 @@ const Home = ({ starred, navigation }) => {
       }
 
       fetchDepartments()
-      // return loadingWrap(fetchDepartments)
     }, [setAllDepartments])
 
     const departmentItems = departments.map((dept) => {
@@ -159,16 +157,7 @@ const Home = ({ starred, navigation }) => {
       const allCourses = await getOfferingsData()
       const newCourses = filterCourses(allCourses)
 
-      const setNewCourses = () => {
-        setCourses(newCourses)
-      }
-
-      setNewCourses()
-      // return loadingWrap(setCourses, newCourses)
-      // loadingWrap(setCourses(newCourses))
-      // loadingWrap(setCourses(newCourses))
-      // loadingWrap(setNewCourses)
-      // return loadingWrap((newCourses) => setCourses(newCourses))
+      setCourses(newCourses)
     }
 
     return (

@@ -315,7 +315,7 @@ export const OFFERINGS_IN_LIST = [
     courses: [
       {
         courseId: 'test_course',
-        courseName: "NULL",
+        courseName: 'NULL',
         courseNumber: '000',
         description: null,
         departmentId: '2001',
@@ -441,5 +441,5 @@ export const OFFERINGS_IN_LIST = [
       universityId: '1001',
       id: '0001',
     },
-  }
+  },
 ]

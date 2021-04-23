@@ -12,7 +12,6 @@ export const getOfferingData = async (offeringId) => {
   return apiCall(url)
 }
 
-
 /// ////////////////       STUDENT OFFERING FUNCTIONS       ////////////////////
 
 /**
@@ -42,31 +41,28 @@ export const getOfferingsData = async () => {
     requests.push(
       new Promise((resolve) => {
         getOfferingData(entry.offering.id).then((offeringData) => {
-          if (offeringData.length == 1) offeringData = offeringData[0]
+          if (offeringData != null && offeringData.length === 1) offerings.push(offeringData[0])
           if (offeringData != null) offerings.push(offeringData)
           resolve()
         })
       })
     )
-
   }
 
   await Promise.all(requests).catch((e) => console.error(e))
 
   if (offerings.length > 1) {
-
     const sortedOfferings = offerings.sort((a, b) => {
       const courseA = a.courses[0].departmentAcronym
       const courseB = b.courses[0].departmentAcronym
-  
+
       const lessThan = courseA < courseB ? -1 : 0
       return courseA > courseB ? 1 : lessThan
     })
 
     return sortedOfferings
-  } else {
-    return offerings
   }
+  return offerings
 }
 
 /// ////////////////       STARRED OFFERING CALLS       //////////////////////

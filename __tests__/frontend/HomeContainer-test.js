@@ -9,7 +9,10 @@ import { HTTP_STATUS_CODES } from '../../src/api'
 import { UNIVERSITY_RESPONSE } from '../mock_responses/mock-university-response'
 import { DEPARTMENTS_RESPONSE } from '../mock_responses/mock-department-response'
 import Home from '../../src/containers/HomeContainer/Home'
-import { OFFERINGS_RESPONSE_1, OFFERINGS_IN_LIST, STARRED_OFFERINGS_RESPONSE2 } from '../mock_responses/mock-offerings-response'
+import {
+  OFFERINGS_IN_LIST,
+  STARRED_OFFERINGS_RESPONSE2,
+} from '../mock_responses/mock-offerings-response'
 import { useLoadingIndicator } from '../../src/hooks/useLoadingIndicator'
 
 jest.mock('../../src/hooks/useLoadingIndicator')
@@ -28,7 +31,6 @@ describe('Check universities rendering', () => {
 
   const offeringId = 'ac5b1727-629c-443b-8c1a-cc1bd541af6a'
   const mockNavigator = { push: jest.fn() }
-
 
   beforeEach(() => {
     mock
@@ -68,13 +70,14 @@ describe('Check universities rendering', () => {
     await waitFor(() => expect(mockHook).toHaveBeenCalled())
   })
 
-  test('Check (not starred) courses render', async() => {
+  test('Check (not starred) courses render', async () => {
     setUserData(USER_DATA)
 
-    const { queryByText, queryAllByA11yRole } = render(<Home starred={false} navigation={mockNavigator} />)
+    const { queryByText, queryAllByA11yRole } = render(
+      <Home starred={false} navigation={mockNavigator} />
+    )
     const courses = await waitFor(() => queryAllByA11yRole('button'))
     expect(courses.length).not.toBe(0)
-
 
     for (let i = 0; i < OFFERINGS_IN_LIST.length; i += 1) {
       const offering = OFFERINGS_IN_LIST[i]
@@ -82,16 +85,14 @@ describe('Check universities rendering', () => {
       const courseItem = await waitFor(() => queryByText(termSection))
       expect(courseItem).not.toBe(null)
     }
-
   })
 
-  test('Check (starred) courses render', async() => {
+  test('Check (starred) courses render', async () => {
     setUserData(USER_DATA)
 
-    const { queryByText, queryAllByA11yRole } = render(<Home starred={true} navigation={mockNavigator} />)
+    const { queryByText, queryAllByA11yRole } = render(<Home starred navigation={mockNavigator} />)
     const courses = await waitFor(() => queryAllByA11yRole('button'))
     expect(courses.length).not.toBe(0)
-
 
     for (let i = 0; i < OFFERINGS_IN_LIST.length; i += 1) {
       const offering = OFFERINGS_IN_LIST[i]
@@ -99,7 +100,5 @@ describe('Check universities rendering', () => {
       const courseItem = await waitFor(() => queryByText(termSection))
       expect(courseItem).not.toBe(null)
     }
-
   })
-
 })
