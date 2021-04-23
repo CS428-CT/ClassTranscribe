@@ -2,13 +2,18 @@ import axios from 'axios'
 import React from 'react'
 import MockAdapter from 'axios-mock-adapter'
 import { render, waitFor } from '@testing-library/react-native'
-import { setUserData } from '../../src/api/auth'
+import { setUserData, getCurrentAuthenticatedUser } from '../../src/api/auth'
 import { ENDPOINTS } from '../../src/api/api-requests'
 import { format } from '../../src/utils/string'
 import { HTTP_STATUS_CODES } from '../../src/api'
 import { UNIVERSITY_RESPONSE } from '../mock_responses/mock-university-response'
+import { DEPARTMENTS_RESPONSE } from '../mock_responses/mock-department-response'
 import Home from '../../src/containers/HomeContainer/Home'
-import { OFFERINGS_RESPONSE_1 } from '../mock_responses/mock-offerings-response'
+
+import {
+  OFFERINGS_IN_LIST,
+  STARRED_OFFERINGS_RESPONSE2,
+} from '../mock_responses/mock-offerings-response'
 import { useLoadingIndicator } from '../../src/hooks/useLoadingIndicator'
 
 jest.mock('../../src/hooks/useLoadingIndicator')
@@ -21,7 +26,8 @@ describe('Check universities rendering', () => {
     authToken: 'A',
     universityId: '1001',
     userId: 'test user',
-    emaildId: 'testuser@email.com',
+    emailId: 'testuser@email.com',
+    metadata: { starredOfferings: STARRED_OFFERINGS_RESPONSE2 },
   }
 
   const offeringId = 'ac5b1727-629c-443b-8c1a-cc1bd541af6a'
@@ -31,10 +37,12 @@ describe('Check universities rendering', () => {
     mock
       .onGet(`${ENDPOINTS.UNIVERSITIES}`)
       .reply(HTTP_STATUS_CODES.OK, UNIVERSITY_RESPONSE)
+      .onGet(`${format(ENDPOINTS.DEPARTMENTS, USER_DATA.universityId)}`)
+      .reply(HTTP_STATUS_CODES.OK, DEPARTMENTS_RESPONSE)
       .onGet(`${ENDPOINTS.OFFERINGBYSTUDENT}`)
-      .reply(HTTP_STATUS_CODES.OK, OFFERINGS_RESPONSE_1)
+      .reply(HTTP_STATUS_CODES.OK, OFFERINGS_IN_LIST)
       .onGet(`${format(ENDPOINTS.OFFERING, offeringId)}`)
-      .reply(HTTP_STATUS_CODES.OK, OFFERINGS_RESPONSE_1)
+      .reply(HTTP_STATUS_CODES.OK, OFFERINGS_IN_LIST)
   })
 
   afterEach(() => {
@@ -46,8 +54,11 @@ describe('Check universities rendering', () => {
 
     const { getByTestId } = render(<Home starred={false} navigation={mockNavigator} />)
 
-    const picker = getByTestId('picker')
-    expect(picker).not.toBe(null)
+    const uniPicker = getByTestId('uniPicker')
+    expect(uniPicker).not.toBe(null)
+
+    const deptPicker = getByTestId('deptPicker')
+    expect(deptPicker).not.toBe(null)
 
     const courseList = getByTestId('courseList')
     expect(courseList).not.toBe(null)
@@ -55,8 +66,42 @@ describe('Check universities rendering', () => {
 
   test('Check that loading indicator renders', async () => {
     setUserData(USER_DATA)
-    render(<Home navigation={mockNavigator} />)
+    render(<Home starred={false} navigation={mockNavigator} />)
 
     await waitFor(() => expect(mockHook).toHaveBeenCalled())
+  })
+
+  test('Check (not starred) courses render', async () => {
+    setUserData(USER_DATA)
+
+    const { queryByText, queryAllByA11yRole } = render(
+      <Home starred={false} navigation={mockNavigator} />
+    )
+    const courses = await waitFor(() => queryAllByA11yRole('button'))
+    expect(courses.length).not.toBe(0)
+
+    for (let i = 0; i < OFFERINGS_IN_LIST.length; i += 1) {
+      const offering = OFFERINGS_IN_LIST[i]
+      const termSection = `${offering.term.name} | ${offering.offering.sectionName}`
+      const courseItem = await waitFor(() => queryByText(termSection))
+      expect(courseItem).not.toBe(null)
+    }
+  })
+
+  test('Check (starred) courses render', async () => {
+    setUserData(USER_DATA)
+    const user = getCurrentAuthenticatedUser()
+    user.metadata = STARRED_OFFERINGS_RESPONSE2
+
+    const { queryByText, queryAllByA11yRole } = render(<Home starred navigation={mockNavigator} />)
+    const courses = await waitFor(() => queryAllByA11yRole('button'))
+    expect(courses.length).not.toBe(0)
+
+    for (let i = 0; i < OFFERINGS_IN_LIST.length; i += 1) {
+      const offering = OFFERINGS_IN_LIST[i]
+      const termSection = `${offering.term.name} | ${offering.offering.sectionName}`
+      const courseItem = await waitFor(() => queryByText(termSection))
+      expect(courseItem).not.toBe(null)
+    }
   })
 })

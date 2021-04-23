@@ -3,7 +3,7 @@ import { TouchableNativeFeedback, FlatList, View, Text } from 'react-native'
 import { Picker } from '@react-native-community/picker'
 import PropTypes from 'prop-types'
 import { getOfferingsData, getStarredOfferingsData } from '../../api/offerings'
-import { getUniversities } from '../../api/universities'
+import { getUniversities, getUniversityDepartments } from '../../api/universities'
 import { getCurrentAuthenticatedUser } from '../../api/auth'
 import CourseCard from '../../components/Cards/CourseCard'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
@@ -19,6 +19,7 @@ const Home = ({ starred, navigation }) => {
   const currentUser = getCurrentAuthenticatedUser()
   const loadingWrap = useLoadingWrap()
   let universityId = currentUser.universityId
+  let departmentId = 'all'
 
   /**
    * Helper function to filter courses by university id
@@ -28,7 +29,9 @@ const Home = ({ starred, navigation }) => {
     const newOfferings = []
     for (const i in offerings) {
       if (offerings[i].term.universityId === universityId) {
-        newOfferings.push(offerings[i])
+        if (departmentId === 'all' || offerings[i].courses[0].departmentId === departmentId) {
+          newOfferings.push(offerings[i])
+        }
       }
     }
 
@@ -41,14 +44,18 @@ const Home = ({ starred, navigation }) => {
       let offerings
       if (starred) {
         offerings = await getStarredOfferingsData()
+        if (offerings.length === 1) {
+          offerings = offerings[0]
+        }
       } else {
         offerings = await getOfferingsData()
       }
+
       const studentCourses = filterCourses(offerings)
       setCourses(studentCourses)
     }
 
-    return loadingWrap(fetchCourseInfo)
+    return loadingWrap(fetchCourseInfo, 'fetchCourses')
   }, [setCourses])
 
   const onCourseSelected = (courseId) => {
@@ -68,14 +75,20 @@ const Home = ({ starred, navigation }) => {
     const courseId = item.offering.id
 
     return (
-      <View key={courseId}>
-        <TouchableNativeFeedback onPress={() => onCourseSelected(courseId)}>
-          <View style={styles.cardContainer}>
+      <View accessibilityRole="button" key={courseId}>
+        <TouchableNativeFeedback
+          accessibilityRole="button"
+          onPress={() => onCourseSelected(courseId)}
+        >
+          <View accessibilityRole="button" style={styles.cardContainer}>
             <CourseCard
               departmentAcronym={course.departmentAcronym}
               courseNumber={course.courseNumber}
               courseName={courseName}
+              courseSection={item.offering.sectionName}
+              courseTerm={item.term.name}
               courseDescription={courseDescription}
+              accessibilityRole="button"
             />
           </View>
         </TouchableNativeFeedback>
@@ -93,7 +106,7 @@ const Home = ({ starred, navigation }) => {
         const allUnis = await getUniversities()
         setAllUniversities(allUnis)
       }
-      fetchUniversities()
+      loadingWrap(fetchUniversities, 'fetchUniversities')
     }, [setAllUniversities])
 
     const universityItems = universities.map((uni) => {
@@ -102,27 +115,80 @@ const Home = ({ starred, navigation }) => {
 
     const [university, setUniversity] = useState(universityId)
     const onUniversitySelected = async (newUniversityId) => {
-      setUniversity(newUniversityId)
-      universityId = newUniversityId
+      const updateDepartment = async () => {
+        setCourses([])
+        setUniversity(newUniversityId)
+        universityId = newUniversityId
 
-      const newUnicourses = await getOfferingsData()
-      const newCourses = filterCourses(newUnicourses)
+        const allCourses = await getOfferingsData()
+        const newCourses = filterCourses(allCourses)
 
-      try {
         setCourses(newCourses)
-      } catch (error) {
-        console.error(error)
       }
+
+      loadingWrap(updateDepartment, 'updateDepartment')
+    }
+
+    return (
+      <View style={styles.universityDropdown}>
+        <Picker
+          testID="uniPicker"
+          selectedValue={university}
+          onValueChange={(newUniversityId) => onUniversitySelected(newUniversityId)}
+        >
+          {universityItems}
+        </Picker>
+      </View>
+    )
+  }
+
+  /**
+   * Render department's course offerings in a dropdown picker based on department id.
+   */
+  const renderDepartmentsDropDown = () => {
+    const [departments, setAllDepartments] = useState([])
+    useEffect(
+      () => {
+        const fetchDepartments = async () => {
+          const allDept = await getUniversityDepartments(universityId)
+          setAllDepartments(allDept)
+        }
+
+        fetchDepartments()
+      },
+      [setAllDepartments],
+      universityId
+    )
+
+    const departmentItems = departments.map((dept) => {
+      return <Picker.Item key={dept.id} value={dept.id} label={dept.name} />
+    })
+
+    const [department, setDepartment] = useState(departmentId)
+    const onDepartmentSelected = async (newDepartmentId) => {
+      const updateDepartment = async () => {
+        setCourses([])
+        setDepartment(newDepartmentId)
+        departmentId = newDepartmentId
+
+        const allCourses = await getOfferingsData()
+        const newCourses = filterCourses(allCourses)
+
+        setCourses(newCourses)
+      }
+
+      loadingWrap(updateDepartment, 'updateDepartment')
     }
 
     return (
       <View style={styles.dropdown}>
         <Picker
-          testID="picker"
-          selectedValue={university}
-          onValueChange={(newUniversityId) => onUniversitySelected(newUniversityId)}
+          testID="deptPicker"
+          selectedValue={department}
+          onValueChange={(newDepartmentId) => onDepartmentSelected(newDepartmentId)}
         >
-          {universityItems}
+          <Picker.Item key="all" value="all" label="All Departments" />
+          {departmentItems}
         </Picker>
       </View>
     )
@@ -160,6 +226,7 @@ const Home = ({ starred, navigation }) => {
   return (
     <View style={styles.viewStyle}>
       {renderUniversityDropDown()}
+      {renderDepartmentsDropDown()}
       {renderCourses()}
     </View>
   )
