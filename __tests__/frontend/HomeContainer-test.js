@@ -52,7 +52,7 @@ describe('Check universities rendering', () => {
   test('Check that components render', async () => {
     setUserData(USER_DATA)
 
-    const { getByTestId } = render(<Home starred={false} navigation={mockNavigator} />)
+    const { getByTestId } = render(<Home navigation={mockNavigator} />)
 
     const uniPicker = getByTestId('uniPicker')
     expect(uniPicker).not.toBe(null)
@@ -66,26 +66,9 @@ describe('Check universities rendering', () => {
 
   test('Check that loading indicator renders', async () => {
     setUserData(USER_DATA)
-    render(<Home starred={false} navigation={mockNavigator} />)
+    render(<Home navigation={mockNavigator} />)
 
     await waitFor(() => expect(mockHook).toHaveBeenCalled())
-  })
-
-  test('Check (not starred) courses render', async () => {
-    setUserData(USER_DATA)
-
-    const { queryByText, queryAllByA11yRole } = render(
-      <Home starred={false} navigation={mockNavigator} />
-    )
-    const courses = await waitFor(() => queryAllByA11yRole('button'))
-    expect(courses.length).not.toBe(0)
-
-    for (let i = 0; i < OFFERINGS_IN_LIST.length; i += 1) {
-      const offering = OFFERINGS_IN_LIST[i]
-      const termSection = `${offering.term.name} | ${offering.offering.sectionName}`
-      const courseItem = await waitFor(() => queryByText(termSection))
-      expect(courseItem).not.toBe(null)
-    }
   })
 
   test('Check (starred) courses render', async () => {
@@ -93,7 +76,7 @@ describe('Check universities rendering', () => {
     const user = getCurrentAuthenticatedUser()
     user.metadata = STARRED_OFFERINGS_RESPONSE2
 
-    const { queryByText, queryAllByA11yRole } = render(<Home starred navigation={mockNavigator} />)
+    const { queryByText, queryAllByA11yRole } = render(<Home navigation={mockNavigator} />)
     const courses = await waitFor(() => queryAllByA11yRole('button'))
     expect(courses.length).not.toBe(0)
 

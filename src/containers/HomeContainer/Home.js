@@ -15,7 +15,7 @@ import { NO_COURSES, NO_STARRED_COURSES } from '../../constants'
  * Contains the home screen of the application. Lists courses and gives the user the ability
  * to search for courses. Clicking on a course shows the playlists for it.
  */
-const Home = ({ starred, navigation }) => {
+const Home = ({ navigation }) => {
   const currentUser = getCurrentAuthenticatedUser()
   const loadingWrap = useLoadingWrap()
   let universityId = currentUser.universityId
@@ -42,13 +42,9 @@ const Home = ({ starred, navigation }) => {
   useEffect(() => {
     const fetchCourseInfo = async () => {
       let offerings
-      if (starred) {
-        offerings = await getStarredOfferingsData()
-        if (offerings.length === 1) {
-          offerings = offerings[0]
-        }
-      } else {
-        offerings = await getOfferingsData()
+      offerings = await getStarredOfferingsData()
+      if (offerings.length === 1) {
+        offerings = offerings[0]
       }
 
       const studentCourses = filterCourses(offerings)
@@ -202,16 +198,9 @@ const Home = ({ starred, navigation }) => {
    */
   const renderCourses = () => {
     if (courses.length === 0) {
-      if (starred) {
-        return (
-          <Text testID="courseList" style={styles.noCourses}>
-            {NO_STARRED_COURSES}
-          </Text>
-        )
-      }
       return (
         <Text testID="courseList" style={styles.noCourses}>
-          {NO_COURSES}
+          {NO_STARRED_COURSES}
         </Text>
       )
     }
@@ -239,7 +228,6 @@ Home.propTypes = {
   navigation: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
-  starred: PropTypes.bool.isRequired,
 }
 
 export default Home
