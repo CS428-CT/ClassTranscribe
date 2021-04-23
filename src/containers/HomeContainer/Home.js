@@ -9,7 +9,7 @@ import CourseCard from '../../components/Cards/CourseCard'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
 import styles from './Home.style'
 import { useLoadingWrap } from '../../hooks/useLoadingWrap'
-import { NO_COURSES, NO_STARRED_COURSES } from '../../constants'
+import { NO_STARRED_COURSES } from '../../constants'
 
 /**
  * Contains the home screen of the application. Lists courses and gives the user the ability
