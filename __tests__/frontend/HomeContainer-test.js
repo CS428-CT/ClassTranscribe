@@ -9,6 +9,7 @@ import { HTTP_STATUS_CODES } from '../../src/api'
 import { UNIVERSITY_RESPONSE } from '../mock_responses/mock-university-response'
 import { DEPARTMENTS_RESPONSE } from '../mock_responses/mock-department-response'
 import Home from '../../src/containers/HomeContainer/Home'
+import { getCurrentAuthenticatedUser } from '../../src/api/auth'
 import {
   OFFERINGS_IN_LIST,
   STARRED_OFFERINGS_RESPONSE2,
@@ -25,10 +26,11 @@ describe('Check universities rendering', () => {
     authToken: 'A',
     universityId: '1001',
     userId: 'test user',
-    emaildId: 'testuser@email.com',
-    metadata: STARRED_OFFERINGS_RESPONSE2,
+    emailId: 'testuser@email.com',
+    metadata: {starredOfferings: STARRED_OFFERINGS_RESPONSE2},
   }
 
+  
   const offeringId = 'ac5b1727-629c-443b-8c1a-cc1bd541af6a'
   const mockNavigator = { push: jest.fn() }
 
@@ -65,7 +67,7 @@ describe('Check universities rendering', () => {
 
   test('Check that loading indicator renders', async () => {
     setUserData(USER_DATA)
-    render(<Home navigation={mockNavigator} />)
+    render(<Home starred={false} navigation={mockNavigator} />)
 
     await waitFor(() => expect(mockHook).toHaveBeenCalled())
   })
@@ -89,6 +91,8 @@ describe('Check universities rendering', () => {
 
   test('Check (starred) courses render', async () => {
     setUserData(USER_DATA)
+    const user = getCurrentAuthenticatedUser()
+    user.metadata = STARRED_OFFERINGS_RESPONSE2
 
     const { queryByText, queryAllByA11yRole } = render(<Home starred navigation={mockNavigator} />)
     const courses = await waitFor(() => queryAllByA11yRole('button'))

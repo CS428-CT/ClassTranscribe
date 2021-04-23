@@ -44,6 +44,9 @@ const Home = ({ starred, navigation }) => {
       let offerings
       if (starred) {
         offerings = await getStarredOfferingsData()
+        if (offerings.length === 1) {
+          offerings = offerings[0]
+        }
       } else {
         offerings = await getOfferingsData()
       }
@@ -72,9 +75,9 @@ const Home = ({ starred, navigation }) => {
     const courseId = item.offering.id
 
     return (
-      <View key={courseId}>
-        <TouchableNativeFeedback onPress={() => onCourseSelected(courseId)}>
-          <View style={styles.cardContainer}>
+      <View accessibilityRole="button" key={courseId}>
+        <TouchableNativeFeedback accessibilityRole="button" onPress={() => onCourseSelected(courseId)}>
+          <View accessibilityRole="button" style={styles.cardContainer}>
             <CourseCard
               departmentAcronym={course.departmentAcronym}
               courseNumber={course.courseNumber}
@@ -82,6 +85,7 @@ const Home = ({ starred, navigation }) => {
               courseSection={item.offering.sectionName}
               courseTerm={item.term.name}
               courseDescription={courseDescription}
+              accessibilityRole="button"
             />
           </View>
         </TouchableNativeFeedback>

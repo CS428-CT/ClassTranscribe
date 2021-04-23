@@ -3,8 +3,10 @@ export const STARRED_OFFERINGS_RESPONSE = {
   '2c7a83cc-e2f3-493a-ae65-33f9c998e8ed': 'starred',
 }
 
+
 export const STARRED_OFFERINGS_RESPONSE2 = {
-  'ac5b1727-629c-443b-8c1a-cc1bd541af6a': 'starred',
+  starredOfferings:
+    '{"ac5b1727-629c-443b-8c1a-cc1bd541af6a":"starred"}',
 }
 
 export const OFFERINGS_RESPONSE_1 = {
