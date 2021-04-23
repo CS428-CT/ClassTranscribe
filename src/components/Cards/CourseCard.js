@@ -36,9 +36,17 @@ const CourseCard = ({
 
   return (
     <View accessibilityRole="button" style={styles.card}>
-      <Text accessibilityRole="button" style={styles.courseTitle}>{getCourseTitle()}</Text>
-      <Text accessibilityRole="button" style={styles.courseName}>{getCourseName()}</Text>
-      <Text accessibilityRole="button" testID={getCourseSectionTerm()} style={styles.courseSectionTerm}>
+      <Text accessibilityRole="button" style={styles.courseTitle}>
+        {getCourseTitle()}
+      </Text>
+      <Text accessibilityRole="button" style={styles.courseName}>
+        {getCourseName()}
+      </Text>
+      <Text
+        accessibilityRole="button"
+        testID={getCourseSectionTerm()}
+        style={styles.courseSectionTerm}
+      >
         {getCourseSectionTerm()}
       </Text>
       <Text accessibilityRole="button" style={styles.courseContent}>

@@ -73,7 +73,7 @@ export const getOfferingsData = async () => {
  * @returns Array of offerings data
  */
 export const getStarredOfferingsData = async () => {
-  let offerings = []
+  const offerings = []
 
   const starredOfferings = getStarredOfferings()
   if (starredOfferings == null) return null

@@ -2,14 +2,14 @@ import axios from 'axios'
 import React from 'react'
 import MockAdapter from 'axios-mock-adapter'
 import { render, waitFor } from '@testing-library/react-native'
-import { setUserData } from '../../src/api/auth'
+import { setUserData, getCurrentAuthenticatedUser } from '../../src/api/auth'
 import { ENDPOINTS } from '../../src/api/api-requests'
 import { format } from '../../src/utils/string'
 import { HTTP_STATUS_CODES } from '../../src/api'
 import { UNIVERSITY_RESPONSE } from '../mock_responses/mock-university-response'
 import { DEPARTMENTS_RESPONSE } from '../mock_responses/mock-department-response'
 import Home from '../../src/containers/HomeContainer/Home'
-import { getCurrentAuthenticatedUser } from '../../src/api/auth'
+
 import {
   OFFERINGS_IN_LIST,
   STARRED_OFFERINGS_RESPONSE2,
@@ -27,10 +27,9 @@ describe('Check universities rendering', () => {
     universityId: '1001',
     userId: 'test user',
     emailId: 'testuser@email.com',
-    metadata: {starredOfferings: STARRED_OFFERINGS_RESPONSE2},
+    metadata: { starredOfferings: STARRED_OFFERINGS_RESPONSE2 },
   }
 
-  
   const offeringId = 'ac5b1727-629c-443b-8c1a-cc1bd541af6a'
   const mockNavigator = { push: jest.fn() }
 

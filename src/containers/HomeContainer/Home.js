@@ -76,7 +76,10 @@ const Home = ({ starred, navigation }) => {
 
     return (
       <View accessibilityRole="button" key={courseId}>
-        <TouchableNativeFeedback accessibilityRole="button" onPress={() => onCourseSelected(courseId)}>
+        <TouchableNativeFeedback
+          accessibilityRole="button"
+          onPress={() => onCourseSelected(courseId)}
+        >
           <View accessibilityRole="button" style={styles.cardContainer}>
             <CourseCard
               departmentAcronym={course.departmentAcronym}
