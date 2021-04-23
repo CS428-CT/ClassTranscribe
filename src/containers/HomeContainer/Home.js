@@ -45,8 +45,8 @@ const Home = ({ starred, navigation }) => {
       if (starred) {
         offerings = await getStarredOfferingsData()
       } else {
-        offerings = await getOfferingsData()
       }
+        offerings = await getOfferingsData()
       const studentCourses = filterCourses(offerings)
       setCourses(studentCourses)
     }
@@ -115,13 +115,13 @@ const Home = ({ starred, navigation }) => {
       const allCourses = await getOfferingsData()
       const newCourses = filterCourses(allCourses)
 
-      setCourses(newCourses)
+      return loadingWrap((newCourses) => setCourses(newCourses))
     }
 
     return (
       <View style={styles.universityDropdown}>
         <Picker
-          testID="picker"
+          testID="uniPicker"
           selectedValue={university}
           onValueChange={(newUniversityId) => onUniversitySelected(newUniversityId)}
         >
@@ -130,6 +130,7 @@ const Home = ({ starred, navigation }) => {
       </View>
     )
   }
+
 
   /**
    * Render department's course offerings in a dropdown picker based on department id.
@@ -142,8 +143,8 @@ const Home = ({ starred, navigation }) => {
         setAllDepartments(allDept)
       }
 
-      // fetchDepartments()
-      return loadingWrap(fetchDepartments)
+      fetchDepartments()
+      // return loadingWrap(fetchDepartments)
     }, [setAllDepartments])
 
     const departmentItems = departments.map((dept) => {
@@ -158,7 +159,16 @@ const Home = ({ starred, navigation }) => {
       const allCourses = await getOfferingsData()
       const newCourses = filterCourses(allCourses)
 
-      setCourses(newCourses)
+      const setNewCourses = () => {
+        setCourses(newCourses)
+      }
+
+      setNewCourses()
+      // return loadingWrap(setCourses, newCourses)
+      // loadingWrap(setCourses(newCourses))
+      // loadingWrap(setCourses(newCourses))
+      // loadingWrap(setNewCourses)
+      // return loadingWrap((newCourses) => setCourses(newCourses))
     }
 
     return (
