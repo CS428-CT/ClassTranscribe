@@ -106,12 +106,7 @@ const Home = ({ starred, navigation }) => {
         const allUnis = await getUniversities()
         setAllUniversities(allUnis)
       }
-<<<<<<< HEAD
       loadingWrap(fetchUniversities, "fetchUniversities");
-=======
-
-      fetchUniversities()
->>>>>>> 9ec7f42c9a57632642215c5f67d5a5411223ec1c
     }, [setAllUniversities])
 
     const universityItems = universities.map((uni) => {
@@ -120,13 +115,18 @@ const Home = ({ starred, navigation }) => {
 
     const [university, setUniversity] = useState(universityId)
     const onUniversitySelected = async (newUniversityId) => {
-      setUniversity(newUniversityId)
-      universityId = newUniversityId
+      const updateDepartment = async () => {
+        setCourses([])
+        setUniversity(newUniversityId)
+        universityId = newUniversityId
 
-      const allCourses = await getOfferingsData()
-      const newCourses = filterCourses(allCourses)
+        const allCourses = await getOfferingsData()
+        const newCourses = filterCourses(allCourses)
 
-      setCourses(newCourses)
+        setCourses(newCourses)
+      }
+
+      loadingWrap(updateDepartment, "updateDepartment")
     }
 
     return (
@@ -154,7 +154,7 @@ const Home = ({ starred, navigation }) => {
       }
 
       fetchDepartments()
-    }, [setAllDepartments])
+    }, [setAllDepartments], universityId)
 
     const departmentItems = departments.map((dept) => {
       return <Picker.Item key={dept.id} value={dept.id} label={dept.name} />
@@ -162,13 +162,18 @@ const Home = ({ starred, navigation }) => {
 
     const [department, setDepartment] = useState(departmentId)
     const onDepartmentSelected = async (newDepartmentId) => {
-      setDepartment(newDepartmentId)
-      departmentId = newDepartmentId
+      const updateDepartment = async () => {
+        setCourses([])
+        setDepartment(newDepartmentId)
+        departmentId = newDepartmentId
 
-      const allCourses = await getOfferingsData()
-      const newCourses = filterCourses(allCourses)
+        const allCourses = await getOfferingsData()
+        const newCourses = filterCourses(allCourses)
 
-      setCourses(newCourses)
+        setCourses(newCourses)
+      }
+
+      loadingWrap(updateDepartment, "updateDepartment")
     }
 
     return (
