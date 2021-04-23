@@ -41,7 +41,8 @@ export const getOfferingsData = async () => {
     requests.push(
       new Promise((resolve) => {
         getOfferingData(entry.offering.id).then((offeringData) => {
-          if (offeringData != null) offerings.push(offeringData)
+          if (offeringData != null && offeringData.length === 1) offerings.push(offeringData[0])
+          else if (offeringData != null) offerings.push(offeringData)
           resolve()
         })
       })
@@ -50,6 +51,17 @@ export const getOfferingsData = async () => {
 
   await Promise.all(requests).catch((e) => console.error(e))
 
+  if (offerings.length > 1) {
+    const sortedOfferings = offerings.sort((a, b) => {
+      const courseA = a.courses[0].departmentAcronym
+      const courseB = b.courses[0].departmentAcronym
+
+      const lessThan = courseA < courseB ? -1 : 0
+      return courseA > courseB ? 1 : lessThan
+    })
+
+    return sortedOfferings
+  }
   return offerings
 }
 
@@ -71,6 +83,18 @@ export const getStarredOfferingsData = async () => {
     if (offeringData != null) offerings.push(offeringData)
   }
 
+  if (offerings.length > 1) {
+    const sortedOfferings = offerings.sort((a, b) => {
+      const courseA = a.courses[0].departmentAcronym
+      const courseB = b.courses[0].departmentAcronym
+
+      const lessThan = courseA < courseB ? -1 : 0
+      return courseA > courseB ? 1 : lessThan
+    })
+
+    return sortedOfferings
+  }
+
   return offerings
 }
 
@@ -83,6 +107,7 @@ export const getStarredOfferings = () => {
   if (!isUserAuthenticated()) return null
 
   const user = getCurrentAuthenticatedUser()
+
   if (user?.metadata?.starredOfferings == null) return null
 
   return JSON.parse(user.metadata.starredOfferings)

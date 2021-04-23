@@ -44,9 +44,13 @@ const Home = ({ starred, navigation }) => {
       let offerings
       if (starred) {
         offerings = await getStarredOfferingsData()
+        if (offerings.length === 1) {
+          offerings = offerings[0]
+        }
       } else {
         offerings = await getOfferingsData()
       }
+
       const studentCourses = filterCourses(offerings)
       setCourses(studentCourses)
     }
@@ -71,14 +75,20 @@ const Home = ({ starred, navigation }) => {
     const courseId = item.offering.id
 
     return (
-      <View key={courseId}>
-        <TouchableNativeFeedback onPress={() => onCourseSelected(courseId)}>
-          <View style={styles.cardContainer}>
+      <View accessibilityRole="button" key={courseId}>
+        <TouchableNativeFeedback
+          accessibilityRole="button"
+          onPress={() => onCourseSelected(courseId)}
+        >
+          <View accessibilityRole="button" style={styles.cardContainer}>
             <CourseCard
               departmentAcronym={course.departmentAcronym}
               courseNumber={course.courseNumber}
               courseName={courseName}
+              courseSection={item.offering.sectionName}
+              courseTerm={item.term.name}
               courseDescription={courseDescription}
+              accessibilityRole="button"
             />
           </View>
         </TouchableNativeFeedback>
@@ -96,7 +106,12 @@ const Home = ({ starred, navigation }) => {
         const allUnis = await getUniversities()
         setAllUniversities(allUnis)
       }
+<<<<<<< HEAD
       loadingWrap(fetchUniversities, "fetchUniversities");
+=======
+
+      fetchUniversities()
+>>>>>>> 9ec7f42c9a57632642215c5f67d5a5411223ec1c
     }, [setAllUniversities])
 
     const universityItems = universities.map((uni) => {
@@ -111,17 +126,13 @@ const Home = ({ starred, navigation }) => {
       const allCourses = await getOfferingsData()
       const newCourses = filterCourses(allCourses)
 
-      try {
-        setCourses(newCourses)
-      } catch (error) {
-        console.error(error)
-      }
+      setCourses(newCourses)
     }
 
     return (
-      <View style={styles.dropdown}>
+      <View style={styles.universityDropdown}>
         <Picker
-          testID="picker"
+          testID="uniPicker"
           selectedValue={university}
           onValueChange={(newUniversityId) => onUniversitySelected(newUniversityId)}
         >
@@ -141,6 +152,7 @@ const Home = ({ starred, navigation }) => {
         const allDept = await getUniversityDepartments(universityId)
         setAllDepartments(allDept)
       }
+
       fetchDepartments()
     }, [setAllDepartments])
 
@@ -156,11 +168,7 @@ const Home = ({ starred, navigation }) => {
       const allCourses = await getOfferingsData()
       const newCourses = filterCourses(allCourses)
 
-      try {
-        setCourses(newCourses)
-      } catch (error) {
-        console.error(error)
-      }
+      setCourses(newCourses)
     }
 
     return (
