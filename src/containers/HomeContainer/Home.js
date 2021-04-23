@@ -99,8 +99,8 @@ const Home = ({ starred, navigation }) => {
         setAllUniversities(allUnis)
       }
 
-      fetchUniversities()
-      // return loadingWrap(fetchUniversities)
+      // fetchUniversities()
+      return loadingWrap(fetchUniversities)
     }, [setAllUniversities])
 
     const universityItems = universities.map((uni) => {
