@@ -3,9 +3,11 @@ import MockAdapter from 'axios-mock-adapter'
 import { getUserMetadata, setAuthToken, signOutUser } from '../../src/api/auth'
 import { format } from '../../src/utils/string'
 import {
+  addStarredOferring,
   getOfferingData,
   getStarredOfferings,
   getStarredOfferingsData,
+  removeStarredOffering,
 } from '../../src/api/offerings'
 import { HTTP_STATUS_CODES } from '../../src/api'
 import {
@@ -114,5 +116,44 @@ describe('Get starred offerings data', () => {
 
     const starredOfferings = await getStarredOfferingsData()
     expect(starredOfferings).toStrictEqual([])
+  })
+})
+
+describe('Modify starred offerings', () => {
+  beforeEach(() => {
+    mock.onGet(`${ENDPOINTS.USER_METADATA}`).reply(HTTP_STATUS_CODES.OK, METADATA_RESPONSE)
+    mock.onPost(`${ENDPOINTS.POST_USER_METADATA}`).reply(HTTP_STATUS_CODES.OK)
+    setAuthToken(MOCK_AUTH_TOKEN)
+  })
+
+  afterEach(async () => {
+    mock.reset()
+  })
+
+  test('Add offering', async () => {
+    const offeringToAdd = 'testOfferingId'
+
+    await getUserMetadata()
+    const originalStarredOfferings = await getStarredOfferings()
+    await addStarredOferring(offeringToAdd)
+    const updatedStarredOfferings = await getStarredOfferings()
+
+    const expected = { [offeringToAdd]: 'starred', ...originalStarredOfferings }
+    expect(updatedStarredOfferings).toStrictEqual(expected)
+  })
+
+  test('Remove offering', async () => {
+    await getUserMetadata()
+    const originalStarredOfferings = await getStarredOfferings()
+
+    const toRemove = Object.keys(originalStarredOfferings)[0]
+
+    await removeStarredOffering(toRemove)
+    const updatedStarredOfferings = await getStarredOfferings()
+
+    const expected = originalStarredOfferings
+    delete expected[toRemove]
+
+    expect(updatedStarredOfferings).toStrictEqual(expected)
   })
 })

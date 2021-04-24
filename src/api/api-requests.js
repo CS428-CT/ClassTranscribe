@@ -13,6 +13,7 @@ export const ENDPOINTS = {
   TRANSCRIPT: `${API_BASE_URL}Captions/ByTranscription/{0}`,
   MEDIA: `${API_BASE_URL}Media/{0}`,
   USER_METADATA: `${API_BASE_URL}Account/GetUserMetadata/GetUserMetadata`,
+  POST_USER_METADATA: `${API_BASE_URL}Account/PostUserMetadata/PostUserMetadata`,
 }
 
 /**

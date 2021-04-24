@@ -1,6 +1,8 @@
+import axios from 'axios'
 import { format } from '../utils/string'
 import { getCurrentAuthenticatedUser, isUserAuthenticated } from './auth'
 import { apiCall, ENDPOINTS } from './api-requests'
+import { HTTP_STATUS_CODES } from '.'
 
 /**
  * Gets the data for an offering from the CT API
@@ -111,4 +113,43 @@ export const getStarredOfferings = () => {
   if (user?.metadata?.starredOfferings == null) return null
 
   return JSON.parse(user.metadata.starredOfferings)
+}
+
+/**
+ * Adds the given starred offering to the users list of starred offerings
+ * @param {String} offeringID The offering ID to add
+ * @returns true if the post was successful
+ */
+export const addStarredOferring = async (offeringID) => {
+  if (!isUserAuthenticated()) return false
+
+  const offerings = getStarredOfferings()
+  offerings[offeringID] = 'starred'
+
+  const user = getCurrentAuthenticatedUser()
+  user.metadata.starredOfferings = JSON.stringify(offerings)
+
+  const request = { starredOfferings: user.metadata.starredOfferings }
+  const resp = await axios.post(ENDPOINTS.POST_USER_METADATA, request)
+  if (resp?.status !== HTTP_STATUS_CODES.OK) return false
+  return true
+}
+
+/**
+ * Removes the given starred offering from the users list of starred offerings
+ * @param {String} offeringID The offering ID to remove
+ */
+export const removeStarredOffering = async (offeringID) => {
+  if (!isUserAuthenticated()) return false
+
+  const offerings = getStarredOfferings()
+  delete offerings[offeringID]
+
+  const user = getCurrentAuthenticatedUser()
+  user.metadata.starredOfferings = JSON.stringify(offerings)
+
+  const request = { starredOfferings: user.metadata.starredOfferings }
+  const resp = await axios.post(ENDPOINTS.POST_USER_METADATA, request)
+  if (resp?.status !== HTTP_STATUS_CODES.OK) return false
+  return true
 }

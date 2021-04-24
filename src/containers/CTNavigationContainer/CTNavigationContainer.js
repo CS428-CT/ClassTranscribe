@@ -10,6 +10,7 @@ import CoursePlaylistsContainer from '../CoursePlaylistsContainer/CoursePlaylist
 import VideoContainer from '../VideoContainer/VideoContainer'
 import PlaylistContainer from '../PlaylistContainer/PlaylistContainer'
 import DownloadContainer from '../DownloadContainer/DownloadContainer'
+import SearchContainer from '../SearchContainer/SearchContainer'
 
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
@@ -80,25 +81,6 @@ const HomeNavigator = () => {
 }
 
 /**
- * The navigator of the course tab. Contains a stack navigator.
- */
-const CourseNavigator = () => {
-  return (
-    <Stack.Navigator initialRouteName={STACK_SCREENS.HOME}>
-      <Stack.Screen
-        name={STACK_SCREENS.HOME}
-        component={HomeView}
-        initialParams={{ starred: false }}
-      />
-      <Stack.Screen name={STACK_SCREENS.COURSE_PLAYLISTS} component={CoursePlaylistsView} />
-      <Stack.Screen name={STACK_SCREENS.PLAYLIST} component={PlaylistView} />
-      <Stack.Screen name={STACK_SCREENS.VIDEO} component={VideoView} />
-      <Stack.Screen name={STACK_SCREENS.DOWNLOAD} component={DownloadView} />
-    </Stack.Navigator>
-  )
-}
-
-/**
  * The navigator for the download tab. Contains a stack navigator.
  */
 const DownloadNavigator = () => {
@@ -120,12 +102,12 @@ const CTNavigationContainer = () => {
     <NavigationContainer>
       <Tab.Navigator>
         <Tab.Screen
-          name="Course"
-          component={CourseNavigator}
+          name="Search"
+          component={SearchContainer}
           options={{
-            tabBarLabel: 'Courses',
+            tabBarLabel: 'Search',
             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="school" color={color} size={size} />
+              <MaterialCommunityIcons name="text-search" color={color} size={size} />
             ),
           }}
         />

@@ -2,20 +2,20 @@ import React, { useState, useEffect } from 'react'
 import { TouchableNativeFeedback, FlatList, View, Text } from 'react-native'
 import { Picker } from '@react-native-community/picker'
 import PropTypes from 'prop-types'
-import { getOfferingsData, getStarredOfferingsData } from '../../api/offerings'
+import { getOfferingsData, getStarredOfferingsData, getStarredOfferings } from '../../api/offerings'
 import { getUniversities, getUniversityDepartments } from '../../api/universities'
 import { getCurrentAuthenticatedUser } from '../../api/auth'
 import CourseCard from '../../components/Cards/CourseCard'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
 import styles from './Home.style'
 import { useLoadingWrap } from '../../hooks/useLoadingWrap'
-import { NO_COURSES, NO_STARRED_COURSES } from '../../constants'
+import { NO_STARRED_COURSES } from '../../constants'
 
 /**
  * Contains the home screen of the application. Lists courses and gives the user the ability
  * to search for courses. Clicking on a course shows the playlists for it.
  */
-const Home = ({ starred, navigation }) => {
+const Home = ({ navigation }) => {
   const currentUser = getCurrentAuthenticatedUser()
   const loadingWrap = useLoadingWrap()
   let universityId = currentUser.universityId
@@ -42,13 +42,9 @@ const Home = ({ starred, navigation }) => {
   useEffect(() => {
     const fetchCourseInfo = async () => {
       let offerings
-      if (starred) {
-        offerings = await getStarredOfferingsData()
-        if (offerings.length === 1) {
-          offerings = offerings[0]
-        }
-      } else {
-        offerings = await getOfferingsData()
+      offerings = await getStarredOfferingsData()
+      if (offerings.length === 1) {
+        offerings = offerings[0]
       }
 
       const studentCourses = filterCourses(offerings)
@@ -73,6 +69,7 @@ const Home = ({ starred, navigation }) => {
     const { courseName } = item.offering
     const courseDescription = item.offering.description
     const courseId = item.offering.id
+    const isStarred = courseId in getStarredOfferings()
 
     return (
       <View accessibilityRole="button" key={courseId}>
@@ -82,12 +79,14 @@ const Home = ({ starred, navigation }) => {
         >
           <View accessibilityRole="button" style={styles.cardContainer}>
             <CourseCard
+              offeringId={courseId}
               departmentAcronym={course.departmentAcronym}
               courseNumber={course.courseNumber}
               courseName={courseName}
               courseSection={item.offering.sectionName}
               courseTerm={item.term.name}
               courseDescription={courseDescription}
+              isCourseStarred={isStarred}
               accessibilityRole="button"
             />
           </View>
@@ -199,16 +198,9 @@ const Home = ({ starred, navigation }) => {
    */
   const renderCourses = () => {
     if (courses.length === 0) {
-      if (starred) {
-        return (
-          <Text testID="courseList" style={styles.noCourses}>
-            {NO_STARRED_COURSES}
-          </Text>
-        )
-      }
       return (
         <Text testID="courseList" style={styles.noCourses}>
-          {NO_COURSES}
+          {NO_STARRED_COURSES}
         </Text>
       )
     }
@@ -236,7 +228,6 @@ Home.propTypes = {
   navigation: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
-  starred: PropTypes.bool.isRequired,
 }
 
 export default Home
