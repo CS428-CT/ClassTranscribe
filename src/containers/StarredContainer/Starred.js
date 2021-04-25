@@ -6,6 +6,7 @@ import { getUserHistory } from '../../api/history'
 import { getMedia } from '../../api/video'
 import { getCurrentAuthenticatedUser } from '../../api/auth'
 import CourseCard from '../../components/Cards/CourseCard'
+import VideoCard from '../../components/Cards/VideoCard'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
 import styles from './Starred.style'
 import { useLoadingWrap } from '../../hooks/useLoadingWrap'
@@ -87,7 +88,6 @@ const Starred = ({ navigation }) => {
       index: 0,
       downloaded: false
     }
-    // console.log(JSON.parse(item.jsonMetadata.video1))
     console.log(param.videos[0]?.video?.video1Path)
     navigation.push(STACK_SCREENS.VIDEO, param)
   }
@@ -142,9 +142,12 @@ const Starred = ({ navigation }) => {
               accessibilityRole="button"
               onPress={() => onHistorySelected(item)}
             >
-          <View accessibilityRole="button" style={styles.cardContainer}>
-            <Text>{item.name}, watched {item.watchHistory.json.ratio.toFixed(2)}%</Text>
-          </View>
+              <View accessibilityRole="button" style={styles.cardContainer}>
+                <VideoCard 
+                  name={item.name}
+                  ratio={item.watchHistory.json.ratio.toFixed(2)}
+                />
+              </View>
         </TouchableNativeFeedback>
       </View>
     )
