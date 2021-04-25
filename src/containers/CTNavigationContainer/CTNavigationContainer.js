@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { STACK_SCREENS } from './index'
 import Home from '../HomeContainer/Home'
+import Starred from '../StarredContainer/Starred'
 import CoursePlaylistsContainer from '../CoursePlaylistsContainer/CoursePlaylistsContainer'
 import VideoContainer from '../VideoContainer/VideoContainer'
 import PlaylistContainer from '../PlaylistContainer/PlaylistContainer'
@@ -21,6 +22,14 @@ const Stack = createStackNavigator()
  */
 const HomeView = ({ navigation, route }) => {
   return <Home starred={route.params.starred} navigation={navigation} />
+}
+
+/**
+ * Wraps the Starred container so that it can
+ * receive the proper props
+ */
+const StarView = ({ navigation }) => {
+  return <Starred navigation={navigation} />
 }
 
 /**
@@ -59,6 +68,21 @@ const VideoView = ({ route }) => {
  */
 const DownloadView = ({ navigation }) => {
   return <DownloadContainer navigation={navigation} />
+}
+
+/**
+ * The navigator of the starred tab. Contains a stack navigator.
+ */
+const StarredNavigator = () => {
+  return (
+    <Stack.Navigator initialRouteName={STACK_SCREENS.STARRED}>
+      <Stack.Screen name={STACK_SCREENS.STARRED} component={StarView} initialParams={{}} />
+      <Stack.Screen name={STACK_SCREENS.COURSE_PLAYLISTS} component={CoursePlaylistsView} />
+      <Stack.Screen name={STACK_SCREENS.PLAYLIST} component={PlaylistView} />
+      <Stack.Screen name={STACK_SCREENS.VIDEO} component={VideoView} />
+      <Stack.Screen name={STACK_SCREENS.DOWNLOAD} component={DownloadView} />
+    </Stack.Navigator>
+  )
 }
 
 /**
@@ -114,6 +138,16 @@ const CTNavigationContainer = () => {
         <Tab.Screen
           name="Home"
           component={HomeNavigator}
+          options={{
+            tabBarLabel: 'Home',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="star" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Starred"
+          component={StarredNavigator}
           options={{
             tabBarLabel: 'Starred courses',
             tabBarIcon: ({ color, size }) => (
