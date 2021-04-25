@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { TouchableNativeFeedback, FlatList, View, Text } from 'react-native'
 import PropTypes from 'prop-types'
-import { getStarredOfferingsData, getStarredOfferings } from '../../api/offerings'
+import { getStarredOfferingsData, getStarredOfferingit gs } from '../../api/offerings'
 import { getUserHistory } from '../../api/history'
 import { getMedia } from '../../api/video'
 import { getCurrentAuthenticatedUser } from '../../api/auth'
