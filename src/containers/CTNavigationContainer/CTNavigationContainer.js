@@ -28,8 +28,8 @@ const HomeView = ({ navigation, route }) => {
  * Wraps the Starred container so that it can
  * receive the proper props
  */
- const StarView = ({ navigation }) => {
-  return <Starred  navigation={navigation} />
+const StarView = ({ navigation }) => {
+  return <Starred navigation={navigation} />
 }
 
 /**
@@ -73,14 +73,10 @@ const DownloadView = ({ navigation }) => {
 /**
  * The navigator of the starred tab. Contains a stack navigator.
  */
- const StarredNavigator = () => {
+const StarredNavigator = () => {
   return (
     <Stack.Navigator initialRouteName={STACK_SCREENS.STARRED}>
-      <Stack.Screen
-        name={STACK_SCREENS.STARRED}
-        component={StarView}
-        initialParams={{}}
-      />
+      <Stack.Screen name={STACK_SCREENS.STARRED} component={StarView} initialParams={{}} />
       <Stack.Screen name={STACK_SCREENS.COURSE_PLAYLISTS} component={CoursePlaylistsView} />
       <Stack.Screen name={STACK_SCREENS.PLAYLIST} component={PlaylistView} />
       <Stack.Screen name={STACK_SCREENS.VIDEO} component={VideoView} />

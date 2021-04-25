@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { TouchableNativeFeedback, FlatList, View, Text } from 'react-native'
 import PropTypes from 'prop-types'
-import { getStarredOfferingsData, getStarredOfferingit gs } from '../../api/offerings'
+import { getStarredOfferings, getStarredOfferingsData } from '../../api/offerings'
 import { getUserHistory } from '../../api/history'
 import { getMedia } from '../../api/video'
 import { getCurrentAuthenticatedUser } from '../../api/auth'
@@ -19,8 +19,8 @@ import { NO_STARRED_COURSES, NO_HISTORY } from '../../constants'
 const Starred = ({ navigation }) => {
   const currentUser = getCurrentAuthenticatedUser()
   const loadingWrap = useLoadingWrap()
-  let universityId = currentUser.universityId
-  let departmentId = 'all'
+  const universityId = currentUser.universityId
+  const departmentId = 'all'
 
   /**
    * Helper function to filter courses by university id
@@ -58,12 +58,12 @@ const Starred = ({ navigation }) => {
   const [history, setHistory] = useState([])
   useEffect(() => {
     const fetchHistoryInfo = async () => {
-      let history
-      history = await getUserHistory()
-      if (history.length === 1) {
-        history = history[0]
+      let res
+      res = await getUserHistory()
+      if (res.length === 1) {
+        res = res[0]
       }
-      setHistory(history)
+      setHistory(res)
     }
 
     return loadingWrap(fetchHistoryInfo, 'fetchHistory')
@@ -74,21 +74,16 @@ const Starred = ({ navigation }) => {
   }
 
   /**
-   * Helper function to fetch and navigate to pressed video 
-   * @param {*} item 
+   * Helper function to fetch and navigate to pressed video
+   * @param {*} item
    */
   const onHistorySelected = async (item) => {
-    item.video = {
-      video1Path: item.jsonMetadata.video1Path
-    }
-    console.log(item.watchHistory.mediaId)
     const videos = await getMedia(item.watchHistory)
     const param = {
       videos: [videos],
       index: 0,
-      downloaded: false
+      downloaded: false,
     }
-    console.log(param.videos[0]?.video?.video1Path)
     navigation.push(STACK_SCREENS.VIDEO, param)
   }
 
@@ -133,21 +128,15 @@ const Starred = ({ navigation }) => {
    * Renders a single watch history in the history list.
    * @param {Object} item The underlying data for the item to render.
    */
-   const renderHistoryItem = ({ item }) => {
+  const renderHistoryItem = ({ item }) => {
     if (item.length === 0) return null
 
     return (
       <View accessibilityRole="button" key={item.id}>
-        <TouchableNativeFeedback
-              accessibilityRole="button"
-              onPress={() => onHistorySelected(item)}
-            >
-              <View accessibilityRole="button" style={styles.cardContainer}>
-                <VideoCard 
-                  name={item.name}
-                  ratio={item.watchHistory.json.ratio.toFixed(2)}
-                />
-              </View>
+        <TouchableNativeFeedback accessibilityRole="button" onPress={() => onHistorySelected(item)}>
+          <View accessibilityRole="button" style={styles.cardContainer}>
+            <VideoCard name={item.name} ratio={item.watchHistory.json.ratio.toFixed(2)} />
+          </View>
         </TouchableNativeFeedback>
       </View>
     )
@@ -178,23 +167,22 @@ const Starred = ({ navigation }) => {
   /**
    * Renders all of the users' Courses into a FlatList
    */
-   const renderCourses = () => {
+  const renderCourses = () => {
     if (courses.length === 0) {
       return (
         <Text testID="courseList" style={styles.noCourses}>
           {NO_STARRED_COURSES}
         </Text>
       )
-    } else {
-      return (
-        <FlatList
-          testID="courseList"
-          keyExtractor={(idxCourses, index) => index.toString()}
-          data={courses}
-          renderItem={renderCourseItem}
-        />
-      )
     }
+    return (
+      <FlatList
+        testID="courseList"
+        keyExtractor={(idxCourses, index) => index.toString()}
+        data={courses}
+        renderItem={renderCourseItem}
+      />
+    )
   }
 
   return (
