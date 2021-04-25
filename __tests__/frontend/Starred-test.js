@@ -8,7 +8,7 @@ import { format } from '../../src/utils/string'
 import { HTTP_STATUS_CODES } from '../../src/api'
 import { UNIVERSITY_RESPONSE } from '../mock_responses/mock-university-response'
 import { DEPARTMENTS_RESPONSE } from '../mock_responses/mock-department-response'
-import {HISTORY_RESPONSE} from '../mock_responses/mock-history-response'
+import { HISTORY_RESPONSE } from '../mock_responses/mock-history-response'
 import Starred from '../../src/containers/StarredContainer/Starred'
 
 import {
