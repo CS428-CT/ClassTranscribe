@@ -1,4 +1,5 @@
 export const STACK_SCREENS = {
+  STARRED: 'Starred',
   HOME: 'Home',
   UNIVERSITY_LIST: 'Universities',
   DEPT_LIST: 'Departments',

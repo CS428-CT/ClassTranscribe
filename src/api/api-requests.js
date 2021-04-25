@@ -14,6 +14,7 @@ export const ENDPOINTS = {
   MEDIA: `${API_BASE_URL}Media/{0}`,
   USER_METADATA: `${API_BASE_URL}Account/GetUserMetadata/GetUserMetadata`,
   POST_USER_METADATA: `${API_BASE_URL}Account/PostUserMetadata/PostUserMetadata`,
+  USER_WATCH_HISTORY: `${API_BASE_URL}WatchHistories/GetAllWatchedMediaForUser`
 }
 
 /**
