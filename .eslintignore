@@ -1,2 +1,3 @@
 __tests__/*.js
 jest.setup.js
+docs/
