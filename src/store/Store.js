@@ -12,7 +12,7 @@ const initialState = {
  * The global store. The entire application should be wrapped in this component so that all children have access
  * to the store
  * @param {Array} children All the components children. The children will be rendered. This prop is passed in implicitley as the children prop typically is.
- * @returns 
+ * @returns
  */
 const Store = ({ children }) => {
   const [state, dispatch] = useReducer(Reducer, initialState)

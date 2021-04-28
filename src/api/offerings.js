@@ -50,8 +50,7 @@ export const getOfferingsData = async () => {
   }
 
   await Promise.all(requests).catch((e) => console.error(e))
-  if (offerings.length > 1)
-    return sortOfferings(offerings)
+  if (offerings.length > 1) return sortOfferings(offerings)
 
   return offerings
 }
@@ -62,17 +61,16 @@ export const getOfferingsData = async () => {
  * @returns Sorted array of offerings
  */
 const sortOfferings = (offerings) => {
-    const sortedOfferings = offerings.sort((a, b) => {
-      const courseA = a.courses[0].departmentAcronym
-      const courseB = b.courses[0].departmentAcronym
+  const sortedOfferings = offerings.sort((a, b) => {
+    const courseA = a.courses[0].departmentAcronym
+    const courseB = b.courses[0].departmentAcronym
 
-      const lessThan = courseA < courseB ? -1 : 0
-      return courseA > courseB ? 1 : lessThan
-    })
+    const lessThan = courseA < courseB ? -1 : 0
+    return courseA > courseB ? 1 : lessThan
+  })
 
-    return sortedOfferings
+  return sortedOfferings
 }
-
 
 /**
  * Returns an array of all the starred offering data for the current user.

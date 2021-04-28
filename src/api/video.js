@@ -3,7 +3,7 @@ import { apiCall, ENDPOINTS } from './api-requests'
 
 /**
  * Fetches data about a media from its ID
- * @param {String} mediaId 
+ * @param {String} mediaId
  * @returns The media data from the backend
  */
 export const getMedia = async (mediaId) => {
