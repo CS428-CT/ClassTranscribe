@@ -12,6 +12,7 @@ const videoSuffix = '.mp4' // Currently, classtrascribe only uses mp4 as their v
 /**
  * Contains the home screen of the application. Lists starred courses and gives the user the ability
  * to search for courses. Clicking on a course shows the playlists for it.
+ * @param {Object} navigation A stack navigator that contains a video screen
  */
 const DownloadContainer = ({ navigation }) => {
   const [localVideos, setLocalVideos] = useState([]) // an array of local video names
