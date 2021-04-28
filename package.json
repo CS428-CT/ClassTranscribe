@@ -10,6 +10,7 @@
     "axios": "^0.21.1",
     "axios-mock-adapter": "^1.19.0",
     "babel-eslint": "^10.1.0",
+    "better-docs": "^2.3.2",
     "eslint": "^7.21.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.1.0",
@@ -25,6 +26,7 @@
     "expo-random": "~10.0.0",
     "expo-video-thumbnails": "~4.4.0",
     "jest-expo": "^40.0.2",
+    "jsdoc": "^3.6.6",
     "jwt-decode": "2.2.0",
     "prettier": "^2.2.1",
     "prop-types": "^15.7.2",
@@ -46,7 +48,8 @@
     "react-native-web": "^0.15.0",
     "react-native-webview": "^11.3.2",
     "react-test-renderer": "^17.0.1",
-    "rn-fetch-blob": "^0.12.0"
+    "rn-fetch-blob": "^0.12.0",
+    "yuidocjs": "^0.10.2"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
@@ -71,6 +74,7 @@
   },
   "scripts": {
     "start": "expo start",
+    "docs": "jsdoc -c jsdoc.conf.json",
     "test": "jest --passWithNoTests --runInBand --detectOpenHandles --forceExit",
     "android": "expo start --android",
     "build-android": "expo build:android",
