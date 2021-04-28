@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/Cards/CourseCard.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/Cards/CourseCard.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from 'react'
+import { Text, View } from 'react-native'
+import PropTypes from 'prop-types'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { truncateString } from '../../utils/string'
+import styles from './CourseCard.style'
+import { addStarredOferring, removeStarredOffering } from '../../api/offerings'
+
+const MAX_DESCRIPTION_LENGTH = 100
+
+/**
+ * Component to render a single course item. Displays information about the course -- used in the HomeContainer
+ * @param {String} departmentAcronym Example: "CS" or "ECE"
+ * @param {String} courseNumber Example: "400" or "429"
+ * @param {String} courseName The name of the course to be displayed
+ * @param {String} courseSection Example: "AL1" or "ADD"
+ * @param {String} courseTerm Example: "SP 21" or "FA 19"
+ * @param {String} courseDescription The full description of the course. Long course names will be truncated.
+ * @param {Boolean} isCourseStarred Indicates whether the user has starred the course
+ * @param {String} offeringId The unique ID for this offering
+ * @returns
+ */
+const CourseCard = ({
+  departmentAcronym,
+  offeringId,
+  courseNumber,
+  courseName,
+  courseSection,
+  courseTerm,
+  courseDescription = '',
+  isCourseStarred,
+}) => {
+  const [isStarred, setIsStarred] = useState(isCourseStarred)
+  const getCourseTitle = () => {
+    return `${departmentAcronym} ${courseNumber}`
+  }
+
+  const getCourseName = () => {
+    return `${courseName}`
+  }
+
+  /**
+   * Called when the user wants to star an offering.
+   * Usually, the request will succeed, so we will immediately update the star icon to make
+   * the app feel fast. If it does fail (which is very rare), we will unstar it after the failure
+   */
+  const onCourseStarred = async () => {
+    if (!isStarred) {
+      setIsStarred(true)
+      const wasSuccessful = await addStarredOferring(offeringId)
+      setIsStarred(wasSuccessful)
+    } else {
+      setIsStarred(false)
+      const wasSuccessful = await removeStarredOffering(offeringId)
+      setIsStarred(!wasSuccessful)
+    }
+  }
+
+  const getFavoriteButton = () => {
+    if (isStarred) return &lt;MaterialCommunityIcons name="star" size={30} onPress={onCourseStarred} />
+    return &lt;MaterialCommunityIcons name="star-outline" size={30} onPress={onCourseStarred} />
+  }
+
+  const getCourseSectionTerm = () => {
+    return `${courseTerm} | ${courseSection}`
+  }
+
+  return (
+    &lt;View accessibilityRole="button" style={styles.card}>
+      &lt;View style={styles.cardHeader}>
+        &lt;Text style={styles.courseTitle}>{getCourseTitle()}&lt;/Text>
+        {getFavoriteButton()}
+      &lt;/View>
+      &lt;Text accessibilityRole="button" style={styles.courseName}>
+        {getCourseName()}
+      &lt;/Text>
+      &lt;Text
+        accessibilityRole="button"
+        testID={getCourseSectionTerm()}
+        style={styles.courseSectionTerm}
+      >
+        {getCourseSectionTerm()}
+      &lt;/Text>
+      &lt;Text accessibilityRole="button" style={styles.courseContent}>
+        {truncateString(courseDescription, MAX_DESCRIPTION_LENGTH)}
+      &lt;/Text>
+    &lt;/View>
+  )
+}
+
+CourseCard.propTypes = {
+  departmentAcronym: PropTypes.string.isRequired,
+  courseNumber: PropTypes.string.isRequired,
+  courseName: PropTypes.string.isRequired,
+  isCourseStarred: PropTypes.bool.isRequired,
+  offeringId: PropTypes.string.isRequired,
+  courseSection: PropTypes.string.isRequired,
+  courseTerm: PropTypes.string.isRequired,
+  courseDescription: PropTypes.string,
+}
+
+export default CourseCard
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addStarredOferring">addStarredOferring</a></li><li><a href="global.html#apiCall">apiCall</a></li><li><a href="global.html#Context">Context</a></li><li><a href="global.html#CourseCard">CourseCard</a></li><li><a href="global.html#CoursePlaylistsContainer">CoursePlaylistsContainer</a></li><li><a href="global.html#CoursePlaylistsView">CoursePlaylistsView</a></li><li><a href="global.html#CTNavigationContainer">CTNavigationContainer</a></li><li><a href="global.html#currentAuthenticatedUser">currentAuthenticatedUser</a></li><li><a href="global.html#DownloadContainer">DownloadContainer</a></li><li><a href="global.html#DownloadNavigator">DownloadNavigator</a></li><li><a href="global.html#DownloadView">DownloadView</a></li><li><a href="global.html#format">format</a></li><li><a href="global.html#getCurrentAuthenticatedUser">getCurrentAuthenticatedUser</a></li><li><a href="global.html#getDepartmentCourses">getDepartmentCourses</a></li><li><a href="global.html#getMedia">getMedia</a></li><li><a href="global.html#getOfferingData">getOfferingData</a></li><li><a href="global.html#getOfferingsByStudent">getOfferingsByStudent</a></li><li><a href="global.html#getOfferingsData">getOfferingsData</a></li><li><a href="global.html#getPlaylistsByOffering">getPlaylistsByOffering</a></li><li><a href="global.html#getStarredOfferings">getStarredOfferings</a></li><li><a href="global.html#getStarredOfferingsData">getStarredOfferingsData</a></li><li><a href="global.html#getUniversities">getUniversities</a></li><li><a href="global.html#getUniversityDepartments">getUniversityDepartments</a></li><li><a href="global.html#getUserHistory">getUserHistory</a></li><li><a href="global.html#getUserMetadata">getUserMetadata</a></li><li><a href="global.html#getVideosByPlaylist">getVideosByPlaylist</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#HomeNavigator">HomeNavigator</a></li><li><a href="global.html#HomeView">HomeView</a></li><li><a href="global.html#HTTP_STATUS_CODES">HTTP_STATUS_CODES</a></li><li><a href="global.html#isUserAuthenticated">isUserAuthenticated</a></li><li><a href="global.html#LoginContainer">LoginContainer</a></li><li><a href="global.html#PlaylistView">PlaylistView</a></li><li><a href="global.html#Reducer">Reducer</a></li><li><a href="global.html#removeStarredOffering">removeStarredOffering</a></li><li><a href="global.html#SearchContainer">SearchContainer</a></li><li><a href="global.html#setAuthToken">setAuthToken</a></li><li><a href="global.html#setUserData">setUserData</a></li><li><a href="global.html#signOutUser">signOutUser</a></li><li><a href="global.html#sortOfferings">sortOfferings</a></li><li><a href="global.html#Starred">Starred</a></li><li><a href="global.html#StarredNavigator">StarredNavigator</a></li><li><a href="global.html#StarView">StarView</a></li><li><a href="global.html#Store">Store</a></li><li><a href="global.html#truncateString">truncateString</a></li><li><a href="global.html#useLoadingIndicator">useLoadingIndicator</a></li><li><a href="global.html#useLoadingWrap">useLoadingWrap</a></li><li><a href="global.html#VideoCard">VideoCard</a></li><li><a href="global.html#VideoContainer">VideoContainer</a></li><li><a href="global.html#VideoView">VideoView</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Apr 28 2021 09:18:09 GMT-0500 (Central Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

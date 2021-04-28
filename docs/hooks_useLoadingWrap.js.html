@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: hooks/useLoadingWrap.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: hooks/useLoadingWrap.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useCallback } from 'react'
+import { useLoadingIndicator } from './useLoadingIndicator'
+
+/**
+ * Custom hook for displaying a loading indicator while a function executes.
+ * The hook returns a function that takes another function as a parameter.
+ * The hooks returned function also returns a cleanup function for useEffect
+ * @returns A function that takes another function as a parameter. This function will "loadingWrap" the parameter function when called.
+ */
+export const useLoadingWrap = () => {
+  const setLoading = useLoadingIndicator()
+  const loadingWrap = useCallback((func, effectId) => {
+    ;(async (f, id) => {
+      setLoading(true, id)
+      try {
+        await f()
+      } catch (error) {
+        console.error(error)
+      } finally {
+        setLoading(false, id)
+      }
+    })(func, effectId)
+
+    return () => setLoading(false, effectId)
+  })
+
+  return loadingWrap
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addStarredOferring">addStarredOferring</a></li><li><a href="global.html#apiCall">apiCall</a></li><li><a href="global.html#Context">Context</a></li><li><a href="global.html#CourseCard">CourseCard</a></li><li><a href="global.html#CoursePlaylistsContainer">CoursePlaylistsContainer</a></li><li><a href="global.html#CoursePlaylistsView">CoursePlaylistsView</a></li><li><a href="global.html#CTNavigationContainer">CTNavigationContainer</a></li><li><a href="global.html#currentAuthenticatedUser">currentAuthenticatedUser</a></li><li><a href="global.html#DownloadContainer">DownloadContainer</a></li><li><a href="global.html#DownloadNavigator">DownloadNavigator</a></li><li><a href="global.html#DownloadView">DownloadView</a></li><li><a href="global.html#format">format</a></li><li><a href="global.html#getCurrentAuthenticatedUser">getCurrentAuthenticatedUser</a></li><li><a href="global.html#getDepartmentCourses">getDepartmentCourses</a></li><li><a href="global.html#getMedia">getMedia</a></li><li><a href="global.html#getOfferingData">getOfferingData</a></li><li><a href="global.html#getOfferingsByStudent">getOfferingsByStudent</a></li><li><a href="global.html#getOfferingsData">getOfferingsData</a></li><li><a href="global.html#getPlaylistsByOffering">getPlaylistsByOffering</a></li><li><a href="global.html#getStarredOfferings">getStarredOfferings</a></li><li><a href="global.html#getStarredOfferingsData">getStarredOfferingsData</a></li><li><a href="global.html#getUniversities">getUniversities</a></li><li><a href="global.html#getUniversityDepartments">getUniversityDepartments</a></li><li><a href="global.html#getUserHistory">getUserHistory</a></li><li><a href="global.html#getUserMetadata">getUserMetadata</a></li><li><a href="global.html#getVideosByPlaylist">getVideosByPlaylist</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#HomeNavigator">HomeNavigator</a></li><li><a href="global.html#HomeView">HomeView</a></li><li><a href="global.html#HTTP_STATUS_CODES">HTTP_STATUS_CODES</a></li><li><a href="global.html#isUserAuthenticated">isUserAuthenticated</a></li><li><a href="global.html#LoginContainer">LoginContainer</a></li><li><a href="global.html#PlaylistView">PlaylistView</a></li><li><a href="global.html#Reducer">Reducer</a></li><li><a href="global.html#removeStarredOffering">removeStarredOffering</a></li><li><a href="global.html#SearchContainer">SearchContainer</a></li><li><a href="global.html#setAuthToken">setAuthToken</a></li><li><a href="global.html#setUserData">setUserData</a></li><li><a href="global.html#signOutUser">signOutUser</a></li><li><a href="global.html#sortOfferings">sortOfferings</a></li><li><a href="global.html#Starred">Starred</a></li><li><a href="global.html#StarredNavigator">StarredNavigator</a></li><li><a href="global.html#StarView">StarView</a></li><li><a href="global.html#Store">Store</a></li><li><a href="global.html#truncateString">truncateString</a></li><li><a href="global.html#useLoadingIndicator">useLoadingIndicator</a></li><li><a href="global.html#useLoadingWrap">useLoadingWrap</a></li><li><a href="global.html#VideoCard">VideoCard</a></li><li><a href="global.html#VideoContainer">VideoContainer</a></li><li><a href="global.html#VideoView">VideoView</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Apr 28 2021 09:18:10 GMT-0500 (Central Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

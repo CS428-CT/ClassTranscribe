@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: containers/HomeContainer/Home.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: containers/HomeContainer/Home.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect } from 'react'
+import { TouchableNativeFeedback, FlatList, View, Text } from 'react-native'
+import { Picker } from '@react-native-community/picker'
+import PropTypes from 'prop-types'
+import { getOfferingsData, getStarredOfferingsData, getStarredOfferings } from '../../api/offerings'
+import { getUniversities, getUniversityDepartments } from '../../api/universities'
+import { getCurrentAuthenticatedUser } from '../../api/auth'
+import CourseCard from '../../components/Cards/CourseCard'
+import { STACK_SCREENS } from '../CTNavigationContainer/index'
+import styles from './Home.style'
+import { useLoadingWrap } from '../../hooks/useLoadingWrap'
+import { NO_STARRED_COURSES } from '../../constants'
+
+/**
+ * Contains the home screen of the application. Lists courses and gives the user the ability
+ * to search for courses. Clicking on a course shows othe playlists for it.
+ * @param {Object} A stack navigator
+ */
+const Home = ({ navigation }) => {
+  const currentUser = getCurrentAuthenticatedUser()
+  const loadingWrap = useLoadingWrap()
+  let universityId = currentUser.universityId
+  let departmentId = 'all'
+
+  /**
+   * Helper function to filter courses by university id
+   * @param offerings Pass in all offerings that student is allowed to access only
+   */
+  const filterCourses = (offerings) => {
+    const newOfferings = []
+    for (const i in offerings) {
+      if (offerings[i].term.universityId === universityId) {
+        if (departmentId === 'all' || offerings[i].courses[0].departmentId === departmentId) {
+          newOfferings.push(offerings[i])
+        }
+      }
+    }
+
+    return newOfferings
+  }
+
+  const [courses, setCourses] = useState([])
+  useEffect(() => {
+    const fetchCourseInfo = async () => {
+      let offerings
+      offerings = await getStarredOfferingsData()
+      if (offerings.length === 1) {
+        offerings = offerings[0]
+      }
+
+      const studentCourses = filterCourses(offerings)
+      setCourses(studentCourses)
+    }
+
+    return loadingWrap(fetchCourseInfo, 'fetchCourses')
+  }, [setCourses])
+
+  const onCourseSelected = (courseId) => {
+    navigation.push(STACK_SCREENS.COURSE_PLAYLISTS, { courseId })
+  }
+
+  /**
+   * Renders a single course in the course list.
+   * @param {Object} item The underlying data for the item to render.
+   */
+  const renderCourseItem = ({ item }) => {
+    if (item.length === 0) return null
+
+    const course = item.courses[0]
+    const { courseName } = item.offering
+    const courseDescription = item.offering.description
+    const courseId = item.offering.id
+    const isStarred = courseId in getStarredOfferings()
+
+    return (
+      &lt;View accessibilityRole="button" key={courseId}>
+        &lt;TouchableNativeFeedback
+          accessibilityRole="button"
+          onPress={() => onCourseSelected(courseId)}
+        >
+          &lt;View accessibilityRole="button" style={styles.cardContainer}>
+            &lt;CourseCard
+              offeringId={courseId}
+              departmentAcronym={course.departmentAcronym}
+              courseNumber={course.courseNumber}
+              courseName={courseName}
+              courseSection={item.offering.sectionName}
+              courseTerm={item.term.name}
+              courseDescription={courseDescription}
+              isCourseStarred={isStarred}
+              accessibilityRole="button"
+            />
+          &lt;/View>
+        &lt;/TouchableNativeFeedback>
+      &lt;/View>
+    )
+  }
+
+  /**
+   * Render universities' course offerings in a dropdown picker based on university id.
+   */
+  const renderUniversityDropDown = () => {
+    const [universities, setAllUniversities] = useState([])
+    useEffect(() => {
+      const fetchUniversities = async () => {
+        const allUnis = await getUniversities()
+        setAllUniversities(allUnis)
+      }
+      loadingWrap(fetchUniversities, 'fetchUniversities')
+    }, [setAllUniversities])
+
+    const universityItems = universities.map((uni) => {
+      return &lt;Picker.Item key={uni.id} value={uni.id} label={uni.name} />
+    })
+
+    const [university, setUniversity] = useState(universityId)
+    const onUniversitySelected = async (newUniversityId) => {
+      const updateDepartment = async () => {
+        setCourses([])
+        setUniversity(newUniversityId)
+        universityId = newUniversityId
+
+        const allCourses = await getOfferingsData()
+        const newCourses = filterCourses(allCourses)
+
+        setCourses(newCourses)
+      }
+
+      loadingWrap(updateDepartment, 'updateDepartment')
+    }
+
+    return (
+      &lt;View style={styles.universityDropdown}>
+        &lt;Picker
+          testID="uniPicker"
+          selectedValue={university}
+          onValueChange={(newUniversityId) => onUniversitySelected(newUniversityId)}
+        >
+          {universityItems}
+        &lt;/Picker>
+      &lt;/View>
+    )
+  }
+
+  /**
+   * Render department's course offerings in a dropdown picker based on department id.
+   */
+  const renderDepartmentsDropDown = () => {
+    const [departments, setAllDepartments] = useState([])
+    useEffect(
+      () => {
+        const fetchDepartments = async () => {
+          const allDept = await getUniversityDepartments(universityId)
+          setAllDepartments(allDept)
+        }
+
+        fetchDepartments()
+      },
+      [setAllDepartments],
+      universityId
+    )
+
+    const departmentItems = departments.map((dept) => {
+      return &lt;Picker.Item key={dept.id} value={dept.id} label={dept.name} />
+    })
+
+    const [department, setDepartment] = useState(departmentId)
+    const onDepartmentSelected = async (newDepartmentId) => {
+      const updateDepartment = async () => {
+        setCourses([])
+        setDepartment(newDepartmentId)
+        departmentId = newDepartmentId
+
+        const allCourses = await getOfferingsData()
+        const newCourses = filterCourses(allCourses)
+
+        setCourses(newCourses)
+      }
+
+      loadingWrap(updateDepartment, 'updateDepartment')
+    }
+
+    return (
+      &lt;View style={styles.dropdown}>
+        &lt;Picker
+          testID="deptPicker"
+          selectedValue={department}
+          onValueChange={(newDepartmentId) => onDepartmentSelected(newDepartmentId)}
+        >
+          &lt;Picker.Item key="all" value="all" label="All Departments" />
+          {departmentItems}
+        &lt;/Picker>
+      &lt;/View>
+    )
+  }
+
+  /**
+   * Renders all of the users' courses into a FlatList
+   */
+  const renderCourses = () => {
+    if (courses.length === 0) {
+      return (
+        &lt;Text testID="courseList" style={styles.noCourses}>
+          {NO_STARRED_COURSES}
+        &lt;/Text>
+      )
+    }
+
+    return (
+      &lt;FlatList
+        testID="courseList"
+        keyExtractor={(idxCourses, index) => index.toString()}
+        data={courses}
+        renderItem={renderCourseItem}
+      />
+    )
+  }
+
+  return (
+    &lt;View style={styles.viewStyle}>
+      {renderUniversityDropDown()}
+      {renderDepartmentsDropDown()}
+      {renderCourses()}
+    &lt;/View>
+  )
+}
+
+Home.propTypes = {
+  navigation: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+}
+
+export default Home
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addStarredOferring">addStarredOferring</a></li><li><a href="global.html#apiCall">apiCall</a></li><li><a href="global.html#Context">Context</a></li><li><a href="global.html#CourseCard">CourseCard</a></li><li><a href="global.html#CoursePlaylistsContainer">CoursePlaylistsContainer</a></li><li><a href="global.html#CoursePlaylistsView">CoursePlaylistsView</a></li><li><a href="global.html#CTNavigationContainer">CTNavigationContainer</a></li><li><a href="global.html#currentAuthenticatedUser">currentAuthenticatedUser</a></li><li><a href="global.html#DownloadContainer">DownloadContainer</a></li><li><a href="global.html#DownloadNavigator">DownloadNavigator</a></li><li><a href="global.html#DownloadView">DownloadView</a></li><li><a href="global.html#format">format</a></li><li><a href="global.html#getCurrentAuthenticatedUser">getCurrentAuthenticatedUser</a></li><li><a href="global.html#getDepartmentCourses">getDepartmentCourses</a></li><li><a href="global.html#getMedia">getMedia</a></li><li><a href="global.html#getOfferingData">getOfferingData</a></li><li><a href="global.html#getOfferingsByStudent">getOfferingsByStudent</a></li><li><a href="global.html#getOfferingsData">getOfferingsData</a></li><li><a href="global.html#getPlaylistsByOffering">getPlaylistsByOffering</a></li><li><a href="global.html#getStarredOfferings">getStarredOfferings</a></li><li><a href="global.html#getStarredOfferingsData">getStarredOfferingsData</a></li><li><a href="global.html#getUniversities">getUniversities</a></li><li><a href="global.html#getUniversityDepartments">getUniversityDepartments</a></li><li><a href="global.html#getUserHistory">getUserHistory</a></li><li><a href="global.html#getUserMetadata">getUserMetadata</a></li><li><a href="global.html#getVideosByPlaylist">getVideosByPlaylist</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#HomeNavigator">HomeNavigator</a></li><li><a href="global.html#HomeView">HomeView</a></li><li><a href="global.html#HTTP_STATUS_CODES">HTTP_STATUS_CODES</a></li><li><a href="global.html#isUserAuthenticated">isUserAuthenticated</a></li><li><a href="global.html#LoginContainer">LoginContainer</a></li><li><a href="global.html#PlaylistView">PlaylistView</a></li><li><a href="global.html#Reducer">Reducer</a></li><li><a href="global.html#removeStarredOffering">removeStarredOffering</a></li><li><a href="global.html#SearchContainer">SearchContainer</a></li><li><a href="global.html#setAuthToken">setAuthToken</a></li><li><a href="global.html#setUserData">setUserData</a></li><li><a href="global.html#signOutUser">signOutUser</a></li><li><a href="global.html#sortOfferings">sortOfferings</a></li><li><a href="global.html#Starred">Starred</a></li><li><a href="global.html#StarredNavigator">StarredNavigator</a></li><li><a href="global.html#StarView">StarView</a></li><li><a href="global.html#Store">Store</a></li><li><a href="global.html#truncateString">truncateString</a></li><li><a href="global.html#useLoadingIndicator">useLoadingIndicator</a></li><li><a href="global.html#useLoadingWrap">useLoadingWrap</a></li><li><a href="global.html#VideoCard">VideoCard</a></li><li><a href="global.html#VideoContainer">VideoContainer</a></li><li><a href="global.html#VideoView">VideoView</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Apr 28 2021 09:18:09 GMT-0500 (Central Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

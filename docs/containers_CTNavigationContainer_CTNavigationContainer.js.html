@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: containers/CTNavigationContainer/CTNavigationContainer.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: containers/CTNavigationContainer/CTNavigationContainer.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* eslint react/prop-types: "off" */
+import * as React from 'react'
+import { NavigationContainer } from '@react-navigation/native'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { createStackNavigator } from '@react-navigation/stack'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { STACK_SCREENS } from './index'
+import Home from '../HomeContainer/Home'
+import Starred from '../StarredContainer/Starred'
+import CoursePlaylistsContainer from '../CoursePlaylistsContainer/CoursePlaylistsContainer'
+import VideoContainer from '../VideoContainer/VideoContainer'
+import PlaylistContainer from '../PlaylistContainer/PlaylistContainer'
+import DownloadContainer from '../DownloadContainer/DownloadContainer'
+import SearchContainer from '../SearchContainer/SearchContainer'
+
+const Tab = createBottomTabNavigator()
+const Stack = createStackNavigator()
+
+/**
+ * Wraps the Home container so that it can
+ * receive the proper props
+ */
+const HomeView = ({ navigation, route }) => {
+  return &lt;Home starred={route.params.starred} navigation={navigation} />
+}
+
+/**
+ * Wraps the Starred container so that it can
+ * receive the proper props
+ */
+const StarView = ({ navigation }) => {
+  return &lt;Starred navigation={navigation} />
+}
+
+/**
+ * Wraps the CoursePlaylistsContainer so that it can
+ * receive the proper props
+ */
+const CoursePlaylistsView = ({ navigation, route }) => {
+  return &lt;CoursePlaylistsContainer courseId={route.params.courseId} navigation={navigation} />
+}
+
+/**
+ * Wraps the PlaylistContainer so that it can
+ * receive the proper props
+ */
+const PlaylistView = ({ navigation, route }) => {
+  return &lt;PlaylistContainer playlistId={route.params.playlistId} navigation={navigation} />
+}
+
+/**
+ * Wraps the VideoContainer so that it can
+ * receive the proper props
+ */
+const VideoView = ({ route }) => {
+  return (
+    &lt;VideoContainer
+      videos={route.params.videos}
+      index={route.params.index}
+      downloaded={route.params.downloaded}
+    />
+  )
+}
+
+/**
+ * Wraps the DownloadContainer so that it can
+ * receive the proper props
+ */
+const DownloadView = ({ navigation }) => {
+  return &lt;DownloadContainer navigation={navigation} />
+}
+
+/**
+ * The navigator of the starred tab. Contains a stack navigator.
+ */
+const StarredNavigator = () => {
+  return (
+    &lt;Stack.Navigator initialRouteName={STACK_SCREENS.STARRED}>
+      &lt;Stack.Screen name={STACK_SCREENS.STARRED} component={StarView} initialParams={{}} />
+      &lt;Stack.Screen name={STACK_SCREENS.COURSE_PLAYLISTS} component={CoursePlaylistsView} />
+      &lt;Stack.Screen name={STACK_SCREENS.PLAYLIST} component={PlaylistView} />
+      &lt;Stack.Screen name={STACK_SCREENS.VIDEO} component={VideoView} />
+      &lt;Stack.Screen name={STACK_SCREENS.DOWNLOAD} component={DownloadView} />
+    &lt;/Stack.Navigator>
+  )
+}
+
+/**
+ * The navigator of the home tab. Contains a stack navigator.
+ */
+const HomeNavigator = () => {
+  return (
+    &lt;Stack.Navigator initialRouteName={STACK_SCREENS.HOME}>
+      &lt;Stack.Screen
+        name={STACK_SCREENS.HOME}
+        component={HomeView}
+        initialParams={{ starred: true }}
+      />
+      &lt;Stack.Screen name={STACK_SCREENS.COURSE_PLAYLISTS} component={CoursePlaylistsView} />
+      &lt;Stack.Screen name={STACK_SCREENS.PLAYLIST} component={PlaylistView} />
+      &lt;Stack.Screen name={STACK_SCREENS.VIDEO} component={VideoView} />
+      &lt;Stack.Screen name={STACK_SCREENS.DOWNLOAD} component={DownloadView} />
+    &lt;/Stack.Navigator>
+  )
+}
+
+/**
+ * The navigator for the download tab. Contains a stack navigator.
+ */
+const DownloadNavigator = () => {
+  return (
+    &lt;Stack.Navigator initialRouteName={STACK_SCREENS.DOWNLOAD}>
+      &lt;Stack.Screen name={STACK_SCREENS.DOWNLOAD} component={DownloadView} />
+      &lt;Stack.Screen name={STACK_SCREENS.VIDEO} component={VideoView} />
+    &lt;/Stack.Navigator>
+  )
+}
+
+/**
+ * This is the root navigator for the entire application.
+ * Contains a starred tab, search tab, and downloads tab. Within each tab, there may be additional navigators
+ * such as a stack navigator.
+ */
+const CTNavigationContainer = () => {
+  return (
+    &lt;NavigationContainer>
+      &lt;Tab.Navigator>
+        &lt;Tab.Screen
+          name="Search"
+          component={SearchContainer}
+          options={{
+            tabBarLabel: 'Search',
+            tabBarIcon: ({ color, size }) => (
+              &lt;MaterialCommunityIcons name="text-search" color={color} size={size} />
+            ),
+          }}
+        />
+        &lt;Tab.Screen
+          name="Home"
+          component={HomeNavigator}
+          options={{
+            tabBarLabel: 'Home',
+            tabBarIcon: ({ color, size }) => (
+              &lt;MaterialCommunityIcons name="star" color={color} size={size} />
+            ),
+          }}
+        />
+        &lt;Tab.Screen
+          name="Starred"
+          component={StarredNavigator}
+          options={{
+            tabBarLabel: 'Starred courses',
+            tabBarIcon: ({ color, size }) => (
+              &lt;MaterialCommunityIcons name="star" color={color} size={size} />
+            ),
+          }}
+        />
+        &lt;Tab.Screen
+          name="Download"
+          component={DownloadNavigator}
+          options={{
+            tabBarLabel: 'Download',
+            tabBarIcon: ({ color, size }) => (
+              &lt;MaterialCommunityIcons name="download" color={color} size={size} />
+            ),
+          }}
+        />
+      &lt;/Tab.Navigator>
+    &lt;/NavigationContainer>
+  )
+}
+
+export default CTNavigationContainer
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addStarredOferring">addStarredOferring</a></li><li><a href="global.html#apiCall">apiCall</a></li><li><a href="global.html#Context">Context</a></li><li><a href="global.html#CourseCard">CourseCard</a></li><li><a href="global.html#CoursePlaylistsContainer">CoursePlaylistsContainer</a></li><li><a href="global.html#CoursePlaylistsView">CoursePlaylistsView</a></li><li><a href="global.html#CTNavigationContainer">CTNavigationContainer</a></li><li><a href="global.html#currentAuthenticatedUser">currentAuthenticatedUser</a></li><li><a href="global.html#DownloadContainer">DownloadContainer</a></li><li><a href="global.html#DownloadNavigator">DownloadNavigator</a></li><li><a href="global.html#DownloadView">DownloadView</a></li><li><a href="global.html#format">format</a></li><li><a href="global.html#getCurrentAuthenticatedUser">getCurrentAuthenticatedUser</a></li><li><a href="global.html#getDepartmentCourses">getDepartmentCourses</a></li><li><a href="global.html#getMedia">getMedia</a></li><li><a href="global.html#getOfferingData">getOfferingData</a></li><li><a href="global.html#getOfferingsByStudent">getOfferingsByStudent</a></li><li><a href="global.html#getOfferingsData">getOfferingsData</a></li><li><a href="global.html#getPlaylistsByOffering">getPlaylistsByOffering</a></li><li><a href="global.html#getStarredOfferings">getStarredOfferings</a></li><li><a href="global.html#getStarredOfferingsData">getStarredOfferingsData</a></li><li><a href="global.html#getUniversities">getUniversities</a></li><li><a href="global.html#getUniversityDepartments">getUniversityDepartments</a></li><li><a href="global.html#getUserHistory">getUserHistory</a></li><li><a href="global.html#getUserMetadata">getUserMetadata</a></li><li><a href="global.html#getVideosByPlaylist">getVideosByPlaylist</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#HomeNavigator">HomeNavigator</a></li><li><a href="global.html#HomeView">HomeView</a></li><li><a href="global.html#HTTP_STATUS_CODES">HTTP_STATUS_CODES</a></li><li><a href="global.html#isUserAuthenticated">isUserAuthenticated</a></li><li><a href="global.html#LoginContainer">LoginContainer</a></li><li><a href="global.html#PlaylistView">PlaylistView</a></li><li><a href="global.html#Reducer">Reducer</a></li><li><a href="global.html#removeStarredOffering">removeStarredOffering</a></li><li><a href="global.html#SearchContainer">SearchContainer</a></li><li><a href="global.html#setAuthToken">setAuthToken</a></li><li><a href="global.html#setUserData">setUserData</a></li><li><a href="global.html#signOutUser">signOutUser</a></li><li><a href="global.html#sortOfferings">sortOfferings</a></li><li><a href="global.html#Starred">Starred</a></li><li><a href="global.html#StarredNavigator">StarredNavigator</a></li><li><a href="global.html#StarView">StarView</a></li><li><a href="global.html#Store">Store</a></li><li><a href="global.html#truncateString">truncateString</a></li><li><a href="global.html#useLoadingIndicator">useLoadingIndicator</a></li><li><a href="global.html#useLoadingWrap">useLoadingWrap</a></li><li><a href="global.html#VideoCard">VideoCard</a></li><li><a href="global.html#VideoContainer">VideoContainer</a></li><li><a href="global.html#VideoView">VideoView</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Apr 28 2021 09:18:09 GMT-0500 (Central Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
