@@ -14,8 +14,6 @@ export const getOfferingData = async (offeringId) => {
   return apiCall(url)
 }
 
-/// ////////////////       STUDENT OFFERING FUNCTIONS       ////////////////////
-
 /**
  * Gets the data for an offering from the CT API if the student is authenticated
  * @returns The offering data
@@ -52,8 +50,18 @@ export const getOfferingsData = async () => {
   }
 
   await Promise.all(requests).catch((e) => console.error(e))
+  if (offerings.length > 1)
+    return sortOfferings(offerings)
 
-  if (offerings.length > 1) {
+  return offerings
+}
+
+/**
+ * Sorts offerings by their department acronym
+ * @param {Array} offerings Array of offerings data from the backend
+ * @returns Sorted array of offerings
+ */
+const sortOfferings = (offerings) => {
     const sortedOfferings = offerings.sort((a, b) => {
       const courseA = a.courses[0].departmentAcronym
       const courseB = b.courses[0].departmentAcronym
@@ -63,11 +71,8 @@ export const getOfferingsData = async () => {
     })
 
     return sortedOfferings
-  }
-  return offerings
 }
 
-/// ////////////////       STARRED OFFERING CALLS       //////////////////////
 
 /**
  * Returns an array of all the starred offering data for the current user.
@@ -138,6 +143,7 @@ export const addStarredOferring = async (offeringID) => {
 /**
  * Removes the given starred offering from the users list of starred offerings
  * @param {String} offeringID The offering ID to remove
+ * @returns true on success
  */
 export const removeStarredOffering = async (offeringID) => {
   if (!isUserAuthenticated()) return false

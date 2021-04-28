@@ -13,12 +13,13 @@ const MAX_DESCRIPTION_LENGTH = 100
  * @param {String} departmentAcronym Example: "CS" or "ECE"
  * @param {String} courseNumber Example: "400" or "429"
  * @param {String} courseName The name of the course to be displayed
+ * @param {String} courseSection Example: "AL1" or "ADD"
+ * @param {String} courseTerm Example: "SP 21" or "FA 19"
  * @param {String} courseDescription The full description of the course. Long course names will be truncated.
  * @param {Boolean} isCourseStarred Indicates whether the user has starred the course
  * @param {String} offeringId The unique ID for this offering
  * @returns
  */
-
 const CourseCard = ({
   departmentAcronym,
   offeringId,
