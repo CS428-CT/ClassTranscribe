@@ -117,6 +117,17 @@ const DownloadNavigator = () => {
 }
 
 /**
+ * The navigator for the search tab. Contains a stack navigator.
+ */
+const SearchNavigator = () => {
+  return (
+    <Stack.Navigator initialRouteName={STACK_SCREENS.SEARCH}>
+      <Stack.Screen name={STACK_SCREENS.SEARCH} component={SearchContainer} />
+    </Stack.Navigator>
+  )
+}
+
+/**
  * This is the root navigator for the entire application.
  * Contains a home tab and a video tab. Within each tab, there may be additional navigators
  * such as a stack navigator.
@@ -127,7 +138,7 @@ const CTNavigationContainer = () => {
       <Tab.Navigator initialRouteName={STACK_SCREENS.STARRED}>
         <Tab.Screen
           name={STACK_SCREENS.SEARCH}
-          component={SearchContainer}
+          component={SearchNavigator}
           options={{
             tabBarLabel: 'Search',
             tabBarIcon: ({ color, size }) => (

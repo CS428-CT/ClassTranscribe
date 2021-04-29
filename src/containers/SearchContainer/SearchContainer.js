@@ -206,8 +206,8 @@ const SearchContainer = () => {
 
   return (
     <View style={styles.viewStyle}>
-      {renderDepartmentsDropdown()}
       {renderUniversitiesDropdown()}
+      {renderDepartmentsDropdown()}
       {renderSearchBar()}
       {renderCourses()}
     </View>
