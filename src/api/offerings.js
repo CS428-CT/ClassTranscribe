@@ -88,19 +88,19 @@ export const getStarredOfferingsData = async () => {
     if (offeringData != null) offerings.push(offeringData)
   }
 
-  if (offerings.length > 1) {
-    const sortedOfferings = offerings.sort((a, b) => {
-      const courseA = a.courses[0].departmentAcronym
-      const courseB = b.courses[0].departmentAcronym
+  return sortOfferingsByDepartment(offerings);
+}
 
-      const lessThan = courseA < courseB ? -1 : 0
-      return courseA > courseB ? 1 : lessThan
-    })
+// TODO: Write test for this
+export const sortOfferingsByDepartment = (offerings) => {
+  const sortedOfferings = offerings.sort((a, b) => {
+    const courseA = a.courses[0].departmentAcronym
+    const courseB = b.courses[0].departmentAcronym
 
-    return sortedOfferings
-  }
+    return courseA - courseB;
+  })
 
-  return offerings
+  return sortedOfferings
 }
 
 /**
