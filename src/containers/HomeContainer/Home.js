@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { TouchableNativeFeedback, FlatList, View, Text } from 'react-native'
-import { Picker } from '@react-native-community/picker'
 import PropTypes from 'prop-types'
-import { getOfferingsData, getStarredOfferingsData, getStarredOfferings } from '../../api/offerings'
-import { getUniversities, getUniversityDepartments } from '../../api/universities'
+import { getStarredOfferingsData, getStarredOfferings } from '../../api/offerings'
 import { getCurrentAuthenticatedUser } from '../../api/auth'
 import CourseCard from '../../components/Cards/CourseCard'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
@@ -94,104 +92,6 @@ const Home = ({ navigation }) => {
       </View>
     )
   }
-
-  // /**
-  //  * Render universities' course offerings in a dropdown picker based on university id.
-  //  */
-  // const renderUniversityDropDown = () => {
-  //   const [universities, setAllUniversities] = useState([])
-  //   useEffect(() => {
-  //     const fetchUniversities = async () => {
-  //       const allUnis = await getUniversities()
-  //       setAllUniversities(allUnis)
-  //     }
-  //     loadingWrap(fetchUniversities, 'fetchUniversities')
-  //   }, [setAllUniversities])
-
-  //   const universityItems = universities.map((uni) => {
-  //     return <Picker.Item key={uni.id} value={uni.id} label={uni.name} />
-  //   })
-
-  //   const [university, setUniversity] = useState(universityId)
-  //   const onUniversitySelected = async (newUniversityId) => {
-  //     const updateDepartment = async () => {
-  //       setCourses([])
-  //       setUniversity(newUniversityId)
-  //       universityId = newUniversityId
-
-  //       const allCourses = await getOfferingsData()
-  //       const newCourses = filterCourses(allCourses)
-
-  //       setCourses(newCourses)
-  //     }
-
-  //     loadingWrap(updateDepartment, 'updateDepartment')
-  //   }
-
-  //   return (
-  //     <View style={styles.universityDropdown}>
-  //       <Picker
-  //         testID="uniPicker"
-  //         selectedValue={university}
-  //         onValueChange={(newUniversityId) => onUniversitySelected(newUniversityId)}
-  //       >
-  //         {universityItems}
-  //       </Picker>
-  //     </View>
-  //   )
-  // }
-
-  // /**
-  //  * Render department's course offerings in a dropdown picker based on department id.
-  //  */
-  // const renderDepartmentsDropDown = () => {
-  //   const [departments, setAllDepartments] = useState([])
-  //   useEffect(
-  //     () => {
-  //       const fetchDepartments = async () => {
-  //         const allDept = await getUniversityDepartments(universityId)
-  //         setAllDepartments(allDept)
-  //       }
-
-  //       fetchDepartments()
-  //     },
-  //     [setAllDepartments],
-  //     universityId
-  //   )
-
-  //   const departmentItems = departments.map((dept) => {
-  //     return <Picker.Item key={dept.id} value={dept.id} label={dept.name} />
-  //   })
-
-  //   const [department, setDepartment] = useState(departmentId)
-  //   const onDepartmentSelected = async (newDepartmentId) => {
-  //     const updateDepartment = async () => {
-  //       setCourses([])
-  //       setDepartment(newDepartmentId)
-  //       departmentId = newDepartmentId
-
-  //       const allCourses = await getOfferingsData()
-  //       const newCourses = filterCourses(allCourses)
-
-  //       setCourses(newCourses)
-  //     }
-
-  //     loadingWrap(updateDepartment, 'updateDepartment')
-  //   }
-
-  //   return (
-  //     <View style={styles.dropdown}>
-  //       <Picker
-  //         testID="deptPicker"
-  //         selectedValue={department}
-  //         onValueChange={(newDepartmentId) => onDepartmentSelected(newDepartmentId)}
-  //       >
-  //         <Picker.Item key="all" value="all" label="All Departments" />
-  //         {departmentItems}
-  //       </Picker>
-  //     </View>
-  //   )
-  // }
 
   /**
    * Renders all of the users' courses into a FlatList

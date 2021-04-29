@@ -21,34 +21,6 @@ const SearchContainer = () => {
   const [departmentId, setDepartmentId] = useState('all');
   const loadingWrap = useLoadingWrap()
 
-  /**
-   * Helper function to filter courses by the current query
-   * @param offerings Pass in all offerings that student is allowed to access
-   */
-  const filterCourses = (offerings) => {
-    const newOfferings = []
-
-    offerings.forEach((offering) => {
-      if (offering?.term?.universityId.toString() !== universityId.toString())
-        return;
-
-      if (departmentId !== 'all' && offering?.courses?.length && offering?.courses[0]?.departmentId !== departmentId)
-        return;
-
-      const course = offering.courses[0] || {}
-      const departmentAcronym = course.departmentAcronym
-      const courseNumber = course?.courseNumber
-      const courseName = offering?.offering?.courseName
-      const courseDescription = offering?.offering?.description
-      const searchString = `${departmentAcronym} ${courseNumber} ${courseName} ${courseDescription}`
-
-      if (searchString.toUpperCase().includes(currentQuery.toUpperCase()))
-        newOfferings.push(offering)
-    })
-
-    return newOfferings
-  }
-
   useEffect(() => {
     const fetchInfo = async () => {
       setAllCourses([])
@@ -80,6 +52,35 @@ const SearchContainer = () => {
   useEffect(() => {
     setFilteredCourses(filterCourses(allCourses))
   }, [departmentId, universityId])
+
+  /**
+   * Helper function to filter courses by the current query
+   * @param offerings Pass in all offerings that student is allowed to access
+   */
+  const filterCourses = (offerings) => {
+    const newOfferings = []
+
+    offerings.forEach((offering) => {
+      if (offering?.term?.universityId.toString() !== universityId.toString())
+        return;
+
+      if (departmentId !== 'all' && offering?.courses?.length && offering?.courses[0]?.departmentId !== departmentId)
+        return;
+
+      const course = offering.courses[0] || {}
+      const departmentAcronym = course.departmentAcronym
+      const courseNumber = course?.courseNumber
+      const courseName = offering?.offering?.courseName
+      const courseDescription = offering?.offering?.description
+      const searchString = `${departmentAcronym} ${courseNumber} ${courseName} ${courseDescription}`
+
+      if (searchString.toUpperCase().includes(currentQuery.toUpperCase()))
+        newOfferings.push(offering)
+    })
+
+    return newOfferings
+  }
+
 
   const onQueryChange = (text) => {
     setCurrentQuery(text)
