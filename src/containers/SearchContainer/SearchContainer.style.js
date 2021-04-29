@@ -23,6 +23,18 @@ const HomeStyle = StyleSheet.create({
     paddingHorizontal: 4,
     borderRadius: 5,
   },
+
+  dropdown: {
+    flex: 0,
+    width: '95%',
+    backgroundColor: '#FFF',
+    borderBottomColor: '#333',
+    borderColor: 'transparent',
+    borderWidth: 0.5,
+    overflow: 'hidden',
+    marginBottom: 10,
+  },
+
 })
 
 export default HomeStyle

@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from 'react'
 import { TouchableNativeFeedback, FlatList, View, Text } from 'react-native'
+import { Picker } from '@react-native-community/picker'
 import { TextInput } from 'react-native-paper'
 import { getOfferingsData, getStarredOfferings } from '../../api/offerings'
 import CourseCard from '../../components/Cards/CourseCard'
 import styles from './SearchContainer.style'
 import { useLoadingWrap } from '../../hooks/useLoadingWrap'
 import { NO_COURSES } from '../../constants'
+import { getCurrentAuthenticatedUser } from '../../api/auth'
+import { getUniversityDepartments } from '../../api/universities'
 
 const SearchContainer = () => {
   const [currentQuery, setCurrentQuery] = useState('')
   const [filteredCourses, setFilteredCourses] = useState([])
   const [allCourses, setAllCourses] = useState([])
   const [isSearchDisabled, setSearchDisabled] = useState(true)
+  const [departments, setAllDepartments] = useState([])
+  const [universityId, setUniversityId] = useState(getCurrentAuthenticatedUser()?.universityId)
+  const [departmentId, setDepartmentId] = useState('all');
   const loadingWrap = useLoadingWrap()
 
   /**
@@ -22,6 +28,14 @@ const SearchContainer = () => {
     const newOfferings = []
 
     offerings.forEach((offering) => {
+      if (offering?.term?.universityId !== universityId)
+        return;
+
+        console.log(departmentId)
+        console.log(offering?.courses[0]?.departmentId)
+      if (departmentId !== 'all' && offering?.courses?.length && offering?.courses[0]?.departmentId !== departmentId)
+        return;
+
       const course = offering.courses[0] || {}
       const departmentAcronym = course.departmentAcronym
       const courseNumber = course?.courseNumber
@@ -37,21 +51,34 @@ const SearchContainer = () => {
   }
 
   useEffect(() => {
-    const fetchCourseInfo = async () => {
+    const fetchInfo = async () => {
       setAllCourses([])
       setFilteredCourses([])
+      setAllDepartments([])
       setSearchDisabled(true)
+
       const offerings = await getOfferingsData()
+      const allDepts = await getUniversityDepartments(universityId)
+
       setAllCourses(offerings)
       setFilteredCourses(offerings)
+      setAllDepartments(allDepts)
       setSearchDisabled(false)
     }
-    return loadingWrap(fetchCourseInfo)
-  }, [setAllCourses])
+    return loadingWrap(fetchInfo, "fetchInfo")
+  }, [setAllCourses, setFilteredCourses, setAllDepartments, setSearchDisabled, universityId])
+
+  useEffect(() => {
+    setFilteredCourses(filterCourses(allCourses))
+  }, [departmentId, universityId])
 
   const onQueryChange = (text) => {
     setCurrentQuery(text)
     setFilteredCourses(filterCourses(allCourses))
+  }
+
+  const onDepartmentSelected = async (newDepartmentId) => {
+    setDepartmentId(newDepartmentId)
   }
 
   /**
@@ -103,6 +130,7 @@ const SearchContainer = () => {
   }
 
   const renderCourses = () => {
+    console.log("RERENDERING")
     if (filteredCourses.length === 0) {
       return (
         <Text testID="courseList" style={styles.noCourses}>
@@ -121,8 +149,31 @@ const SearchContainer = () => {
     )
   }
 
+  // /**
+  //  * Render department's course offerings in a dropdown picker based on department id.
+  //  */
+  const renderDepartmentsDropdown = () => {
+    const departmentItems = departments.map((dept) => {
+      return <Picker.Item key={dept.id} value={dept.id} label={dept.name} />
+    })
+
+    return (
+      <View style={styles.dropdown}>
+        <Picker
+          testID="deptPicker"
+          selectedValue={departmentId}
+          onValueChange={(newDepartmentId) => onDepartmentSelected(newDepartmentId)}
+        >
+          <Picker.Item key="all" value="all" label="All Departments" />
+          {departmentItems}
+        </Picker>
+      </View>
+    )
+  }
+
   return (
     <View style={styles.viewStyle}>
+      {renderDepartmentsDropdown()}
       {renderSearchBar()}
       {renderCourses()}
     </View>
