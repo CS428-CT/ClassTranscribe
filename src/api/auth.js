@@ -4,6 +4,16 @@ import { REFERRER_URL } from '../constants'
 import { ENDPOINTS } from './api-requests'
 
 /**
+ * Object contains the following attributes:
+ *     - authToken: The user's authentication token
+ *     - emailId: The user's email
+ *     - metaData: An object containing user preferences, such as "starredOfferings"
+ *     - universityId: ID of the user's university
+ *     - userId: ID of user
+ */
+let currentAuthenticatedUser = null
+
+/**
  * Interceptor signs every request with the token of the user.
  * If user is not authenticated, then nothing happens
  */
@@ -20,29 +30,17 @@ axios.interceptors.request.use(
 )
 
 /**
- * Object contains the following attributes:
- *     - authToken: The user's authentication token
- *     - emailId: The user's email
- *     - metaData: An object containing user preferences, such as "starredOfferings"
- *     - universityId: ID of the user's university
- *     - userId: ID of user
- */
-let currentAuthenticatedUser = null
-
-/**
  * Gets all metdata for the authenticted user and stores it locally. Metdata includes starred courses.
  */
 export const getUserMetadata = async () => {
   if (!isUserAuthenticated()) return
 
-  try {
-    const resp = await axios.get(ENDPOINTS.USER_METADATA)
-    if (resp?.status !== HTTP_STATUS_CODES.OK) return
-    currentAuthenticatedUser.metadata = {}
-    currentAuthenticatedUser.metadata.starredOfferings = resp.data.starredOfferings
-  } catch (error) {
-    console.error(error)
-  }
+  const starredOfferings = apiCall(ENDPOINTS.USER_METADATA)
+  if (!starredOfferings)
+    return;
+
+  currentAuthenticatedUser.metadata = {}
+  currentAuthenticatedUser.metadata.starredOfferings = starredOfferings;
 }
 
 /**
