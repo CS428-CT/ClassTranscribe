@@ -53,26 +53,33 @@ const SearchContainer = () => {
     const fetchInfo = async () => {
       setAllCourses([])
       setFilteredCourses([])
-      setAllDepartments([])
       setAllUniversities([])
       setSearchDisabled(true)
 
       const offerings = await getOfferingsData()
-      const allDepts = await getUniversityDepartments(universityId)
       const allUnis = await getUniversities()
 
       setAllCourses(offerings)
       setFilteredCourses(filterCourses(offerings))
-      setAllDepartments(allDepts)
       setAllUniversities(allUnis)
       setSearchDisabled(false)
     }
-    return loadingWrap(fetchInfo, "fetchInfo")
-  }, [setAllCourses, setFilteredCourses, setAllDepartments, setSearchDisabled, universityId])
+    return loadingWrap(fetchInfo, "fetchCourseAndUniInfo")
+  }, [setAllCourses, setFilteredCourses, setAllDepartments, setSearchDisabled])
+
+  useEffect(() => {
+    const fetchInfo = async () => {
+      setAllDepartments([])
+      const allDepts = await getUniversityDepartments(universityId)
+      setAllDepartments(allDepts)
+    }
+
+    return loadingWrap(fetchInfo, "fetchDeptInfo")
+  }, [universityId])
 
   useEffect(() => {
     setFilteredCourses(filterCourses(allCourses))
-  }, [departmentId])
+  }, [departmentId, universityId])
 
   const onQueryChange = (text) => {
     setCurrentQuery(text)
