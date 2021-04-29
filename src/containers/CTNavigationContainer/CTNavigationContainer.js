@@ -129,7 +129,7 @@ const SearchNavigator = () => {
 
 /**
  * This is the root navigator for the entire application.
- * Contains a home tab and a video tab. Within each tab, there may be additional navigators
+ * Contains a starred tab, search tab, and downloads tab. Within each tab, there may be additional navigators
  * such as a stack navigator.
  */
 const CTNavigationContainer = () => {

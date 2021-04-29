@@ -5,6 +5,7 @@ import { useLoadingIndicator } from './useLoadingIndicator'
  * Custom hook for displaying a loading indicator while a function executes.
  * The hook returns a function that takes another function as a parameter.
  * The hooks returned function also returns a cleanup function for useEffect
+ * @returns A function that takes another function as a parameter. This function will "loadingWrap" the parameter function when called.
  */
 export const useLoadingWrap = () => {
   const setLoading = useLoadingIndicator()

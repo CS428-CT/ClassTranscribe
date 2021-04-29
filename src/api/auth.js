@@ -29,6 +29,9 @@ axios.interceptors.request.use(
  */
 let currentAuthenticatedUser = null
 
+/**
+ * Gets all metdata for the authenticted user and stores it locally. Metdata includes starred courses.
+ */
 export const getUserMetadata = async () => {
   if (!isUserAuthenticated()) return
 

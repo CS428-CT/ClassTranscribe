@@ -7,6 +7,12 @@ import { getVideosByPlaylist } from '../../api/playlists'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
 import { useLoadingWrap } from '../../hooks/useLoadingWrap'
 
+/**
+ * Renders screen that shows all videos for a given playlist
+ * @param {String} playlistId The ID of the playlist to show the videos for
+ * @param {Object} navigation The stack navigator to use
+ * @returns Children of component
+ */
 const PlaylistContainer = ({ navigation, playlistId }) => {
   const [videos, setVideos] = useState([])
   const loadingWrap = useLoadingWrap()

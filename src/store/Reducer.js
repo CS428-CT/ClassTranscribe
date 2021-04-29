@@ -1,5 +1,11 @@
 const { REDUCER_ACTIONS } = require('../constants')
 
+/**
+ * Reducer for the global store. Called automatically by React framework
+ * @param {Object} state The current state of the global store
+ * @param {Object} action The action being performed
+ * @returns The updated state
+ */
 const Reducer = (state, action) => {
   const handleSetLoading = () => {
     return {
