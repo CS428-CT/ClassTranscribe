@@ -75,7 +75,7 @@
   "scripts": {
     "start": "expo start",
     "docs": "jsdoc -c jsdoc.conf.json",
-    "test": "jest --passWithNoTests --runInBand --detectOpenHandles --forceExit",
+    "test": "jest --passWithNoTests --runInBand --detectOpenHandles --forceExit --bail",
     "android": "expo start --android",
     "build-android": "expo build:android",
     "build-ios": "expo build:ios",
