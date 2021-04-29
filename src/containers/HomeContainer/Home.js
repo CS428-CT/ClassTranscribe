@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { TouchableNativeFeedback, FlatList, View, Text } from 'react-native'
 import PropTypes from 'prop-types'
 import { getStarredOfferingsData, getStarredOfferings } from '../../api/offerings'
-import { getCurrentAuthenticatedUser } from '../../api/auth'
 import CourseCard from '../../components/Cards/CourseCard'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
 import styles from './Home.style'
@@ -14,24 +13,12 @@ import { NO_STARRED_COURSES } from '../../constants'
  * to search for courses. Clicking on a course shows the playlists for it.
  */
 const Home = ({ navigation }) => {
-  const currentUser = getCurrentAuthenticatedUser()
   const loadingWrap = useLoadingWrap()
-  let universityId = currentUser.universityId
-  let departmentId = 'all'
 
-  /**
-   * Helper function to filter courses by university id
-   * @param offerings Pass in all offerings that student is allowed to access only
-   */
   const filterCourses = (offerings) => {
     const newOfferings = []
-    for (const i in offerings) {
-      if (offerings[i].term.universityId === universityId) {
-        if (departmentId === 'all' || offerings[i].courses[0].departmentId === departmentId) {
-          newOfferings.push(offerings[i])
-        }
-      }
-    }
+    for (const i in offerings)
+      newOfferings.push(offerings[i])
 
     return newOfferings
   }
