@@ -7,7 +7,7 @@ import styles from './VideoCard.style'
  * Renders information about the watch history of a video
  * @param {String} name The video name
  * @param {String} ratio A number in [0, 100] representing the percent of the video watched by the user
- * @returns
+ * @returns Children of component
  */
 const VideoCard = ({ name, ratio }) => {
   return (

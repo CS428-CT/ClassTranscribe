@@ -20,7 +20,7 @@ const REFERER = 'https://classtranscribe.illinois.edu/video?id=5ce157b0-713a-418
  * @param {Object} videos An array of video data for this playlist
  * @param {Number} index The current selected video index within the playlist
  * @param {Boolean} downloaded True if downloaded, false otherwise
- * @returns
+ * @returns Children of component
  */
 const VideoContainer = ({ videos, index, downloaded }) => {
   const [vidIndex, setVidIndex] = useState(index)

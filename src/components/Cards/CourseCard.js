@@ -18,7 +18,7 @@ const MAX_DESCRIPTION_LENGTH = 100
  * @param {String} courseDescription The full description of the course. Long course names will be truncated.
  * @param {Boolean} isCourseStarred Indicates whether the user has starred the course
  * @param {String} offeringId The unique ID for this offering
- * @returns
+ * @returns Children of component
  */
 const CourseCard = ({
   departmentAcronym,

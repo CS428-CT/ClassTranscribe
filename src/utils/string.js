@@ -24,7 +24,7 @@ const replaceAll = (string, search, replace) => {
  * The string is cut to size maxLength and "..." is added to the end of it.
  * @param {String} str string to truncate
  * @param {Number} maxLength the maximum length for the string before truncation happens
- * @returns
+ * @returns The truncated string with elipses if needed
  */
 export const truncateString = (str, maxLength) => {
   if (!str) return ''
