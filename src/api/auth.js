@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { HTTP_STATUS_CODES } from '.'
 import { REFERRER_URL } from '../constants'
 import { apiCall, ENDPOINTS } from './api-requests'
 
@@ -36,11 +35,10 @@ export const getUserMetadata = async () => {
   if (!isUserAuthenticated()) return
 
   const data = await apiCall(ENDPOINTS.USER_METADATA)
-  if (!data)
-    return;
+  if (!data) return
 
   currentAuthenticatedUser.metadata = {}
-  currentAuthenticatedUser.metadata.starredOfferings = data.starredOfferings;
+  currentAuthenticatedUser.metadata.starredOfferings = data.starredOfferings
 }
 
 /**

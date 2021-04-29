@@ -30,7 +30,7 @@ const PlaylistContainer = ({ navigation, playlistId }) => {
       }
     }
 
-    return loadingWrap(fetchVideos, "fetchVideos")
+    return loadingWrap(fetchVideos, 'fetchVideos')
   }, [playlistId, setVideos])
 
   const onVideoSelected = (videoData) => {
