@@ -18,7 +18,7 @@ const Home = ({ navigation }) => {
   const [courses, setCourses] = useState([])
   useEffect(() => {
     const fetchCourseInfo = async () => {
-      let offerings = await getStarredOfferingsData()
+      const offerings = await getStarredOfferingsData()
       setCourses(offerings)
     }
 
