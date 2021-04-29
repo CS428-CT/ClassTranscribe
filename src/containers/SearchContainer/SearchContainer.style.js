@@ -16,7 +16,6 @@ const HomeStyle = StyleSheet.create({
 
   search: {
     width: '92%',
-    marginTop: '2%',
     marginBottom: '2%',
     justifyContent: 'space-between',
     paddingVertical: 4,
