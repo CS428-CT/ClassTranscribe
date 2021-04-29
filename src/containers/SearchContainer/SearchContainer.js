@@ -8,7 +8,7 @@ import styles from './SearchContainer.style'
 import { useLoadingWrap } from '../../hooks/useLoadingWrap'
 import { NO_COURSES } from '../../constants'
 import { getCurrentAuthenticatedUser } from '../../api/auth'
-import { getUniversityDepartments } from '../../api/universities'
+import { getUniversities, getUniversityDepartments } from '../../api/universities'
 
 const SearchContainer = () => {
   const [currentQuery, setCurrentQuery] = useState('')
@@ -16,6 +16,7 @@ const SearchContainer = () => {
   const [allCourses, setAllCourses] = useState([])
   const [isSearchDisabled, setSearchDisabled] = useState(true)
   const [departments, setAllDepartments] = useState([])
+  const [universities, setAllUniversities] = useState([])
   const [universityId, setUniversityId] = useState(getCurrentAuthenticatedUser()?.universityId)
   const [departmentId, setDepartmentId] = useState('all');
   const loadingWrap = useLoadingWrap()
@@ -28,11 +29,9 @@ const SearchContainer = () => {
     const newOfferings = []
 
     offerings.forEach((offering) => {
-      if (offering?.term?.universityId !== universityId)
+      if (offering?.term?.universityId.toString() !== universityId.toString())
         return;
 
-        console.log(departmentId)
-        console.log(offering?.courses[0]?.departmentId)
       if (departmentId !== 'all' && offering?.courses?.length && offering?.courses[0]?.departmentId !== departmentId)
         return;
 
@@ -55,14 +54,17 @@ const SearchContainer = () => {
       setAllCourses([])
       setFilteredCourses([])
       setAllDepartments([])
+      setAllUniversities([])
       setSearchDisabled(true)
 
       const offerings = await getOfferingsData()
       const allDepts = await getUniversityDepartments(universityId)
+      const allUnis = await getUniversities()
 
       setAllCourses(offerings)
-      setFilteredCourses(offerings)
+      setFilteredCourses(filterCourses(offerings))
       setAllDepartments(allDepts)
+      setAllUniversities(allUnis)
       setSearchDisabled(false)
     }
     return loadingWrap(fetchInfo, "fetchInfo")
@@ -70,7 +72,7 @@ const SearchContainer = () => {
 
   useEffect(() => {
     setFilteredCourses(filterCourses(allCourses))
-  }, [departmentId, universityId])
+  }, [departmentId])
 
   const onQueryChange = (text) => {
     setCurrentQuery(text)
@@ -78,7 +80,11 @@ const SearchContainer = () => {
   }
 
   const onDepartmentSelected = async (newDepartmentId) => {
-    setDepartmentId(newDepartmentId)
+    setDepartmentId(newDepartmentId);
+  }
+
+  const onUniversitySelected = async (newUniversityId) => {
+    setUniversityId(newUniversityId);
   }
 
   /**
@@ -130,7 +136,6 @@ const SearchContainer = () => {
   }
 
   const renderCourses = () => {
-    console.log("RERENDERING")
     if (filteredCourses.length === 0) {
       return (
         <Text testID="courseList" style={styles.noCourses}>
@@ -148,10 +153,30 @@ const SearchContainer = () => {
       />
     )
   }
+  /**
+   * Render universities' course offerings in a dropdown picker based on university id.
+   */
+  const renderUniversitiesDropdown = () => {
+    const universityItems = universities.map((uni) => {
+      return <Picker.Item key={uni.id} value={uni.id} label={uni.name} />
+    })
 
-  // /**
-  //  * Render department's course offerings in a dropdown picker based on department id.
-  //  */
+    return (
+      <View style={styles.universityDropdown}>
+        <Picker
+          testID="uniPicker"
+          selectedValue={universityId}
+          onValueChange={(newUniversityId) => onUniversitySelected(newUniversityId)}
+        >
+          {universityItems}
+        </Picker>
+      </View>
+    )
+  }
+
+  /**
+   * Render department's course offerings in a dropdown picker based on department id.
+   */
   const renderDepartmentsDropdown = () => {
     const departmentItems = departments.map((dept) => {
       return <Picker.Item key={dept.id} value={dept.id} label={dept.name} />
@@ -174,6 +199,7 @@ const SearchContainer = () => {
   return (
     <View style={styles.viewStyle}>
       {renderDepartmentsDropdown()}
+      {renderUniversitiesDropdown()}
       {renderSearchBar()}
       {renderCourses()}
     </View>

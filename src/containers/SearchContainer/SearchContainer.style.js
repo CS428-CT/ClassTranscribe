@@ -35,6 +35,18 @@ const HomeStyle = StyleSheet.create({
     marginBottom: 10,
   },
 
+  universityDropdown: {
+    flex: 0,
+    width: '95%',
+    backgroundColor: '#FFF',
+    borderBottomColor: '#333',
+    borderColor: 'transparent',
+    borderWidth: 0.5,
+    overflow: 'hidden',
+    marginTop: 5,
+    marginBottom: 5,
+  },
+
 })
 
 export default HomeStyle

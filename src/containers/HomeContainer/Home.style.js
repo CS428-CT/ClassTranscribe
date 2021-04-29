@@ -15,18 +15,6 @@ const HomeStyle = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
   },
-  
-  universityDropdown: {
-    flex: 0,
-    width: '95%',
-    backgroundColor: '#FFF',
-    borderBottomColor: '#333',
-    borderColor: 'transparent',
-    borderWidth: 0.5,
-    overflow: 'hidden',
-    marginTop: 5,
-    marginBottom: 5,
-  },
 
   noCourses: {
     flex: 1,
