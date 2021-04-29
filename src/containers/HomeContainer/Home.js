@@ -34,7 +34,7 @@ const Home = ({ navigation }) => {
    * @param {Object} item The underlying data for the item to render.
    */
   const renderCourseItem = ({ item }) => {
-    if (item.length === 0) return null
+    if (item.courses.length === 0) return null
 
     const course = item.courses[0]
     const { courseName } = item.offering
@@ -54,8 +54,8 @@ const Home = ({ navigation }) => {
               departmentAcronym={course.departmentAcronym}
               courseNumber={course.courseNumber}
               courseName={courseName}
-              courseSection={item.offering.sectionName}
-              courseTerm={item.term.name}
+              courseSection={item?.offering?.sectionName}
+              courseTerm={item?.term?.name}
               courseDescription={courseDescription}
               isCourseStarred={isStarred}
               accessibilityRole="button"
@@ -70,7 +70,7 @@ const Home = ({ navigation }) => {
    * Renders all of the users' courses into a FlatList
    */
   const renderCourses = () => {
-    if (courses.length === 0) {
+    if (!courses?.length) {
       return (
         <Text testID="courseList" style={styles.noCourses}>
           {NO_STARRED_COURSES}
