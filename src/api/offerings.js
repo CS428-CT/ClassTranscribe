@@ -1,4 +1,5 @@
 import axios from 'axios'
+import _ from 'lodash'
 import { format } from '../utils/string'
 import { getCurrentAuthenticatedUser, isUserAuthenticated } from './auth'
 import { apiCall, ENDPOINTS } from './api-requests'
@@ -50,9 +51,7 @@ export const getOfferingsData = async () => {
   }
 
   await Promise.all(requests).catch((e) => console.error(e))
-  if (offerings.length > 1) return sortOfferings(offerings)
-
-  return offerings
+  return sortOfferings(offerings)
 }
 
 /**
@@ -95,8 +94,7 @@ export const sortOfferingsByDepartment = (offerings) => {
   const sortedOfferings = offerings.sort((a, b) => {
     const courseA = a.courses[0].departmentAcronym
     const courseB = b.courses[0].departmentAcronym
-
-    return courseA - courseB;
+    return courseA.localeCompare(courseB);
   })
 
   return sortedOfferings
