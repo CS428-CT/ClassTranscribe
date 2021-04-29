@@ -19,10 +19,6 @@ const Home = ({ navigation }) => {
   useEffect(() => {
     const fetchCourseInfo = async () => {
       let offerings = await getStarredOfferingsData()
-      if (offerings.length === 1) {
-        offerings = offerings[0]
-      }
-
       setCourses(offerings)
     }
 
