@@ -541,7 +541,7 @@ export const OFFERINGS_RESPONSE_2 = {
     {
       courseId: 'test_course',
       courseName: null,
-      courseNumber: '000',
+      courseNumber: '001',
       description: null,
       departmentId: '2001',
       departmentAcronym: 'CS',

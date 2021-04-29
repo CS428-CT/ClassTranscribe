@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React from 'react'
 import MockAdapter from 'axios-mock-adapter'
-import { render, waitFor } from '@testing-library/react-native'
+import { fireEvent, render, waitFor } from '@testing-library/react-native'
 import { setUserData } from '../../src/api/auth'
 import { ENDPOINTS } from '../../src/api/api-requests'
 import { format } from '../../src/utils/string'
