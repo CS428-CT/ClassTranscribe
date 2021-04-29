@@ -18,7 +18,7 @@ const SearchContainer = () => {
   const [departments, setAllDepartments] = useState([])
   const [universities, setAllUniversities] = useState([])
   const [universityId, setUniversityId] = useState(getCurrentAuthenticatedUser()?.universityId)
-  const [departmentId, setDepartmentId] = useState('all');
+  const [departmentId, setDepartmentId] = useState('all')
   const loadingWrap = useLoadingWrap()
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const SearchContainer = () => {
       setAllUniversities(allUnis)
       setSearchDisabled(false)
     }
-    return loadingWrap(fetchInfo, "fetchCourseAndUniInfo")
+    return loadingWrap(fetchInfo, 'fetchCourseAndUniInfo')
   }, [setAllCourses, setFilteredCourses, setAllDepartments, setSearchDisabled])
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const SearchContainer = () => {
       setAllDepartments(allDepts)
     }
 
-    return loadingWrap(fetchInfo, "fetchDeptInfo")
+    return loadingWrap(fetchInfo, 'fetchDeptInfo')
   }, [universityId])
 
   useEffect(() => {
@@ -61,11 +61,14 @@ const SearchContainer = () => {
     const newOfferings = []
 
     offerings.forEach((offering) => {
-      if (offering?.term?.universityId.toString() !== universityId.toString())
-        return;
+      if (offering?.term?.universityId.toString() !== universityId.toString()) return
 
-      if (departmentId !== 'all' && offering?.courses?.length && offering?.courses[0]?.departmentId !== departmentId)
-        return;
+      if (
+        departmentId !== 'all' &&
+        offering?.courses?.length &&
+        offering?.courses[0]?.departmentId !== departmentId
+      )
+        return
 
       const course = offering.courses[0] || {}
       const departmentAcronym = course.departmentAcronym
@@ -81,18 +84,17 @@ const SearchContainer = () => {
     return newOfferings
   }
 
-
   const onQueryChange = (text) => {
     setCurrentQuery(text)
     setFilteredCourses(filterCourses(allCourses))
   }
 
   const onDepartmentSelected = async (newDepartmentId) => {
-    setDepartmentId(newDepartmentId);
+    setDepartmentId(newDepartmentId)
   }
 
   const onUniversitySelected = async (newUniversityId) => {
-    setUniversityId(newUniversityId);
+    setUniversityId(newUniversityId)
   }
 
   /**

@@ -15,25 +15,15 @@ import { NO_STARRED_COURSES } from '../../constants'
 const Home = ({ navigation }) => {
   const loadingWrap = useLoadingWrap()
 
-  const filterCourses = (offerings) => {
-    const newOfferings = []
-    for (const i in offerings)
-      newOfferings.push(offerings[i])
-
-    return newOfferings
-  }
-
   const [courses, setCourses] = useState([])
   useEffect(() => {
     const fetchCourseInfo = async () => {
-      let offerings
-      offerings = await getStarredOfferingsData()
+      let offerings = await getStarredOfferingsData()
       if (offerings.length === 1) {
         offerings = offerings[0]
       }
 
-      const studentCourses = filterCourses(offerings)
-      setCourses(studentCourses)
+      setCourses(offerings)
     }
 
     return loadingWrap(fetchCourseInfo, 'fetchCourses')
@@ -102,11 +92,7 @@ const Home = ({ navigation }) => {
     )
   }
 
-  return (
-    <View style={styles.viewStyle}>
-      {renderCourses()}
-    </View>
-  )
+  return <View style={styles.viewStyle}>{renderCourses()}</View>
 }
 
 Home.propTypes = {
