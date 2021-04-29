@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { HTTP_STATUS_CODES } from '.'
 import { REFERRER_URL } from '../constants'
-import { ENDPOINTS } from './api-requests'
+import { apiCall, ENDPOINTS } from './api-requests'
 
 /**
  * Object contains the following attributes:
@@ -35,12 +35,12 @@ axios.interceptors.request.use(
 export const getUserMetadata = async () => {
   if (!isUserAuthenticated()) return
 
-  const starredOfferings = apiCall(ENDPOINTS.USER_METADATA)
-  if (!starredOfferings)
+  const data = await apiCall(ENDPOINTS.USER_METADATA)
+  if (!data)
     return;
 
   currentAuthenticatedUser.metadata = {}
-  currentAuthenticatedUser.metadata.starredOfferings = starredOfferings;
+  currentAuthenticatedUser.metadata.starredOfferings = data.starredOfferings;
 }
 
 /**
