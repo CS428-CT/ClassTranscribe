@@ -91,7 +91,6 @@ export const getStarredOfferingsData = async () => {
   return sortOfferingsByDepartment(offerings);
 }
 
-// TODO: Write test for this
 export const sortOfferingsByDepartment = (offerings) => {
   const sortedOfferings = offerings.sort((a, b) => {
     const courseA = a.courses[0].departmentAcronym

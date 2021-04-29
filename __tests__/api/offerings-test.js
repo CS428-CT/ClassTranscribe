@@ -8,6 +8,7 @@ import {
   getStarredOfferings,
   getStarredOfferingsData,
   removeStarredOffering,
+  sortOfferingsByDepartment,
 } from '../../src/api/offerings'
 import { HTTP_STATUS_CODES } from '../../src/api'
 import {
@@ -155,5 +156,29 @@ describe('Modify starred offerings', () => {
     delete expected[toRemove]
 
     expect(updatedStarredOfferings).toStrictEqual(expected)
+  })
+})
+
+describe('Sort starred offergins', () => {
+  test('When empty', () => {
+    const unsorted = [];
+    const expected = [];
+
+    expect(sortOfferingsByDepartment(unsorted)).toStrictEqual(expected)
+  })
+
+  test('With single course', () => {
+    const unsorted = [ 
+      {
+        courses: [
+          {
+            departmentAcronym: "CS",
+          }
+        ]
+      }
+    ];
+    const expected = unsorted;
+
+    expect(sortOfferingsByDepartment(unsorted)).toStrictEqual(expected)
   })
 })
