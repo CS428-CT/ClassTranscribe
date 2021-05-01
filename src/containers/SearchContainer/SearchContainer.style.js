@@ -11,19 +11,24 @@ const HomeStyle = StyleSheet.create({
   viewStyle: {
     flex: 1,
     alignItems: 'center',
-    marginTop: '3%',
+    paddingTop: '2%',
+    backgroundColor: 'white',
   },
 
   search: {
-    width: '92%',
+    width: '98%',
     marginBottom: '2%',
     justifyContent: 'space-between',
     paddingVertical: 4,
     paddingHorizontal: 4,
-    borderRadius: 5,
   },
 
-  dropdown: {
+  isHighlighted: {
+    borderColor: 'black',
+    borderWidth: 5,
+  },
+
+  departmentDropdown: {
     flex: 0,
     width: '95%',
     backgroundColor: '#FFF',
@@ -45,6 +50,7 @@ const HomeStyle = StyleSheet.create({
     marginTop: 5,
     marginBottom: 5,
   },
+
 })
 
 export default HomeStyle
