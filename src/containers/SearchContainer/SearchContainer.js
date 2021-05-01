@@ -139,8 +139,8 @@ const SearchContainer = () => {
     return (
       <TextInput
         style={styles.search}
-        selectionColor='teal'
-        theme={{ colors: { primary: 'teal' }}}
+        selectionColor="teal"
+        theme={{ colors: { primary: 'teal' } }}
         disabled={isSearchDisabled}
         onChangeText={onQueryChange}
         value={currentQuery}

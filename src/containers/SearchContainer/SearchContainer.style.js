@@ -57,7 +57,6 @@ const HomeStyle = StyleSheet.create({
     textAlignVertical: 'center',
     fontSize: 20,
   },
-
 })
 
 export default HomeStyle

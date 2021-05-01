@@ -16,7 +16,7 @@ const StarredStyle = StyleSheet.create({
     flexDirection: 'row',
     width: '98%',
     marginBottom: 2,
-  },  
+  },
 
   historyWatchList: {
     marginTop: 8,
@@ -26,7 +26,7 @@ const StarredStyle = StyleSheet.create({
     alignContent: 'center',
     borderBottomColor: '#999',
     borderBottomWidth: 2,
-  },  
+  },
 
   viewStyle: {
     flex: 1,
