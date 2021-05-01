@@ -51,6 +51,13 @@ const HomeStyle = StyleSheet.create({
     marginBottom: 5,
   },
 
+  noCourses: {
+    flex: 1,
+    justifyContent: 'center',
+    textAlignVertical: 'center',
+    fontSize: 20,
+  },
+
 })
 
 export default HomeStyle
