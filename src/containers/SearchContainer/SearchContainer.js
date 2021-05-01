@@ -7,6 +7,10 @@ import styles from './SearchContainer.style'
 import { useLoadingWrap } from '../../hooks/useLoadingWrap'
 import { NO_COURSES } from '../../constants'
 
+/**
+ * Renders the search screen for the application. This screen contains a single search bar and as the user types
+ * in a query, cards corresponding to each offering are shown. The user can star and unstar courses from here.
+ */
 const SearchContainer = () => {
   const [currentQuery, setCurrentQuery] = useState('')
   const [filteredCourses, setFilteredCourses] = useState([])

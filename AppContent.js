@@ -5,6 +5,9 @@ import LoginContainer from './src/containers/LoginContainer/LoginContainer'
 import CTNavigationContainer from './src/containers/CTNavigationContainer/CTNavigationContainer'
 import { Context } from './src/store/Store'
 
+/**
+ * The main code for the application. All items in here should have access to the store.
+ */
 export default function AppContent() {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false)
   const state = useContext(Context)[0]

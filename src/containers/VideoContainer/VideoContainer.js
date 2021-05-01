@@ -15,8 +15,14 @@ import { getCurrentAuthenticatedUser } from '../../api/auth'
 // just hardcode a valid referer and the API accepts it.
 const REFERER = 'https://classtranscribe.illinois.edu/video?id=5ce157b0-713a-4182-94e9-065f68f9abf6'
 
+/**
+ * Renders the screen where a user can view videos for a course
+ * @param {Object} videos An array of video data for this playlist
+ * @param {Number} index The current selected video index within the playlist
+ * @param {Boolean} downloaded True if downloaded, false otherwise
+ * @returns Children of component
+ */
 const VideoContainer = ({ videos, index, downloaded }) => {
-  // Passing a list of videos would not be a bad approach because react pass object as reference
   const [vidIndex, setVidIndex] = useState(index)
   const url = videos[vidIndex]?.video?.video1Path
 

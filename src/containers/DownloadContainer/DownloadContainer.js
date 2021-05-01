@@ -5,17 +5,16 @@ import * as FileSystem from 'expo-file-system'
 import { Icon, Image, ListItem } from 'react-native-elements'
 import * as VideoThumbnails from 'expo-video-thumbnails'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
-import { useLoadingIndicator } from '../../hooks/useLoadingIndicator'
 
 const videoSuffix = '.mp4' // Currently, classtrascribe only uses mp4 as their video format
 
 /**
  * Contains the home screen of the application. Lists starred courses and gives the user the ability
  * to search for courses. Clicking on a course shows the playlists for it.
+ * @param {Object} navigation A stack navigator that contains a video screen
  */
 const DownloadContainer = ({ navigation }) => {
   const [localVideos, setLocalVideos] = useState([]) // an array of local video names
-  const setLoading = useLoadingIndicator();
 
   const getFileSize = async (fileUri) => {
     const fileInfo = await FileSystem.getInfoAsync(fileUri)

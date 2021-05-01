@@ -15,6 +15,7 @@ import { NO_STARRED_COURSES, NO_HISTORY } from '../../constants'
 /**
  * Contains the home screen of the application. Lists courses and gives the user the ability
  * to search for courses. Clicking on a course shows the playlists for it.
+ * @param {Object} navigation Stack navigator
  */
 const Starred = ({ navigation }) => {
   const currentUser = getCurrentAuthenticatedUser()
