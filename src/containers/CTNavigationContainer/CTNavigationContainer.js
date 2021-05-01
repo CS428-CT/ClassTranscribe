@@ -73,10 +73,10 @@ const DownloadView = ({ navigation }) => {
 /**
  * The navigator of the starred tab. Contains a stack navigator.
  */
-const StarredNavigator = () => {
+const HistoryNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName={STACK_SCREENS.STARRED}>
-      <Stack.Screen name={STACK_SCREENS.STARRED} component={StarView} initialParams={{}} />
+    <Stack.Navigator initialRouteName={STACK_SCREENS.HISTORY}>
+      <Stack.Screen name={STACK_SCREENS.HISTORY} component={StarView} initialParams={{}} />
       <Stack.Screen name={STACK_SCREENS.COURSE_PLAYLISTS} component={CoursePlaylistsView} />
       <Stack.Screen name={STACK_SCREENS.PLAYLIST} component={PlaylistView} />
       <Stack.Screen name={STACK_SCREENS.VIDEO} component={VideoView} />
@@ -90,9 +90,9 @@ const StarredNavigator = () => {
  */
 const HomeNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName={STACK_SCREENS.HOME}>
+    <Stack.Navigator initialRouteName={STACK_SCREENS.STARRED}>
       <Stack.Screen
-        name={STACK_SCREENS.HOME}
+        name={STACK_SCREENS.STARRED}
         component={HomeView}
         initialParams={{ starred: true }}
       />
@@ -117,6 +117,17 @@ const DownloadNavigator = () => {
 }
 
 /**
+ * The navigator for the search tab. Contains a stack navigator.
+ */
+const SearchNavigator = () => {
+  return (
+    <Stack.Navigator initialRouteName={STACK_SCREENS.SEARCH}>
+      <Stack.Screen name={STACK_SCREENS.SEARCH} component={SearchContainer} />
+    </Stack.Navigator>
+  )
+}
+
+/**
  * This is the root navigator for the entire application.
  * Contains a starred tab, search tab, and downloads tab. Within each tab, there may be additional navigators
  * such as a stack navigator.
@@ -124,10 +135,10 @@ const DownloadNavigator = () => {
 const CTNavigationContainer = () => {
   return (
     <NavigationContainer>
-      <Tab.Navigator>
+      <Tab.Navigator initialRouteName={STACK_SCREENS.STARRED}>
         <Tab.Screen
-          name="Search"
-          component={SearchContainer}
+          name={STACK_SCREENS.SEARCH}
+          component={SearchNavigator}
           options={{
             tabBarLabel: 'Search',
             tabBarIcon: ({ color, size }) => (
@@ -136,27 +147,27 @@ const CTNavigationContainer = () => {
           }}
         />
         <Tab.Screen
-          name="Home"
+          name={STACK_SCREENS.STARRED}
           component={HomeNavigator}
           options={{
-            tabBarLabel: 'Home',
+            tabBarLabel: 'Starred',
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="star" color={color} size={size} />
             ),
           }}
         />
         <Tab.Screen
-          name="Starred"
-          component={StarredNavigator}
+          name={STACK_SCREENS.HISTORY}
+          component={HistoryNavigator}
           options={{
-            tabBarLabel: 'Starred courses',
+            tabBarLabel: 'History',
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="star" color={color} size={size} />
             ),
           }}
         />
         <Tab.Screen
-          name="Download"
+          name={STACK_SCREENS.DOWNLOAD}
           component={DownloadNavigator}
           options={{
             tabBarLabel: 'Download',

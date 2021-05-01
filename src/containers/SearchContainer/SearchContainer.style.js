@@ -16,12 +16,34 @@ const HomeStyle = StyleSheet.create({
 
   search: {
     width: '92%',
-    marginTop: '2%',
     marginBottom: '2%',
     justifyContent: 'space-between',
     paddingVertical: 4,
     paddingHorizontal: 4,
     borderRadius: 5,
+  },
+
+  dropdown: {
+    flex: 0,
+    width: '95%',
+    backgroundColor: '#FFF',
+    borderBottomColor: '#333',
+    borderColor: 'transparent',
+    borderWidth: 0.5,
+    overflow: 'hidden',
+    marginBottom: 10,
+  },
+
+  universityDropdown: {
+    flex: 0,
+    width: '95%',
+    backgroundColor: '#FFF',
+    borderBottomColor: '#333',
+    borderColor: 'transparent',
+    borderWidth: 0.5,
+    overflow: 'hidden',
+    marginTop: 5,
+    marginBottom: 5,
   },
 })
 

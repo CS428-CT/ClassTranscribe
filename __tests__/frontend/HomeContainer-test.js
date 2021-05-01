@@ -12,6 +12,7 @@ import Home from '../../src/containers/HomeContainer/Home'
 
 import {
   OFFERINGS_IN_LIST,
+  OFFERINGS_RESPONSE_1,
   STARRED_OFFERINGS_RESPONSE2,
 } from '../mock_responses/mock-offerings-response'
 import { useLoadingIndicator } from '../../src/hooks/useLoadingIndicator'
@@ -21,7 +22,7 @@ const mock = new MockAdapter(axios)
 const mockHook = jest.fn()
 useLoadingIndicator.mockReturnValue(mockHook)
 
-describe('Check universities rendering', () => {
+describe('Check screen rendering', () => {
   const USER_DATA = {
     authToken: 'A',
     universityId: '1001',
@@ -42,26 +43,11 @@ describe('Check universities rendering', () => {
       .onGet(`${ENDPOINTS.OFFERINGBYSTUDENT}`)
       .reply(HTTP_STATUS_CODES.OK, OFFERINGS_IN_LIST)
       .onGet(`${format(ENDPOINTS.OFFERING, offeringId)}`)
-      .reply(HTTP_STATUS_CODES.OK, OFFERINGS_IN_LIST)
+      .reply(HTTP_STATUS_CODES.OK, OFFERINGS_RESPONSE_1)
   })
 
   afterEach(() => {
     mock.reset()
-  })
-
-  test('Check that components render', async () => {
-    setUserData(USER_DATA)
-
-    const { getByTestId } = render(<Home navigation={mockNavigator} />)
-
-    const uniPicker = getByTestId('uniPicker')
-    expect(uniPicker).not.toBe(null)
-
-    const deptPicker = getByTestId('deptPicker')
-    expect(deptPicker).not.toBe(null)
-
-    const courseList = getByTestId('courseList')
-    expect(courseList).not.toBe(null)
   })
 
   test('Check that loading indicator renders', async () => {
@@ -71,7 +57,7 @@ describe('Check universities rendering', () => {
     await waitFor(() => expect(mockHook).toHaveBeenCalled())
   })
 
-  test('Check (starred) courses render', async () => {
+  test('Check courses render', async () => {
     setUserData(USER_DATA)
     const user = getCurrentAuthenticatedUser()
     user.metadata = STARRED_OFFERINGS_RESPONSE2

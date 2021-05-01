@@ -54,8 +54,14 @@ describe('Check universities rendering', () => {
 
     const { getByTestId } = render(<SearchContainer />)
 
-    const picker = getByTestId('searchBar')
-    expect(picker).not.toBe(null)
+    const search = getByTestId('searchBar')
+    expect(search).not.toBe(null)
+
+    const uniPicker = getByTestId('uniPicker')
+    expect(uniPicker).not.toBe(null)
+
+    const deptPicker = getByTestId('deptPicker')
+    expect(deptPicker).not.toBe(null)
 
     const courseList = getByTestId('courseList')
     expect(courseList).not.toBe(null)

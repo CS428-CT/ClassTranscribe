@@ -1,6 +1,7 @@
 export const STACK_SCREENS = {
+  HISTORY: 'History',
+  SEARCH: 'Search',
   STARRED: 'Starred',
-  HOME: 'Home',
   UNIVERSITY_LIST: 'Universities',
   DEPT_LIST: 'Departments',
   COURSE_LIST: 'Courses',
