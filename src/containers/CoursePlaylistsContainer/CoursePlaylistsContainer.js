@@ -7,6 +7,11 @@ import { getPlaylistsByOffering } from '../../api/playlists'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
 import { useLoadingWrap } from '../../hooks/useLoadingWrap'
 
+/**
+ * Renders all playlists for a given course
+ * @param {String} courseId The offering ID of the course to render
+ * @param {Object} navigation The stack navigator object to be used. This allows the screen to launch other screens when a playlist is clicked.
+ */
 const CoursePlaylistsContainer = ({ courseId, navigation }) => {
   const [playlists, setPlaylists] = useState([])
   const loadingWrap = useLoadingWrap()
