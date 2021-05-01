@@ -12,9 +12,8 @@ import styles from './VideoCard.style'
 const VideoCard = ({ name, ratio }) => {
   return (
     <View style={styles.cardContainer}>
-      <Text>
-        {name}, watched {ratio}%
-      </Text>
+      <Text style={styles.videoName}>{name}</Text>
+      <Text style={styles.ratio}>{ratio}%</Text>
     </View>
   )
 }

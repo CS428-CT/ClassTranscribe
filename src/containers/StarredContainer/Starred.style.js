@@ -9,6 +9,25 @@ const StarredStyle = StyleSheet.create({
     width: '98%',
   },
 
+  historyListItem: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    width: '98%',
+    marginBottom: 2,
+  },  
+
+  historyWatchList: {
+    marginTop: 8,
+    marginLeft: 8,
+    marginBottom: 40,
+    paddingBottom: 0,
+    alignContent: 'center',
+    borderBottomColor: '#999',
+    borderBottomWidth: 2,
+  },  
+
   viewStyle: {
     flex: 1,
     justifyContent: 'center',
