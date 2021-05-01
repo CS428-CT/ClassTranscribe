@@ -231,7 +231,7 @@ const VideoContainer = ({ videos, index, downloaded }) => {
 
       <View style={styles.buttons}>{downloadButton()}</View>
 
-      {renderLinkVideo()}
+      {/* {renderLinkVideo()} */}
     </View>
   )
 }
