@@ -204,8 +204,6 @@ const VideoContainer = ({ videos, index, downloaded }) => {
       {ready === true ? <></> : <ActivityIndicator style={styles.videoLoading} size="large" />}
 
       <View style={styles.buttons}>{downloadButton()}</View>
-
-      {/* {renderLinkVideo()} */}
     </View>
   )
 }
