@@ -139,6 +139,8 @@ const SearchContainer = () => {
     return (
       <TextInput
         style={styles.search}
+        selectionColor="teal"
+        theme={{ colors: { primary: 'teal' } }}
         disabled={isSearchDisabled}
         onChangeText={onQueryChange}
         value={currentQuery}
@@ -197,7 +199,7 @@ const SearchContainer = () => {
     })
 
     return (
-      <View style={styles.dropdown}>
+      <View style={styles.departmentDropdown}>
         <Picker
           testID="deptPicker"
           selectedValue={departmentId}

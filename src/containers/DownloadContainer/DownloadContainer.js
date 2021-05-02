@@ -91,7 +91,7 @@ const DownloadContainer = ({ navigation }) => {
         <Icon name="play-circle-outline" size={36} onPress={() => watchVideo(item)} />
         <ListItem.Content>
           <ListItem.Title accessibilityRole="button">{item.name}</ListItem.Title>
-          <ListItem.Subtitle>{`${item.filesize} MBs`}</ListItem.Subtitle>
+          <ListItem.Subtitle>{`${item.filesize} MB`}</ListItem.Subtitle>
           {item.thumbnailImg !== null ? (
             <Image
               source={{ uri: item.thumbnailImg }}

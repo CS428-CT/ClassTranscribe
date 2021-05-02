@@ -3,10 +3,17 @@ import { StyleSheet } from 'react-native'
 const VideoCardStyle = StyleSheet.create({
   cardContainer: {
     display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-    width: '98%',
+    width: '100%',
+    backgroundColor: '#f5f5f5',
+  },
+
+  videoName: {
+    fontWeight: 'bold',
+    color: '#333',
+  },
+
+  ratio: {
+    color: 'teal',
   },
 })
 
