@@ -34,30 +34,33 @@ const DownloadContainer = ({ navigation }) => {
     }
   }
 
-  const fetchLocalFiles = async () => {
-    let files = await FileSystem.readDirectoryAsync(FileSystem.documentDirectory)
-    files = files.filter((fileName) => fileName.endsWith(videoSuffix))
-    const videoItems = await Promise.all(
-      files.map(async (fileName) => {
-        const localUri = FileSystem.documentDirectory + fileName
-        const thumbnail = await generateThumbnail(localUri)
-        const filesize = await getFileSize(localUri)
-        const videoName = fileName.slice(0, -videoSuffix.length) // filename without suffix
-        return {
-          key: videoName,
-          name: videoName,
-          thumbnailImg: thumbnail,
-          filesize,
-          video: {
-            video1Path: fileName,
-          },
-        }
-      })
-    )
-    setLocalVideos(videoItems)
-  }
-
   useEffect(() => {
+    const fetchLocalFiles = async () => {
+      let files = await FileSystem.readDirectoryAsync(FileSystem.documentDirectory)
+      files = files.filter((fileName) => fileName.endsWith(videoSuffix))
+      const videoItems = await Promise.all(
+        files.map(async (fileName) => {
+          const localUri = FileSystem.documentDirectory + fileName
+          const thumbnail = await generateThumbnail(localUri)
+          const filesize = await getFileSize(localUri)
+          const videoName = fileName.slice(0, -videoSuffix.length) // filename without suffix
+          return {
+            key: videoName,
+            name: videoName,
+            thumbnailImg: thumbnail,
+            filesize,
+            video: {
+              video1Path: fileName,
+            },
+          }
+        })
+      )
+      // only update videoItems when videos changes
+      if (JSON.stringify(localVideos) !== JSON.stringify(videoItems)) {
+        setLocalVideos(videoItems)
+      }
+    }
+
     fetchLocalFiles()
     const interval = setInterval(() => {
       fetchLocalFiles()
