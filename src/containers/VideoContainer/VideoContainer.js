@@ -23,7 +23,7 @@ const REFERER = 'https://classtranscribe.illinois.edu/video?id=5ce157b0-713a-418
  * @returns Children of component
  */
 const VideoContainer = ({ videos, index, downloaded }) => {
-  const [vidIndex, setVidIndex] = useState(index)
+  const [vidIndex] = useState(index)
   const url = videos[vidIndex]?.video?.video1Path
 
   let videoSource
@@ -140,39 +140,13 @@ const VideoContainer = ({ videos, index, downloaded }) => {
   const togglePlayPause = () =>
     status.isPlaying ? videoRef.current.pauseAsync() : videoRef.current.playAsync()
 
-  const renderLinkVideo = () => {
-    return (
-      <View style={styles.buttons}>
-        <Button
-          icon="skip-previous"
-          mode="contained"
-          disabled={vidIndex === 0}
-          onPress={() => {
-            setVidIndex(vidIndex - 1)
-          }}
-        >
-          Previous Video
-        </Button>
-        <Button
-          icon="skip-next"
-          mode="contained"
-          disabled={vidIndex + 1 >= videos.length}
-          onPress={() => {
-            setVidIndex(vidIndex + 1)
-          }}
-        >
-          Next Video
-        </Button>
-      </View>
-    )
-  }
-
   return (
     <View style={styles.container}>
       <Title style={styles.title}>{videos[vidIndex].name}</Title>
 
       <View style={ready ? {} : { display: 'none' }}>
         <Video
+          accessibilityRole="adjustable"
           ref={videoRef}
           style={styles.video}
           source={videoSource}
@@ -230,8 +204,6 @@ const VideoContainer = ({ videos, index, downloaded }) => {
       {ready === true ? <></> : <ActivityIndicator style={styles.videoLoading} size="large" />}
 
       <View style={styles.buttons}>{downloadButton()}</View>
-
-      {renderLinkVideo()}
     </View>
   )
 }

@@ -162,7 +162,7 @@ const CTNavigationContainer = () => {
           options={{
             tabBarLabel: 'History',
             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="star" color={color} size={size} />
+              <MaterialCommunityIcons name="calendar-clock" color={color} size={size} />
             ),
           }}
         />

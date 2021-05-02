@@ -57,7 +57,7 @@ const Starred = ({ navigation }) => {
     return (
       <View accessibilityRole="button" key={item.id}>
         <TouchableNativeFeedback accessibilityRole="button" onPress={() => onHistorySelected(item)}>
-          <View accessibilityRole="button" style={styles.cardContainer}>
+          <View accessibilityRole="button" style={styles.historyListItem}>
             <VideoCard name={item.name} ratio={item.watchHistory.json.ratio.toFixed(2)} />
           </View>
         </TouchableNativeFeedback>
@@ -80,6 +80,7 @@ const Starred = ({ navigation }) => {
     return (
       <FlatList
         testID="historyList"
+        style={styles.historyWatchList}
         keyExtractor={(idxCourses, index) => index.toString()}
         data={history}
         renderItem={renderHistoryItem}

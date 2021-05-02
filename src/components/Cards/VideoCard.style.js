@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native'
 const VideoCardStyle = StyleSheet.create({
   cardContainer: {
     display: 'flex',
+<<<<<<< HEAD
     justifyContent: 'space-between',
     flexDirection: 'row',
     marginTop: '2%',
@@ -26,6 +27,19 @@ const VideoCardStyle = StyleSheet.create({
   rightText: {
     textAlign: 'right',
     paddingRight: 10,
+=======
+    width: '100%',
+    backgroundColor: '#f5f5f5',
+  },
+
+  videoName: {
+    fontWeight: 'bold',
+    color: '#333',
+  },
+
+  ratio: {
+    color: 'teal',
+>>>>>>> fd3b230ae4615fb26c27889629767157dae4d478
   },
 })
 
