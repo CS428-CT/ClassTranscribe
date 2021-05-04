@@ -25,7 +25,7 @@ const CoursePlaylistsContainer = ({ courseId, navigation }) => {
       }
     }
 
-    return loadingWrap(fetchPlaylists)
+    return loadingWrap(fetchPlaylists, 'fetchPlaylists')
   }, [courseId, setPlaylists])
 
   const onPlaylistSelected = (playlistId) => {
