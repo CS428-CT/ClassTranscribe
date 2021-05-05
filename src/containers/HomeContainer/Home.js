@@ -15,8 +15,8 @@ import { NO_STARRED_COURSES } from '../../constants'
  */
 const Home = ({ navigation }) => {
   const loadingWrap = useLoadingWrap()
-
   const [courses, setCourses] = useState([])
+
   useEffect(() => {
     const fetchCourseInfo = async () => {
       const offerings = await getStarredOfferingsData()
