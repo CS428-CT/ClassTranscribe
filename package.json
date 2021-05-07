@@ -28,6 +28,7 @@
     "jest-expo": "^40.0.2",
     "jsdoc": "^3.6.6",
     "jwt-decode": "2.2.0",
+    "omit-deep-lodash": "^1.1.5",
     "prettier": "^2.2.1",
     "prop-types": "^15.7.2",
     "react": "16.13.1",
