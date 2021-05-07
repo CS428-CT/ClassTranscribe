@@ -6,7 +6,8 @@ import { Icon, Image, ListItem } from 'react-native-elements'
 import * as VideoThumbnails from 'expo-video-thumbnails'
 import _ from 'lodash'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
-const omitDeep = require("omit-deep-lodash");
+
+const omitDeep = require('omit-deep-lodash')
 
 const videoSuffix = '.mp4' // Currently, classtrascribe only uses mp4 as their video format
 
@@ -17,7 +18,7 @@ const videoSuffix = '.mp4' // Currently, classtrascribe only uses mp4 as their v
  */
 const DownloadContainer = ({ navigation }) => {
   const [localVideos, setLocalVideos] = useState([]) // an array of local video names
-  const [numRefreshes, setNumRefreshes] = useState(0);
+  const [numRefreshes, setNumRefreshes] = useState(0)
 
   const getFileSize = async (fileUri) => {
     const fileInfo = await FileSystem.getInfoAsync(fileUri)
@@ -39,7 +40,7 @@ const DownloadContainer = ({ navigation }) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setNumRefreshes(r => r + 1)
+      setNumRefreshes((r) => r + 1)
     }, 5000)
     return () => {
       clearInterval(interval)
@@ -69,12 +70,11 @@ const DownloadContainer = ({ navigation }) => {
       )
 
       // only update videoItems when videos changes
-      if (!_.isEqual(omitDeep(localVideos, "thumbnailImg"), omitDeep(videoItems, "thumbnailImg"))) {
+      if (!_.isEqual(omitDeep(localVideos, 'thumbnailImg'), omitDeep(videoItems, 'thumbnailImg'))) {
         setLocalVideos(videoItems)
       }
     }
     fetchLocalFiles()
-    
   }, [numRefreshes])
 
   const watchVideo = (videoItem) => {
