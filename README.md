@@ -5,7 +5,11 @@ To get involved in this project, please email angrave at illinois to learn more 
 
 ## Getting Started
 ### Prerequisites
-You must have node.js and yarn installed.
+You must have node.js and yarn installed. \
+For node, make sure you install version 12.21.0. Newer versions may not yet be supported by expo. You can install node [here](https://nodejs.org/en/blog/release/v12.21.0/) \
+After installing node, npm should be automatically installed. Use npm to install yarn with `npm install --global yarn`. See more details [here](https://classic.yarnpkg.com/en/docs/install/#windows-stable) \
+
+You will also need the Android Device Bridge and potentially an emulator if you don't own a physical device. It is recommended to install all of this through Android Studio for sake of simplicity. Download and install Android studio from [here](https://developer.android.com/studio/?gclid=CjwKCAjw7diEBhB-EiwAskVi13Wj1U0mZxs7_MaFBeVA9NBgrBwLXBHQXV3OqOCac42s21GPZAW9_BoC8twQAvD_BwE&gclsrc=aw.ds)
 
 ### Dependencies
 After cloning the repo, run `yarn install` in the root of the project to install all dependencies. View package.json to see a list of all dependencies that will be installed.
