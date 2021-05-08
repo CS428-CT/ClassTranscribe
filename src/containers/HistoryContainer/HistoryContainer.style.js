@@ -30,7 +30,7 @@ const StarredStyle = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
-    marginTop: 5,
+    paddingTop: '2%',
   },
 
   dropdown: {

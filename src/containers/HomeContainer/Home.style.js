@@ -11,6 +11,7 @@ const HomeStyle = StyleSheet.create({
 
   viewStyle: {
     flex: 1,
+    paddingTop: '2%',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
