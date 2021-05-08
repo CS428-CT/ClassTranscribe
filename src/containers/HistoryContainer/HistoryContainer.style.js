@@ -20,12 +20,9 @@ const StarredStyle = StyleSheet.create({
 
   historyWatchList: {
     marginTop: 8,
-    marginLeft: 8,
-    marginBottom: 40,
-    paddingBottom: 0,
+    marginLeft: 6,
+    marginBottom: 0,
     alignContent: 'center',
-    borderBottomColor: '#999',
-    borderBottomWidth: 2,
   },
 
   viewStyle: {

@@ -19,13 +19,17 @@ const VideoCardStyle = StyleSheet.create({
     shadowRadius: 2,
     elevation: 5,
   },
+  
   leftText: {
     textAlign: 'left',
     paddingLeft: 10,
+    maxWidth: '60%',
   },
+
   rightText: {
     textAlign: 'right',
     paddingRight: 10,
+    color: '#333'
   },
 })
 

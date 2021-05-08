@@ -21,7 +21,7 @@ const mock = new MockAdapter(axios)
 const mockHook = jest.fn()
 useLoadingIndicator.mockReturnValue(mockHook)
 
-describe('Check universities rendering', () => {
+describe('Check screen rendering', () => {
   const USER_DATA = {
     authToken: 'A',
     universityId: '1001',
