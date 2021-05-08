@@ -7840,7 +7840,7 @@ lodash.truncate@^4.4.2:
   resolved "https://registry.yarnpkg.com/lodash.truncate/-/lodash.truncate-4.4.2.tgz#5a350da0b1113b837ecfffd5812cbe58d6eae193"
   integrity sha1-WjUNoLERO4N+z//VgSy+WNbq4ZM=
 
-lodash@4.17.x, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.21, lodash@^4.17.4, lodash@^4.3.0, lodash@^4.5.0, lodash@^4.6.0, lodash@^4.7.0:
+lodash@4.17.x, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.21, lodash@^4.17.4, lodash@^4.3.0, lodash@^4.5.0, lodash@^4.6.0, lodash@^4.7.0, lodash@~4.17.20:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -8663,6 +8663,13 @@ omggif@^1.0.9:
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/omggif/-/omggif-1.0.10.tgz#ddaaf90d4a42f532e9e7cb3a95ecdd47f17c7b19"
   integrity sha512-LMJTtvgc/nugXj0Vcrrs68Mn2D1r0zf630VNtqtpI1FEO7e+O9FP4gqs9AcnBaSEeoHIPm28u6qgPR0oyEpGSw==
+
+omit-deep-lodash@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/omit-deep-lodash/-/omit-deep-lodash-1.1.5.tgz#12dfc0dbd5a00e73d8a28175e2b5f40fedeffb2b"
+  integrity sha512-WtPD4SLmyas/ETFeU5j8chvh0LY5dN2q3s056aMZyV+thDMx+pFJ1DLenm7fShnHpmEMQ97Nez7j+FLtGSdgKQ==
+  dependencies:
+    lodash "~4.17.20"
 
 on-finished@~2.3.0:
   version "2.3.0"
