@@ -65,7 +65,7 @@ describe('Get videos by playlists', () => {
     mock
       .onGet(`${format(ENDPOINTS.VIDEOS_BY_PLAYLIST, playlistId)}`)
       .reply(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR, PLAYLISTS_BY_OFFERING_RESPONSE)
-    const videos = await getPlaylistsByOffering(playlistId)
+    const videos = await getVideosByPlaylist(playlistId)
     expect(videos).toBe(null)
   })
 })
