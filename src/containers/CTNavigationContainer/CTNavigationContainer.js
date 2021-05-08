@@ -6,7 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { STACK_SCREENS } from './index'
 import Home from '../HomeContainer/Home'
-import Starred from '../StarredContainer/Starred'
+import HistoryContainer from '../HistoryContainer/HistoryContainer'
 import CoursePlaylistsContainer from '../CoursePlaylistsContainer/CoursePlaylistsContainer'
 import VideoContainer from '../VideoContainer/VideoContainer'
 import PlaylistContainer from '../PlaylistContainer/PlaylistContainer'
@@ -25,11 +25,11 @@ const HomeView = ({ navigation, route }) => {
 }
 
 /**
- * Wraps the Starred container so that it can
+ * Wraps the History container so that it can
  * receive the proper props
  */
 const StarView = ({ navigation }) => {
-  return <Starred navigation={navigation} />
+  return <HistoryContainer navigation={navigation} />
 }
 
 /**
