@@ -4,7 +4,10 @@ import PropTypes from 'prop-types'
 import * as FileSystem from 'expo-file-system'
 import { Icon, Image, ListItem } from 'react-native-elements'
 import * as VideoThumbnails from 'expo-video-thumbnails'
+import _ from 'lodash'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
+
+const omitDeep = require('omit-deep-lodash')
 
 const videoSuffix = '.mp4' // Currently, classtrascribe only uses mp4 as their video format
 
@@ -15,6 +18,7 @@ const videoSuffix = '.mp4' // Currently, classtrascribe only uses mp4 as their v
  */
 const DownloadContainer = ({ navigation }) => {
   const [localVideos, setLocalVideos] = useState([]) // an array of local video names
+  const [numRefreshes, setNumRefreshes] = useState(0)
 
   const getFileSize = async (fileUri) => {
     const fileInfo = await FileSystem.getInfoAsync(fileUri)
@@ -34,38 +38,44 @@ const DownloadContainer = ({ navigation }) => {
     }
   }
 
-  const fetchLocalFiles = async () => {
-    let files = await FileSystem.readDirectoryAsync(FileSystem.documentDirectory)
-    files = files.filter((fileName) => fileName.endsWith(videoSuffix))
-    const videoItems = await Promise.all(
-      files.map(async (fileName) => {
-        const localUri = FileSystem.documentDirectory + fileName
-        const thumbnail = await generateThumbnail(localUri)
-        const filesize = await getFileSize(localUri)
-        const videoName = fileName.slice(0, -videoSuffix.length) // filename without suffix
-        return {
-          key: videoName,
-          name: videoName,
-          thumbnailImg: thumbnail,
-          filesize,
-          video: {
-            video1Path: fileName,
-          },
-        }
-      })
-    )
-    setLocalVideos(videoItems)
-  }
-
   useEffect(() => {
-    fetchLocalFiles()
     const interval = setInterval(() => {
-      fetchLocalFiles()
+      setNumRefreshes((r) => r + 1)
     }, 5000)
     return () => {
       clearInterval(interval)
     }
   }, [])
+
+  useEffect(() => {
+    const fetchLocalFiles = async () => {
+      let files = await FileSystem.readDirectoryAsync(FileSystem.documentDirectory)
+      files = files.filter((fileName) => fileName.endsWith(videoSuffix))
+      const videoItems = await Promise.all(
+        files.map(async (fileName) => {
+          const localUri = FileSystem.documentDirectory + fileName
+          const thumbnail = await generateThumbnail(localUri)
+          const filesize = await getFileSize(localUri)
+          const videoName = fileName.slice(0, -videoSuffix.length) // filename without suffix
+          return {
+            key: videoName,
+            name: videoName,
+            thumbnailImg: thumbnail,
+            filesize,
+            video: {
+              video1Path: fileName,
+            },
+          }
+        })
+      )
+
+      // only update videoItems when videos changes
+      if (!_.isEqual(omitDeep(localVideos, 'thumbnailImg'), omitDeep(videoItems, 'thumbnailImg'))) {
+        setLocalVideos(videoItems)
+      }
+    }
+    fetchLocalFiles()
+  }, [numRefreshes])
 
   const watchVideo = (videoItem) => {
     const param = {
