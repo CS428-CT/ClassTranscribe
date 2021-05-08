@@ -62,7 +62,9 @@ describe('Check screen rendering', () => {
     const user = getCurrentAuthenticatedUser()
     user.metadata = STARRED_OFFERINGS_RESPONSE2
 
-    const { queryByText, queryAllByA11yRole } = render(<StarredContainer navigation={mockNavigator} />)
+    const { queryByText, queryAllByA11yRole } = render(
+      <StarredContainer navigation={mockNavigator} />
+    )
     const courses = await waitFor(() => queryAllByA11yRole('button'))
     expect(courses.length).not.toBe(0)
 

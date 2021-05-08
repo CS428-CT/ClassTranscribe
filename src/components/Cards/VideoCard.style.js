@@ -19,7 +19,7 @@ const VideoCardStyle = StyleSheet.create({
     shadowRadius: 2,
     elevation: 5,
   },
-  
+
   leftText: {
     textAlign: 'left',
     paddingLeft: 10,
@@ -29,7 +29,7 @@ const VideoCardStyle = StyleSheet.create({
   rightText: {
     textAlign: 'right',
     paddingRight: 10,
-    color: '#333'
+    color: '#333',
   },
 })
 

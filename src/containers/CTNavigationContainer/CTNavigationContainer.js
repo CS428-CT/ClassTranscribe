@@ -91,10 +91,7 @@ const HistoryNavigator = () => {
 const StarredNavigator = () => {
   return (
     <Stack.Navigator initialRouteName={STACK_SCREENS.STARRED}>
-      <Stack.Screen
-        name={STACK_SCREENS.STARRED}
-        component={StarredView}
-      />
+      <Stack.Screen name={STACK_SCREENS.STARRED} component={StarredView} />
       <Stack.Screen name={STACK_SCREENS.COURSE_PLAYLISTS} component={CoursePlaylistsView} />
       <Stack.Screen name={STACK_SCREENS.PLAYLIST} component={PlaylistView} />
       <Stack.Screen name={STACK_SCREENS.VIDEO} component={VideoView} />
