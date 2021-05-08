@@ -7,7 +7,7 @@ import { ENDPOINTS } from '../../src/api/api-requests'
 import { format } from '../../src/utils/string'
 import { HTTP_STATUS_CODES } from '../../src/api'
 import { UNIVERSITY_RESPONSE } from '../mock_responses/mock-university-response'
-import Starred from '../../src/containers/StarredContainer/Starred'
+import StarredContainer from '../../src/containers/StarredContainer/StarredContainer'
 import {
   OFFERINGS_RESPONSE_1,
   OFFERINGS_RESPONSE_2,
@@ -69,7 +69,7 @@ describe('Check universities rendering', () => {
 
   test('Check that loading indicator renders', async () => {
     setUserData(USER_DATA)
-    render(<Starred navigation={mockNavigator} />)
+    render(<StarredContainer navigation={mockNavigator} />)
 
     await waitFor(() => expect(mockHook).toHaveBeenCalled())
   })

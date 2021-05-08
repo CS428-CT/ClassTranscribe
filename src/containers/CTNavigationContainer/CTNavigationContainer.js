@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { STACK_SCREENS } from './index'
-import Starred from '../StarredContainer/Starred'
+import StarredContainer from '../StarredContainer/StarredContainer'
 import HistoryContainer from '../HistoryContainer/HistoryContainer'
 import CoursePlaylistsContainer from '../CoursePlaylistsContainer/CoursePlaylistsContainer'
 import VideoContainer from '../VideoContainer/VideoContainer'
@@ -20,8 +20,8 @@ const Stack = createStackNavigator()
  * Wraps the Starred container so that it can
  * receive the proper props
  */
-const StarredView = ({ navigation, route }) => {
-  return <Starred starred={route.params.starred} navigation={navigation} />
+const StarredView = ({ navigation }) => {
+  return <StarredContainer navigation={navigation} />
 }
 
 /**
@@ -76,7 +76,7 @@ const DownloadView = ({ navigation }) => {
 const HistoryNavigator = () => {
   return (
     <Stack.Navigator initialRouteName={STACK_SCREENS.HISTORY}>
-      <Stack.Screen name={STACK_SCREENS.HISTORY} component={StarView} initialParams={{}} />
+      <Stack.Screen name={STACK_SCREENS.HISTORY} component={StarView} />
       <Stack.Screen name={STACK_SCREENS.COURSE_PLAYLISTS} component={CoursePlaylistsView} />
       <Stack.Screen name={STACK_SCREENS.PLAYLIST} component={PlaylistView} />
       <Stack.Screen name={STACK_SCREENS.VIDEO} component={VideoView} />
@@ -94,7 +94,6 @@ const StarredNavigator = () => {
       <Stack.Screen
         name={STACK_SCREENS.STARRED}
         component={StarredView}
-        initialParams={{ starred: true }}
       />
       <Stack.Screen name={STACK_SCREENS.COURSE_PLAYLISTS} component={CoursePlaylistsView} />
       <Stack.Screen name={STACK_SCREENS.PLAYLIST} component={PlaylistView} />

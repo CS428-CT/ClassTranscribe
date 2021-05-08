@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 
-const HomeStyle = StyleSheet.create({
+const styles = StyleSheet.create({
   cardContainer: {
     display: 'flex',
     justifyContent: 'center',
@@ -25,4 +25,4 @@ const HomeStyle = StyleSheet.create({
   },
 })
 
-export default HomeStyle
+export default styles

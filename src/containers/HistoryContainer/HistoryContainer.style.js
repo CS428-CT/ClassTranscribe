@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 
-const StarredStyle = StyleSheet.create({
+const styles = StyleSheet.create({
   cardContainer: {
     display: 'flex',
     justifyContent: 'center',
@@ -64,4 +64,4 @@ const StarredStyle = StyleSheet.create({
   },
 })
 
-export default StarredStyle
+export default styles
