@@ -48,7 +48,6 @@ const LoginContainer = ({ onAuthLevelChange }) => {
    */
   const onBrowserMessage = async (event) => {
     if (!event?.nativeEvent?.data) return
-
     const data = event.nativeEvent.data
 
     try {
