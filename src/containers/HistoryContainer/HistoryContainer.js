@@ -3,23 +3,19 @@ import { TouchableNativeFeedback, FlatList, View, Text } from 'react-native'
 import PropTypes from 'prop-types'
 import { getUserHistory } from '../../api/history'
 import { getMedia } from '../../api/video'
-// import { getCurrentAuthenticatedUser } from '../../api/auth'
 import VideoCard from '../../components/Cards/VideoCard'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
-import styles from './Starred.style'
+import styles from './HistoryContainer.style'
 import { useLoadingWrap } from '../../hooks/useLoadingWrap'
 import { NO_HISTORY } from '../../constants'
 
 /**
- * Contains the home screen of the application. Lists courses and gives the user the ability
- * to search for courses. Clicking on a course shows the playlists for it.
- * @param {Object} navigation Stack navigator
+ * Shows the user watch history
  */
-const Starred = ({ navigation }) => {
-  // const currentUser = getCurrentAuthenticatedUser()
+const HistoryContainer = ({ navigation }) => {
   const loadingWrap = useLoadingWrap()
-
   const [history, setHistory] = useState([])
+
   useEffect(() => {
     const fetchHistoryInfo = async () => {
       let res
@@ -91,10 +87,10 @@ const Starred = ({ navigation }) => {
   return <View style={styles.viewStyle}>{renderWatchVideos()}</View>
 }
 
-Starred.propTypes = {
+HistoryContainer.propTypes = {
   navigation: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
 }
 
-export default Starred
+export default HistoryContainer
