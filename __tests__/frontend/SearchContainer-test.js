@@ -7,7 +7,7 @@ import { ENDPOINTS } from '../../src/api/api-requests'
 import { format } from '../../src/utils/string'
 import { HTTP_STATUS_CODES } from '../../src/api'
 import { UNIVERSITY_RESPONSE } from '../mock_responses/mock-university-response'
-import Home from '../../src/containers/HomeContainer/Home'
+import Starred from '../../src/containers/StarredContainer/Starred'
 import {
   OFFERINGS_RESPONSE_1,
   OFFERINGS_RESPONSE_2,
@@ -21,7 +21,7 @@ const mock = new MockAdapter(axios)
 const mockHook = jest.fn()
 useLoadingIndicator.mockReturnValue(mockHook)
 
-describe('Check screen rendering', () => {
+describe('Check universities rendering', () => {
   const USER_DATA = {
     authToken: 'A',
     universityId: '1001',
@@ -69,7 +69,7 @@ describe('Check screen rendering', () => {
 
   test('Check that loading indicator renders', async () => {
     setUserData(USER_DATA)
-    render(<Home navigation={mockNavigator} />)
+    render(<Starred navigation={mockNavigator} />)
 
     await waitFor(() => expect(mockHook).toHaveBeenCalled())
   })
