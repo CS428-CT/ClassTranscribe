@@ -10,7 +10,10 @@ import { useLoadingWrap } from '../../hooks/useLoadingWrap'
 import { NO_HISTORY } from '../../constants'
 
 /**
- * Shows the user watch history
+ * Contains the history screen of the application. Lists all the watched history
+ * of current user sorted by time. Clicking on any one of them will be navigated to
+ * the corresbonding video with last watched location
+ * @param {Object} navigation A stack navigator
  */
 const HistoryContainer = ({ navigation }) => {
   const loadingWrap = useLoadingWrap()
