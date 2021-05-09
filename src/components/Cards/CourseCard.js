@@ -9,7 +9,7 @@ import { addStarredOferring, removeStarredOffering } from '../../api/offerings'
 const MAX_DESCRIPTION_LENGTH = 100
 
 /**
- * Component to render a single course item. Displays information about the course -- used in the HomeContainer
+ * Component to render a single course item. Displays information about the course -- used in the StarredContainer
  * @param {String} departmentAcronym Example: "CS" or "ECE"
  * @param {String} courseNumber Example: "400" or "429"
  * @param {String} courseName The name of the course to be displayed

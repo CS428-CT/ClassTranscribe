@@ -8,7 +8,7 @@ import { format } from '../../src/utils/string'
 import { HTTP_STATUS_CODES } from '../../src/api'
 import { UNIVERSITY_RESPONSE } from '../mock_responses/mock-university-response'
 import { DEPARTMENTS_RESPONSE } from '../mock_responses/mock-department-response'
-import Home from '../../src/containers/HomeContainer/Home'
+import StarredContainer from '../../src/containers/StarredContainer/StarredContainer'
 
 import {
   OFFERINGS_IN_LIST,
@@ -52,7 +52,7 @@ describe('Check screen rendering', () => {
 
   test('Check that loading indicator renders', async () => {
     setUserData(USER_DATA)
-    render(<Home navigation={mockNavigator} />)
+    render(<StarredContainer navigation={mockNavigator} />)
 
     await waitFor(() => expect(mockHook).toHaveBeenCalled())
   })
@@ -62,7 +62,9 @@ describe('Check screen rendering', () => {
     const user = getCurrentAuthenticatedUser()
     user.metadata = STARRED_OFFERINGS_RESPONSE2
 
-    const { queryByText, queryAllByA11yRole } = render(<Home navigation={mockNavigator} />)
+    const { queryByText, queryAllByA11yRole } = render(
+      <StarredContainer navigation={mockNavigator} />
+    )
     const courses = await waitFor(() => queryAllByA11yRole('button'))
     expect(courses.length).not.toBe(0)
 

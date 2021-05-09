@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 
-const StarredStyle = StyleSheet.create({
+const styles = StyleSheet.create({
   cardContainer: {
     display: 'flex',
     justifyContent: 'center',
@@ -20,12 +20,9 @@ const StarredStyle = StyleSheet.create({
 
   historyWatchList: {
     marginTop: 8,
-    marginLeft: 8,
-    marginBottom: 40,
-    paddingBottom: 0,
+    marginLeft: 6,
+    marginBottom: 0,
     alignContent: 'center',
-    borderBottomColor: '#999',
-    borderBottomWidth: 2,
   },
 
   viewStyle: {
@@ -33,7 +30,7 @@ const StarredStyle = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
-    marginTop: 5,
+    paddingTop: '2%',
   },
 
   dropdown: {
@@ -67,4 +64,4 @@ const StarredStyle = StyleSheet.create({
   },
 })
 
-export default StarredStyle
+export default styles

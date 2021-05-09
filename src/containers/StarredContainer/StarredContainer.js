@@ -4,16 +4,16 @@ import PropTypes from 'prop-types'
 import { getStarredOfferingsData, getStarredOfferings } from '../../api/offerings'
 import CourseCard from '../../components/Cards/CourseCard'
 import { STACK_SCREENS } from '../CTNavigationContainer/index'
-import styles from './Home.style'
+import styles from './StarredContainer.style'
 import { useLoadingWrap } from '../../hooks/useLoadingWrap'
 import { NO_STARRED_COURSES } from '../../constants'
 
 /**
- * Contains the home screen of the application. Lists courses and gives the user the ability
+ * Contains the starred screen of the application. Lists courses and gives the user the ability
  * to search for courses. Clicking on a course shows othe playlists for it.
  * @param {Object} navigation A stack navigator
  */
-const Home = ({ navigation }) => {
+const StarredContainer = ({ navigation }) => {
   const loadingWrap = useLoadingWrap()
   const [courses, setCourses] = useState([])
 
@@ -92,10 +92,10 @@ const Home = ({ navigation }) => {
   return <View style={styles.viewStyle}>{renderCourses()}</View>
 }
 
-Home.propTypes = {
+StarredContainer.propTypes = {
   navigation: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
 }
 
-export default Home
+export default StarredContainer
